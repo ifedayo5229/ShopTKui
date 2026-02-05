@@ -1,0 +1,119 @@
+<mat-card class="w-100">
+    <mat-card-content>
+      <h2 class="mb-56">Approved IT Requests</h2>
+  
+      <div class="table-responsive">
+            
+        <mat-form-field>
+            <mat-label>Search requests</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+        </mat-form-field>   
+        <table  mat-table [dataSource]="dataSource" matSort class="text-nowrap w-100">
+  
+            <!-- S/N Column -->
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef fxHide.lt-sm fxHide.lt-md fxHide.md>S/N </th>
+              <td mat-cell class="fw-medium" *matCellDef="let i = index" fxHide.lt-sm fxHide.lt-md fxHide.md> 
+                {{ (paginator.pageIndex * paginator.pageSize) + (i + 1) }}
+              </td>
+            </ng-container>
+
+            <!-- Reference Column -->
+          <ng-container matColumnDef="reference">
+            <th mat-header-cell *matHeaderCellDef> Reference </th>
+            <td mat-cell *matCellDef="let req">
+                <p class="mb-0 fw-medium">{{req.reference}}</p>
+            </td>
+          </ng-container>
+          
+          <!-- Item name Column -->
+          <ng-container matColumnDef="itemName">
+            <th mat-header-cell *matHeaderCellDef> Item </th>
+            <td mat-cell *matCellDef="let req">
+                <p class="mb-0 fw-medium">{{req.itemName}}</p>
+            </td>
+          </ng-container>
+  
+          <!-- Description Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef fxHide.lt-sm fxHide.lt-md fxHide.md> Description </th>
+            <td mat-cell *matCellDef="let req" fxHide.lt-sm fxHide.lt-md fxHide.md>
+                <p class="mb-0 fw-medium">{{req.description}}</p>
+            </td>
+        </ng-container>
+              
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef> Quantity </th>
+              <td mat-cell *matCellDef="let req">
+                  <p class="mb-0 fw-medium">{{req.quantity}}</p>
+              </td>
+          </ng-container>
+
+          <!-- Approved Quantity Column -->
+          <!-- <ng-container matColumnDef="approvedQuantity">
+            <th mat-header-cell *matHeaderCellDef fxHide.lt-sm fxHide.lt-md fxHide.md>Approved Quantity</th>
+            <td mat-cell *matCellDef="let req" fxHide.lt-sm fxHide.lt-md fxHide.md>
+              <p class="mb-0 fw-medium">{{ req.approvedQuantity }}</p>
+            </td>
+          </ng-container> -->
+  
+          <!-- Source store Column -->
+          <ng-container matColumnDef="sourceStoreName">
+            <th mat-header-cell *matHeaderCellDef fxHide.lt-sm fxHide.lt-md fxHide.md>Source Store</th>
+            <td mat-cell *matCellDef="let req" fxHide.lt-sm fxHide.lt-md fxHide.md>
+                <p class="mb-0 fw-medium">{{req.sourceStoreName}}</p>
+            </td>
+        </ng-container>
+  
+        <!-- Receiver's Column -->  
+        <ng-container matColumnDef="requestedDate">
+          <th mat-header-cell *matHeaderCellDef fxHide.lt-sm fxHide.lt-md fxHide.md>Request Date</th>
+          <td mat-cell *matCellDef="let req" fxHide.lt-sm fxHide.lt-md fxHide.md>
+            <p class="mb-0 fw-medium">{{ req.requestDate | date: 'MMM dd, yyy, h:mm a' }}</p>
+          </td>
+        </ng-container>
+  
+        <!-- Status Column -->  
+        <ng-container matColumnDef="Status">
+          <th mat-header-cell *matHeaderCellDef fxHide.lt-sm fxHide.lt-md fxHide.md>Status</th>
+          <td mat-cell *matCellDef="let req" fxHide.lt-sm fxHide.lt-md fxHide.md>
+            <p class="mb-0 fw-medium">{{req.status}}</p>
+          </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="Action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let req">
+            <button mat-raised-button color="primary" type="button" (click)="viewRequestSidebar(req)">View</button>
+          </td>
+
+        </ng-container> -->
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let req">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              
+              <button mat-menu-item color="secondary"(click)="goToForm(req)" [disabled]="req.equipmentAcknowledgedByEmployee" >
+                <mat-icon>dashboard</mat-icon>
+                  <span>Fill Form</span>
+              </button>
+
+            </mat-menu>
+          </td>
+      </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <!-- mat-paginator -->
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+
+
+    </mat-card-content>
+</mat-card>

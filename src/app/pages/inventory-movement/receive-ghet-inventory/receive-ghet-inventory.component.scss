@@ -1,0 +1,187 @@
+.container {
+    max-width: 100%;
+    margin: auto;
+    padding: 1.25rem;
+  }
+  
+  .title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  
+  .section {
+    margin-bottom: 1.25rem;
+  }
+  
+  .section-title {
+    background-color: #babac0;
+    color: white;
+    padding: 0.4rem;
+    font-size: 1rem;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;
+  }
+  
+  .form-field {
+    flex: 1;
+    margin-right: 10px;
+    min-width: 250px; 
+  
+    @media (max-width: 600px) {
+        margin-right: 0; 
+        width: 100%;
+    }
+  }
+  
+  .form-field:last-child {
+    margin-right: 0;
+  }
+  
+  .error {
+    font-size: 0.8rem;
+    margin-left: -0.8rem;
+  }
+  
+  .action-buttons {
+    display: flex;
+    margin-top: 0.5rem;
+  }
+  
+  @media (max-width: 600px) {
+    .action-buttons {
+        flex-direction: column; 
+        align-items: center; 
+    }
+  
+    .action-buttons button {
+        margin: 0.1rem 0; 
+        width: 100%; 
+    }
+  }
+
+  .custom-option > .option-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .view-image-btn {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+    margin-left: 10rem;
+  }
+  
+  .view-image-btn:hover {
+    opacity: 1;
+  }
+
+ 
+/* option layout */
+.option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.option-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.view-image-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #1976d2;            /* Material-ish blue */
+  text-decoration: underline;
+  font: 0.6rem;
+}
+
+/* your hover tooltip; keep it above the Material overlay */
+.preview-tooltip {
+  position: fixed;
+  z-index: 10000;            /* higher than cdk-overlay-container */
+  pointer-events: none;      /* so it doesn’t interfere with hover */
+  background: #fff;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.preview-tooltip img {
+  max-height: 5rem;         /* ✅ as requested */
+  max-width: 5rem;
+  object-fit: contain;
+  display: block;
+}
+
+/* modal for large image */
+.image-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11000;            /* above tooltip + overlay */
+}
+
+.image-modal-content {
+  position: relative;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 95vw;
+  max-height: 95vh;
+}
+
+.image-modal-content img {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  display: block;
+}
+
+.close-btn {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  background: #ff4d4f;
+  border: none;
+  color: #fff;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.preview-tooltip.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.preview-tooltip.hide {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.preview-tooltip {
+  opacity: 0.8;
+  transition: opacity 1s ease;
+}
+
+.preview-tooltip.fade-out {
+  opacity: 0;
+}
+
+
+

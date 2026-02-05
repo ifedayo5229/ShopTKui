@@ -1,0 +1,72 @@
+
+
+<div class="container">
+    <h1 class="title">Create Store</h1>
+    <form [formGroup]="createStoreForm">
+      
+      <div class="section">
+        <h2 class="section-title">Store Details</h2>
+
+        <div class="form-row">
+
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Location</mat-label>            
+                <mat-select formControlName="locationId" required>
+                    <mat-option>
+                        <ngx-mat-select-search [formControl]="searchInputLocation" placeholderLabel="Find a location..."
+                            noEntriesFoundLabel="'No Matching Location Found'"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option [value]="loc.id"  *ngFor="let loc of filteredLocations">{{loc.name}}</mat-option>
+                </mat-select>
+                <mat-error class="error" *ngIf="createStoreForm.get('locationId')?.errors?.['required']">
+                Location is required.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Store Name</mat-label>
+                <input matInput formControlName="storeName" name="storeName" required>
+                <mat-error class="error" *ngIf="createStoreForm.get('storeName')?.errors?.['required']">
+                    Store name is required.
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+
+        <div class="form-row">
+ 
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Description</mat-label>
+                <input matInput formControlName="descriptions" name="descriptions" required>
+                <mat-error class="error" *ngIf="createStoreForm.get('descriptions')?.errors?.['required']">
+                    Please input a brief description.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Function</mat-label>            
+                <mat-select formControlName="departmentId" required>
+                <mat-option>
+                    <ngx-mat-select-search [formControl]="searchInputDepartment" placeholderLabel="Find a function..."
+                        noEntriesFoundLabel="'No Matching Function Found'"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option [value]="loc.id"  *ngFor="let loc of filteredDepartments">{{loc.name}}</mat-option>
+                </mat-select>
+                <mat-error class="error" *ngIf="createStoreForm.get('departmentId')?.errors?.['required']">
+                Function is required.
+                </mat-error>
+            </mat-form-field>
+  
+        </div>
+
+      </div>
+      
+  
+      <!-- Submit/Cancel -->
+      <div align="end" style="margin: 8px 8px 8px 0;">
+        <button mat-raised-button style="margin: 0px 15px 0px 0;" (click)="cancel()">Cancel</button>
+        <button type="submit" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isSubmitting"
+        style="margin: 0px 0px 0px 15px;">Submit</button>
+      </div>
+    </form>
+  </div>

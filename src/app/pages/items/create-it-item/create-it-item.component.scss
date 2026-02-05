@@ -1,0 +1,64 @@
+.container {
+    max-width: 100%;
+    margin: auto;
+    padding: 1.25rem;
+  }
+  
+  .title {
+    margin-bottom: 0.1rem;
+    font-size: 1.5rem;
+  }
+  
+  .section {
+    margin-bottom: 1.25rem;
+  }
+  
+  .section-title {
+    background-color: #babac0;
+    color: white;
+    padding: 0.4rem;
+    font-size: 1rem;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap; // Allow wrapping for responsiveness
+    justify-content: space-between;
+  }
+  
+  .form-field {
+    flex: 1;
+    margin-right: 10px;
+    min-width: 250px; // Set a minimum width for form fields
+  
+    @media (max-width: 600px) {
+        margin-right: 0; // Remove right margin on mobile
+        width: 100%; // Make fields full width on mobile
+    }
+  }
+  
+  .form-field:last-child {
+    margin-right: 0;
+  }
+  
+  .error {
+    font-size: 0.8rem;
+    margin-left: -0.8rem;
+  }
+  
+  .action-buttons {
+    display: flex;
+    margin-top: 0.5rem;
+  }
+  
+  @media (max-width: 600px) {
+    .action-buttons {
+        flex-direction: column; // Stack action buttons vertically on mobile
+        align-items: center; // Ensure buttons take full width
+    }
+  
+    .action-buttons button {
+        margin: 0.1rem 0; // Add margin between buttons
+        width: 100%; // Make buttons full width
+    }
+  }

@@ -1,0 +1,70 @@
+<!-- Admin chart -->
+<section *ngIf="isAdmin">
+      <div class="card-container">
+        <div class="card card-approved"(click)="goToAllRequestsReport()">
+          <h3>All Requests</h3>
+          <p class="value">{{ allRequests }}</p>
+        </div>
+        <div class="card card-default"(click)="goToAllRequestsReport()">
+          <h3>All Approved Requests</h3>
+          <p class="value">{{ approvedRequestsCount }}</p>
+        </div>
+        <div class="card card-pending"(click)="goToAllRequestsReport()">
+          <h3>All Pending Requests</h3>
+          <p class="value">{{ pendingRequestsCount }}</p>
+        </div>
+        <div class="card card-rejected"(click)="goToAllRequestsReport()">
+          <h3>All Rejected Requests</h3>
+          <p class="value">{{ rejectedRequestsCount }}</p>
+        </div>
+      </div>
+
+      <div class="charts-container">
+        <div class="chart">
+            <canvas id="doughnutChart"></canvas>
+        </div>
+        <div class="chart">
+            <canvas id="barLineChart"></canvas>
+        </div>
+     </div>
+</section>
+
+
+<!-- Requester charts -->
+<section *ngIf="isRequesterOnly || isStoreManager || isMainStoreManager || isLineManager || isHoS 
+                || isITStoreManager || isITSupport || isHoD || isCPASDStoreManager">
+  <div class="card-container">
+    <div class="card card-default"  (click)="goToAllRequests()">  
+      <h3>All My Requests</h3>
+      <p class="value">{{ allMyRequests }}</p>
+    </div>
+    <div class="card card-approved" (click)="goToAllRequests()">
+      <h3>My Approved Requests</h3>
+      <p class="value">{{ myapprovedRequestsCount }}</p>
+    </div>
+    <div class="card card-pending" (click)="goToAllRequests()">
+      <h3>My Pending Requests</h3>
+      <p class="value">{{ mypendingRequestsCount }}</p>
+    </div>
+    <div class="card card-rejected" (click)="goToAllRequests()">
+      <h3>My Rejected Requests</h3>
+      <p class="value">{{ myrejectedRequestsCount }}</p>
+    </div>
+    <div class="card card-approval" (click)="goToPendingRequests()" *ngIf="isLineManager || isHoS || isStoreManager || isAdmin">
+      <h3>Pending Approvals</h3>
+      <p class="value">{{ allPendingRequestsCount }}</p>
+    </div>
+  </div>
+
+  <div class="charts-container">
+    <div class="chart">
+        <canvas id="myDoughnutChart"></canvas>
+    </div>
+    <div class="chart">
+        <canvas id="myBarLineChart"></canvas>
+    </div>
+ </div>
+</section>
+
+  
+  

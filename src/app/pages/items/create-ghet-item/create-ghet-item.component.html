@@ -1,0 +1,178 @@
+<!-- Full Width Banner -->
+<div class="banner">
+  <div class="banner-content">
+    <div class="banner-text">
+      <svg class="gift-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="8" width="18" height="4" rx="1"/>
+        <path d="m12 8-2-2v2"/>
+        <path d="m12 8 2-2v2"/>
+        <path d="M12 8v13"/>
+        <path d="M7 16h10"/>
+      </svg>
+      <h2>Gift Request Form</h2>
+      <p>Share your wishlist with us</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <form [formGroup]="giftRequestForm" (ngSubmit)="onSubmit()" class="form-container">
+    
+    <!-- Personal Information Section -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Creator's Details</h2>
+      </div>
+      <div class="card-content">
+        <div class="grid-container">
+          <div class="input-group">
+            <label for="email">Email Address</label>
+            <input 
+              id="email" 
+              type="email" 
+              formControlName="email"
+              placeholder="your.email@example.com"
+              class="form-input"
+              readonly
+              required>
+          </div>
+          
+          <div class="input-group">
+            <label for="location">Location</label>
+            <input 
+              id="location" 
+              formControlName="location"
+              placeholder="Enter your location..."
+              class="form-input"
+              required>
+          </div>
+          
+          <div class="input-group">
+            <label for="function">Function</label>
+            <input 
+              id="function" 
+              formControlName="function"
+              placeholder="Enter your function..."
+              class="form-input"
+              required>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gift Items Section -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Gift Items</h2>
+      </div>
+      <div class="card-content">
+        <div formArrayName="gifts">
+          <div *ngFor="let gift of giftsArray.controls; let i = index" 
+               [formGroupName]="i" 
+               class="gift-item">
+            
+            <div class="gift-item-header">
+              <h3>Gift Item #{{i + 1}}</h3>
+              <button 
+                *ngIf="giftsArray.length > 1"
+                type="button" 
+                class="remove-btn"
+                (click)="removeGiftItem(i)">
+                <svg class="trash-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="m3 6 3 0"/>
+                  <path d="m19 6-3 0"/>
+                  <path d="m8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  <path d="m10 11 0 6"/>
+                  <path d="m14 11 0 6"/>
+                  <path d="M5 6l1 14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2L19 6"/>
+                </svg>
+                Remove
+              </button>
+            </div>
+
+            <div class="gift-item-grid">
+              <div class="input-group">
+                <label [for]="'itemName-' + i">Item Name</label>
+                <input 
+                  [id]="'itemName-' + i"
+                  formControlName="itemName"
+                  placeholder="Name of the gift item"
+                  class="form-input"
+                  required>
+              </div>
+
+              <div class="input-group">
+                <label [for]="'categoryId-' + i">Category</label>
+                <select 
+                  [id]="'categoryId-' + i"
+                  formControlName="categoryId"
+                  class="form-select"
+                  required>
+                  <option value="">Select a category</option>
+                  <option *ngFor="let category of allCategories" [value]="category.id">
+                    {{category.categoryName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label [for]="'description-' + i">Description</label>
+              <textarea 
+                rows="2"
+                [id]="'description-' + i"
+                formControlName="description"
+                placeholder="Describe the gift item in detail..."
+                class="form-textarea"
+                required>
+              </textarea>
+            </div>
+
+            <div class="input-group">
+              <label [for]="'uploadFiles-' + i">Upload Images</label>
+              <div class="file-upload-area" (click)="triggerFileInput(i)">
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7,10 12,15 17,10"/>
+                  <line x1="12" x2="12" y1="15" y2="3"/>
+                </svg>
+                <p>Click to upload images</p>
+                <input #fileInput [id]="'uploadFiles-' + i" type="file" multiple accept="image/*" (change)="onFileSelected($event, i)" class="hidden-input">
+                <!-- <button type="button" class="file-btn">
+                  Choose Files
+                </button> -->
+                <p *ngIf="getSelectedFilesCount(i) > 0" class="file-count">
+                  {{getSelectedFilesCount(i)}} image(s) selected
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="add-gift-container">
+          <button 
+            type="button"
+            (click)="addGiftItem()"
+            class="add-gift-btn">
+            <svg class="plus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="m12 8v8"/>
+              <path d="m8 12h8"/>
+            </svg>
+            Add More Gift Item
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button type="submit" class="submit-btn" [disabled]="giftRequestForm.invalid">
+        Submit Request
+      </button>
+      <button type="button" (click)="resetForm()" class="reset-btn">
+        Reset Form
+      </button>
+    </div>
+  </form>
+</div>

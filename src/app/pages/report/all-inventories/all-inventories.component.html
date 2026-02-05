@@ -1,0 +1,102 @@
+<mat-card class="w-100">
+    <mat-card-content>
+      <h2 class="mb-56">All Inventories</h2>
+  
+      <div class="table-responsive">
+            
+        <mat-form-field>
+            <mat-label>Search inventories</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+        </mat-form-field> 
+
+
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Inventories by store</mat-label>
+          <mat-select formControlName="sourceStoreId" (selectionChange)="onStoreChange($event.value)">
+            <mat-option>
+              <ngx-mat-select-search [formControl]="searchInputStores" placeholderLabel="Find a store..."
+                noEntriesFoundLabel="'No Matching Store Found'"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option [value]="null">All stores</mat-option>
+            <mat-option *ngFor="let store of filteredStoreLocations" [value]="store.id">
+              {{ store.name }}
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+
+        
+        <div class="button-container">
+          <button mat-raised-button color="primary" (click)="exportToExcel()">
+            <mat-icon>download</mat-icon>
+            Export to Excel
+          </button>
+        </div>
+
+        <table  mat-table [dataSource]="dataSource" matSort class="text-nowrap w-100">
+  
+            <!-- Id Column -->
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef fxHide.lt-sm fxHide.lt-md fxHide.md>S/N </th>
+                <td mat-cell class="fw-medium" *matCellDef="let i = index" fxHide.lt-sm fxHide.lt-md fxHide.md> 
+                  {{ (paginator.pageIndex * paginator.pageSize) + (i + 1) }}
+                </td>
+            </ng-container>
+
+            <!-- Code(item-code) Column -->
+            <ng-container matColumnDef="itemCode">
+                <th mat-header-cell *matHeaderCellDef> Item Code</th>
+                <td mat-cell *matCellDef="let movt">
+                    <p class="mb-0 fw-medium">{{movt.code}}</p>
+                </td>
+            </ng-container>
+
+            <!-- Store name Column -->
+            <ng-container matColumnDef="store">
+              <th mat-header-cell *matHeaderCellDef> Store </th>
+              <td mat-cell *matCellDef="let movt">
+                  <p class="mb-0 fw-medium">{{movt.storeName}}</p>
+              </td>
+            </ng-container>
+  
+            <!-- Item name Column -->
+            <ng-container matColumnDef="item">
+                <th mat-header-cell *matHeaderCellDef> Item </th>
+                <td mat-cell *matCellDef="let movt">
+                    <p class="mb-0 fw-medium">{{movt.itemName}}</p>
+                </td>
+            </ng-container>
+  
+            <!-- Quantity Column -->
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef>Quantity</th>
+              <td mat-cell *matCellDef="let movt">
+                  <p class="mb-0 fw-medium">{{movt.quantity}}</p>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="costPerUnit">
+              <th mat-header-cell *matHeaderCellDef>Cost Per Unit (Naira)</th>
+              <td mat-cell *matCellDef="let item">
+                <p class="mb-0 fw-medium">
+                  {{ item.costPerUnit && item.costPerUnit !== 0 
+                      ? (item.costPerUnit | currency:'' :'':'1.2-2') 
+                      : 'N/A' }}
+                </p>
+              </td>
+            </ng-container>
+          <!-- Store Manager's Column -->  
+          <!-- <ng-container matColumnDef="receivedBy">
+            <th mat-header-cell *matHeaderCellDef fxHide.lt-sm fxHide.lt-md fxHide.md>Store Manager</th>
+            <td mat-cell *matCellDef="let movt" fxHide.lt-sm fxHide.lt-md fxHide.md>
+              <p class="mb-0 fw-medium">{{movt.receivedBy}</p>
+            </td>
+          </ng-container> -->
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <!-- mat-paginator -->
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,30 @@
+<mat-card-content>
+    <div class="popup">
+      <h2 class="popup-header">Create Category</h2>
+      <form [formGroup]="createCategoryForm" class="popup-form-container">
+        <div class="popup-form-content">
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Category Name</mat-label>
+            <input matInput formControlName="categoryName" placeholder="Enter category name">
+            <mat-error class="error" *ngIf="createCategoryForm.get('categoryName')?.errors?.['required']">
+              Name is required.
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" rows="4" placeholder="Enter description"></textarea>
+            <mat-error class="error" *ngIf="createCategoryForm.get('description')?.errors?.['required']">
+                Description is required.
+            </mat-error>
+          </mat-form-field>
+  
+        </div>
+        <div class="action-buttons">
+          <button mat-raised-button class="submit-button" color="primary" (click)="createCategory()" [disabled]="isSubmitting">Create</button>
+          <button mat-raised-button color="warn" class="cancel-button" (click)="onCancelClick()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>

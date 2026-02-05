@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Add Roles</h2>
+<div mat-dialog-content *ngIf="isLoading">
+  Loading roles...
+</div>
+<div mat-dialog-content *ngIf="!isLoading">
+  <mat-selection-list [(ngModel)]="selectedRoles">
+    <mat-list-option *ngFor="let role of roles" [value]="role.id" [disabled]="role.disabled">
+      {{ role.roleName }}
+    </mat-list-option>
+  </mat-selection-list>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="saveRoles()">Save</button>
+  <!-- <button mat-button (click)="cancel()">Cancel</button> -->
+</div>

@@ -1,0 +1,30 @@
+<h2 mat-dialog-title *ngIf="currentStep === 'roles'">Add Roles</h2>
+<h2 mat-dialog-title *ngIf="currentStep === 'locations'">Select Locations</h2>
+
+<div mat-dialog-content *ngIf="isLoading">
+  Loading...
+</div>
+
+<div mat-dialog-content *ngIf="!isLoading && currentStep === 'roles'">
+  <mat-radio-group [(ngModel)]="selectedRole">
+    <mat-radio-button *ngFor="let role of roles" [value]="role.id" [disabled]="role.disabled">
+      {{ role.roleName }}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
+
+<div mat-dialog-content *ngIf="!isLoading && currentStep === 'locations'">
+  <mat-radio-group [(ngModel)]="selectedLocation">
+    <mat-radio-button *ngFor="let location of locations" [value]="location.id">
+      {{ location.name }}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
+
+<div mat-dialog-actions>
+  <!-- <button mat-button *ngIf="currentStep === 'locations'" (click)="goToRoles()">Back</button> -->
+  <!-- <button mat-raised-button color="primary" *ngIf="currentStep === 'roles'" (click)="goToLocations()">Next</button> -->
+  <button mat-raised-button color="primary" *ngIf="currentStep === 'locations'" (click)="saveSelections()">Save</button>
+  <!-- <button mat-button (click)="cancel()">Cancel</button> -->
+</div>
+

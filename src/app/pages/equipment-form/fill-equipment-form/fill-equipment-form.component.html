@@ -1,0 +1,237 @@
+<div class="container">
+    <h1 class="title">Equipment Form</h1>
+    <form [formGroup]="equipmentForm">
+      
+      <div class="section">
+        <h2 class="section-title">Employee Details</h2>
+        <div class="form-row">
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" name="email" required readonly>
+            <mat-error class="error" *ngIf="equipmentForm.get('email')?.errors?.['required']">
+              Email is required.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="employeeName" name="employeeName" required readonly>
+            <mat-error class="error" *ngIf="equipmentForm.get('employeeName')?.errors?.['required']">
+                Name is required.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label>ID/Phone Number</mat-label>
+            <input matInput formControlName="idOrPhoneNumber" name="idOrPhoneNumber" required>
+            <mat-error class="error" *ngIf="equipmentForm.get('idOrPhoneNumber')?.errors?.['required']">
+              This field is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="form-row">
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Department</mat-label>
+                <input matInput formControlName="department" name="department" required>
+                <mat-error class="error" *ngIf="equipmentForm.get('department')?.errors?.['required']">
+                  Department is required.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Location</mat-label>
+                <input matInput formControlName="location" name="location" required>
+                <mat-error class="error" *ngIf="equipmentForm.get('location')?.errors?.['required']">
+                  Location is required.
+                </mat-error>
+              </mat-form-field>
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Manager</mat-label>
+                <input matInput formControlName="managerName" name="managerName" required >
+                <mat-error class="error" *ngIf="equipmentForm.get('managerName')?.errors?.['required']">
+                    Manager's name is required.
+                </mat-error>
+            </mat-form-field>
+        </div>
+      </div>
+
+      <div class="confirmation-container">
+        <div class="confirmation-box">
+          <p class="confirmation-text">
+            I hereby confirm that I have aligned with my manager and that a new system has been issued to me on this day in good condition.
+          </p>
+          <mat-checkbox formControlName="managerAlignment">
+            Click here to confirm manager's alignment
+          </mat-checkbox>
+          <mat-error class="error" *ngIf="equipmentForm.get('managerAlignment')?.errors?.['required']">
+            This field is required.
+          </mat-error>
+        </div>
+      </div>
+
+
+      <h2 class="section-title">Computer Description</h2>
+
+      <div class="confirmation-container">
+        <label class="type-label">
+            Type: 
+        </label>
+        <div class="radio-group">
+          <mat-radio-group formControlName="type" (change)="onTypeChange($event.value)" class="radio-options">
+            <mat-radio-button value="Laptop">Laptop</mat-radio-button>
+            <mat-radio-button value="Desktop">Desktop</mat-radio-button>
+            <mat-radio-button value="Monitor">Monitor</mat-radio-button>
+            <mat-radio-button value="Other">Other:</mat-radio-button>
+          </mat-radio-group>
+          <mat-error class="error" *ngIf="equipmentForm.get('type')?.invalid && equipmentForm.get('type')?.touched">
+            Type is required.
+          </mat-error>
+      
+          <mat-form-field *ngIf="showOtherInput" appearance="fill" class="other-input">
+            <input matInput placeholder="Please specify" formControlName="otherType" />
+            <mat-error class="error" *ngIf="equipmentForm.get('otherType')?.hasError('required') && equipmentForm.get('otherType')?.touched">
+              Please specify the type.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="confirmation-container">
+        <label class="type-label">
+            Manufacturer: 
+        </label>
+        <div class="radio-group">
+          <mat-radio-group formControlName="manufacturer" (change)="onManufacturerChange($event.value)" class="radio-options">
+            <mat-radio-button value="HP">HP</mat-radio-button>
+            <mat-radio-button value="LENOVO">LENOVO</mat-radio-button>
+            <mat-radio-button value="OtherManufacturer">Other:</mat-radio-button>
+          </mat-radio-group>
+          <mat-error class="error" *ngIf="equipmentForm.get('manufacturer')?.invalid && equipmentForm.get('manufacturer')?.touched">
+            Manufacturer is required.
+          </mat-error>
+      
+          <mat-form-field *ngIf="showManufacturerOtherInput" appearance="fill" class="other-input">
+            <input matInput placeholder="Please specify" formControlName="manufacturerType" />
+            <mat-error class="error" *ngIf="equipmentForm.get('manufacturerType')?.hasError('required') && equipmentForm.get('manufacturerType')?.touched">
+              Please specify the manufacturer.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="form-row">
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Model</mat-label>
+                <input matInput formControlName="model" name="model" required>
+                <mat-error class="error" *ngIf="equipmentForm.get('model')?.errors?.['required']">
+                  Model is required.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Computer HOSTNAME</mat-label>
+                <input matInput formControlName="hostname" name="hostname" required>
+                <mat-error class="error" *ngIf="equipmentForm.get('hostname')?.errors?.['required']">
+                  Hostname is required.
+                </mat-error>
+              </mat-form-field>
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Serial/Part Number</mat-label>
+                <input matInput formControlName="serialNumber" name="serialNumber" required >
+                <mat-error class="error" *ngIf="equipmentForm.get('serialNumber')?.errors?.['required']">
+                Serial number is required.
+                </mat-error>
+            </mat-form-field>
+        </div>
+      </div>
+
+      
+      <h2 class="section-title">Other Items Issued</h2>
+      <div class="item-request-container">Please check appropriate boxes</div>
+      <div class="item-request-container">
+        <label class="type-label">
+            Items: 
+        </label>
+        <div class="checkbox-container">
+            <mat-checkbox formControlName="laptopBag">Laptop Bag</mat-checkbox>
+            <mat-checkbox formControlName="powerCord">Power Cord</mat-checkbox>
+            <mat-checkbox formControlName="networkCard">Network Card/Adapter</mat-checkbox>
+            <mat-checkbox formControlName="mouse">Mouse</mat-checkbox>
+            <mat-checkbox formControlName="dockingStation">Docking Station</mat-checkbox>
+            <mat-checkbox formControlName="others" (change)="onOthersChange($event)">Others</mat-checkbox>
+          </div>
+          <mat-error class="error" *ngIf="equipmentForm.errors?.['atLeastOneRequired'] && equipmentForm.touched">
+            At least one item type is required.
+          </mat-error>
+      
+        <mat-form-field *ngIf="equipmentForm.get('others')?.value" appearance="fill">
+          <mat-label>Please Specify</mat-label>
+          <input matInput formControlName="otherItem" />
+        </mat-form-field>
+      
+        <mat-error *ngIf="equipmentForm.get('otherItem')?.hasError('required') && equipmentForm.get('others')?.value">
+          Please specify the other item.
+        </mat-error>
+      </div>
+      
+
+      <h2 class="section-title">Return Option</h2>
+      <div class="item-request-container">Kindly fill out one out of the two listed options and add the appropriate comment if necessary</div>
+      <div class="confirmation-container">
+        <div class="confirmation-box">
+
+            <p class="confirmation-text">
+                Old system Return to IT department (Fill in HOSTNAME  of returned system.  example LNGLAGITD01)          
+            </p>
+              
+                <mat-form-field class="text-area" appearance="fill">
+                    <mat-label>System Hostname</mat-label>
+                    <textarea matInput formControlName="returnSysHostname" rows="1"></textarea>
+                </mat-form-field>
+                <mat-error class="error" *ngIf="equipmentForm.get('returnSysHostname')?.errors?.['required']">
+                    Hostname is required.
+                </mat-error>
+        </div>
+      </div>
+
+      <div class="confirmation-container">
+        <div class="confirmation-box">
+
+            <p class="confirmation-text">
+                Additional Comment
+            </p>
+            <mat-form-field appearance="fill">
+                <mat-label>Comment</mat-label>
+                <textarea matInput formControlName="comment" rows="3"></textarea>
+            </mat-form-field>
+            <mat-error class="error" *ngIf="equipmentForm.get('comment')?.errors?.['required']">
+                Comment is required.
+            </mat-error>
+        </div>
+      </div>
+
+
+      <div class="confirmation-container">
+        <div class="confirmation-box">
+          <p class="confirmation-text">
+            By clicking the button below, I signify that I have read, understood, and agree 
+            to abide by the Company’s computer use policy (“the Policy”), available on the 
+            <a class="policy-link" href="https://connect.holcim.com/nigeria/ls/content/6640057542508544/it" target="_blank">Local Intranet</a> . 
+            I consent to bear 100% of the cost of repairs for any subsequent damage(s) after the first incident, which is attributable to my negligence or non-adherence to the Policy. I understand that the estimated waiting period for repairs is 4 weeks.          </p>
+          <mat-checkbox formControlName="policySignature">
+            Click here to sign
+          </mat-checkbox>
+          <mat-error class="error" *ngIf="equipmentForm.get('policySignature')?.errors?.['required']">
+            This field is required.
+          </mat-error>
+        </div>
+      </div>
+
+      <!-- Submit/Cancel -->
+      <div align="end" style="margin: 8px 8px 8px 0;">
+        <button mat-raised-button style="margin: 0px 15px 0px 0;" (click)="cancel()">Cancel</button>
+        <button type="submit" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isSubmitting"
+        style="margin: 0px 0px 0px 15px;">Submit</button>
+      </div>
+    </form>
+  </div>

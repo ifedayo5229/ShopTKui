@@ -1,0 +1,48 @@
+// .objective-header{
+//     margin-bottom: 0.9rem;
+// }
+
+// .cancel-button{
+//     margin-left: 0.5rem;
+// }
+
+.popup {
+    padding: 20px;
+  }
+  
+  .popup-header {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .popup-form-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .popup-form-content {
+    margin-bottom: 20px;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .submit-button {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .cancel-button {
+    flex: 1;
+  }
+
+  .error {
+    font-size: 0.8rem;
+    margin-left: -0.8rem;
+  }

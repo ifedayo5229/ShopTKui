@@ -1,0 +1,22 @@
+<mat-card-content>
+    <div class="objective-popup">
+      <h2 class="objective-header">Receive Item</h2>
+      <form [formGroup]="receiveItemForm" class="objective-form-container">
+        <div class="objective-form-content">
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>COMMENT</mat-label>
+            <textarea matInput formControlName="comment" rows="4" placeholder="Please input your comment"></textarea>
+            <mat-error class="error" *ngIf="receiveItemForm.get('comment')?.errors?.['required']">
+              Comment is required.
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="action-buttons">
+          <button mat-raised-button class="submit-button" color="primary" (click)="receiveItem()" [disabled]="isSubmitting">Receive</button>
+          <button mat-raised-button color="warn" class="cancel-button" (click)="onCancelClick()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>

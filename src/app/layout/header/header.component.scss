@@ -1,0 +1,147 @@
+  
+//   *{
+//     border: 2px solid red;
+//   }
+  
+  .header {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // background: linear-gradient(to right, #00c6ff, #0072ff);
+    background-color: #ffffff; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    padding: 0.7rem 1.25rem;
+    color: #4a4a4a;
+    flex-wrap: wrap; 
+    box-sizing: border-box; 
+    overflow: hidden; 
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    flex: 1; 
+  }
+  
+  .logo img {
+    height: 2.5rem; 
+    margin-right: 0.625rem; 
+  }
+  
+  .logo span {
+    font-size: 1.25rem; 
+    font-weight: bold;
+    color: #71717A;
+  }
+  
+  .user-info {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 0.875rem; 
+    flex: 1; 
+    text-align: right; 
+  }
+  
+  .user-info i {
+    margin-left: 0.3125rem; 
+  }
+  
+  .hamburger {
+    display: none; /* Hide by default */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem; /* Adjust size as needed */
+    cursor: pointer;
+  }
+
+  .user-info img{
+    height: 2rem;
+  }
+
+  .logout-button{
+    font-weight: 500;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.4rem;
+    margin-left: 0.625rem;
+  }
+
+  /* Media Queries for Responsiveness */
+  @media (max-width: 48rem) { 
+    .header {
+      flex-direction: column; 
+      align-items: flex-start; 
+    }
+  
+    .logo {
+      width: 100%;  
+      margin-bottom: 0.625rem; 
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .user-info {
+        width: 100%;
+        display: flex; 
+        align-items: center;
+        justify-content: space-between;
+        text-align: right; 
+        width: 100%; 
+    }
+
+    .hamburger {
+        background: none;
+        display: block; /* Show on smaller screens */
+        margin-right: 0.3rem; /* Space between button and text */
+      }
+
+      .user-name{
+        flex-wrap: wrap;
+      }
+    }
+  
+  
+  @media (max-width: 30rem) { 
+    .logo {
+      width: 100%;  
+      margin-bottom: 0.625rem; 
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .logo span {
+      font-size: 1.125rem; 
+    }
+  
+    .user-info {
+        width: 100%;
+        display: flex; 
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.75rem; 
+        text-align: right;
+    }
+
+    .user-email{
+        flex-wrap: wrap;
+      }
+  }
+
+
+/* Styling for sidebar */
+// .sidebar {
+//   position: fixed;
+//   top: 6.65rem;
+//   left: 0;
+//   height: 100vh;
+//   width: 200px;
+//   background-color: #ddd;
+//   transition: left 0.3s ease-in-out;
+// }
+
+.sidebar.hidden {
+  left: -200px;
+}

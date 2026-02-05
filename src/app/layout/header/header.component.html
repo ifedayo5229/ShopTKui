@@ -1,0 +1,20 @@
+<div class="header">
+    <div class="logo" (click)="logoHome()">
+      <img alt="Logo" src="../../../assets/images/no_background/lafarge_logo_no_bg.png"/>
+      <span>
+        Inventory 
+      </span>
+    </div>
+    <div class="user-info">
+      <button class="hamburger" (click)="toggleSidebar()">
+        <img src="../../../assets/images/icons/hamburger-button.png" alt="harmburger">
+      </button>
+      <div class="user-name">Hello {{ firstName }}!</div>
+      <button class="logout-button" (click)="onLogout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <!-- Sidebar content here -->
+    <app-sidebar></app-sidebar>
+  </div>

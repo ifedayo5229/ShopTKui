@@ -1,0 +1,132 @@
+
+
+<div class="container">
+    <h1 class="title">New Outward Movement</h1>
+    <form [formGroup]="inventoryMovementForm">
+      
+      <div class="section">
+        <h2 class="section-title"></h2>
+        
+        <div class="form-row">
+
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Movement Type</mat-label>
+                <input matInput formControlName="movementType" name="movementType" required readonly>
+                <mat-error class="error" *ngIf="inventoryMovementForm.get('movementType')?.errors?.['required']">
+                    Movement type is required.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Source Store</mat-label>            
+                <mat-select formControlName="storeLocationId" required>
+                <mat-option [value]="loc.id"  *ngFor="let loc of filteredStoreLocations">{{loc.name}}</mat-option>
+                </mat-select>
+                <mat-error class="error" *ngIf="inventoryMovementForm.get('storeLocationId')?.errors?.['required']">
+                Store location is required.
+                </mat-error>
+            </mat-form-field>
+            
+        </div>
+
+        <div class="form-row">
+
+            <mat-form-field class="form-field" appearance="fill">
+                  <mat-label>Sent By</mat-label>
+                  <input matInput formControlName="issuerEmail" name="issuerEmail" required readonly>
+                  <mat-error class="error" *ngIf="inventoryMovementForm.get('issuerEmail')?.errors?.['required']">
+                      Issuer email is required.
+                  </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Movement Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="movementDate" [max]="today" required>
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error class="error" *ngIf="inventoryMovementForm.get('movementDate')?.errors?.['required']">
+                    Movement date is required.
+                </mat-error>
+            </mat-form-field>
+            
+        </div>
+
+        <h2 class="section-title">Receiver's Details</h2>
+        <div class="form-row">
+
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Destination Store</mat-label>            
+                <mat-select formControlName="destinationStoreId" required>
+                <mat-option [value]="loc.id"  *ngFor="let loc of filteredStoreLocations">{{loc.name}}</mat-option>
+                </mat-select>
+                <mat-error class="error" *ngIf="inventoryMovementForm.get('destinationStoreId')?.errors?.['required']">
+                Store location is required.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Location</mat-label>            
+                <mat-select formControlName="destinationLocationId" required>
+                <mat-option [value]="loc.id"  *ngFor="let loc of filteredLocations">{{loc.name}}</mat-option>
+                </mat-select>
+                <mat-error class="error" *ngIf="inventoryMovementForm.get('destinationLocationId')?.errors?.['required']">
+                Store location is required.
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+
+          <div class="section">
+            <h2 class="section-title">Item Details</h2>
+            <div formArrayName="items" >
+              <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+                <mat-form-field class="form-field" appearance="fill">
+                  <mat-label>Item</mat-label>
+                  
+                    <!-- <ngx-mat-select-search [formControl]="searchInputItems" placeholderLabel="Find item..." noEntriesFoundLabel="'No Matching Item Found'"></ngx-mat-select-search> -->
+                  
+                  <mat-select formControlName="itemId" required (keydown.enter)="$event.preventDefault()">
+                    <mat-option [value]="item.id"  *ngFor="let item of filteredItems">{{item.itemName}}</mat-option>
+                  </mat-select>
+                  <mat-error class="error" *ngIf="item.get('itemId')?.errors?.['required']">
+                    Item is required.
+                  </mat-error>
+                </mat-form-field>
+          
+                <mat-form-field appearance="fill">
+                  <mat-label>Quantity</mat-label>
+                  <input matInput type="number" formControlName="quantity" (keydown.enter)="$event.preventDefault()" placeholder="Quantity" required>
+                  
+                  <mat-error class="error" *ngIf="item.get('quantity')?.errors?.['invalidQuantity']">
+                    Please enter a valid quantity
+                  </mat-error>
+                  <mat-error class="error" *ngIf="item.get('quantity')?.errors?.['zeroQuantity']">
+                    Quantity cannot be zero
+                  </mat-error>
+                  <mat-error class="error" *ngIf="item.get('quantity')?.errors?.['required']">
+                    Quantity is required
+                  </mat-error>
+                </mat-form-field>
+          
+                <button mat-mini-fab color="warn" (click)="removeItem(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="action-buttons">
+              <button mat-raised-button color="primary" type="button" (click)="addItem()">Add More</button>
+            </div>
+          </div>
+
+      </div>
+      
+  
+      <!-- Submit/Cancel -->
+      <div align="end" style="margin: 8px 8px 8px 0;">
+        <button mat-raised-button style="margin: 0px 15px 0px 0;" (click)="cancel()">Cancel</button>
+        <button type="submit" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!inventoryMovementForm.valid || isSubmitting"
+        style="margin: 0px 0px 0px 15px;">Submit</button>
+      </div>
+    </form>
+  </div>

@@ -1,0 +1,64 @@
+.container {
+    max-width: 100%;
+    margin: auto;
+    padding: 1.25rem;
+  }
+  
+  .title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  
+  .section {
+    margin-bottom: 1.25rem;
+  }
+  
+  .section-title {
+    background-color: #babac0;
+    color: white;
+    padding: 0.4rem;
+    font-size: 1rem;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;
+  }
+  
+  .form-field {
+    flex: 1;
+    margin-right: 10px;
+    min-width: 250px; 
+  
+    @media (max-width: 600px) {
+        margin-right: 0; 
+        width: 100%;
+    }
+  }
+  
+  .form-field:last-child {
+    margin-right: 0;
+  }
+  
+  .error {
+    font-size: 0.8rem;
+    margin-left: -0.8rem;
+  }
+  
+  .action-buttons {
+    display: flex;
+    margin-top: 0.5rem;
+  }
+  
+  @media (max-width: 600px) {
+    .action-buttons {
+        flex-direction: column; 
+        align-items: center; 
+    }
+  
+    .action-buttons button {
+        margin: 0.1rem 0; 
+        width: 100%; 
+    }
+  }

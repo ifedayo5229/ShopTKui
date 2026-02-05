@@ -1,0 +1,49 @@
+<div class="container">
+    <mat-card>
+        <div class="logo-container">
+            <img class="logo" src="../../../assets/images/auth/lafarge-logo.png" alt="logo">
+        </div>
+      <mat-card-title class="title">Inventory Management Application</mat-card-title>
+      <mat-card-title class="title2">(For Non-stock Items)</mat-card-title>
+      <mat-card-content>
+
+        <form [formGroup]="codeRequestForm" *ngIf="!isLoggedIn && loginPage">
+
+          <mat-form-field appearance="outline" class="input-box">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" name="email" required>
+            <!-- <mat-icon matSuffix>check</mat-icon> -->
+            <mat-error class="error" *ngIf="loginForm?.get('email')?.hasError('required')">
+                Email is required.
+            </mat-error>
+          </mat-form-field>
+          <div class="action-button">
+            <button mat-raised-button color="primary" type="submit" class="login-button" [disabled]="!codeRequestForm.valid || isSubmitting" (click)="getCode()">Request Code</button>
+          </div>
+        </form>
+
+        <form [formGroup]="ngResetForm" *ngIf="!isLoggedIn && !loginPage">
+
+          <mat-form-field appearance="outline" class="input-box">
+            <mat-label>Verification Code</mat-label>
+              <input matInput type="text" formControlName="Code" placeholder="Enter a valid code" />
+              <mat-error *ngIf="ngResetForm.get('Code')?.hasError('required')">
+                Code is required!
+              </mat-error>
+          </mat-form-field>
+          <div class="action-button">
+
+            <button mat-raised-button color="primary" (click)="ngResetForm.valid && verifyCode()" [disabled]="!ngResetForm.valid || isSubmitting">Verify Code</button>
+
+            <!-- <button type="submit" mat-raised-button color="primary" class="btn btn-blue" disabled="{{isSubmitting}}">
+              Verify Code
+            </button> -->
+            <button mat-raised-button style="margin-left: 15px;" (click)="toggleFormBack()" disabled="{{isSubmitting}}">Back</button>
+          
+
+          </div>
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+  </div>

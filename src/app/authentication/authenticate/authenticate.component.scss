@@ -1,0 +1,140 @@
+:host {
+  display: block;
+  height: 100vh;
+  background-image: url('../../../assets/images/auth/register.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 1rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+mat-card {
+  width: 100%;
+  max-width: 34rem;
+  padding: 2rem 2.5rem;
+  border-radius: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  backdrop-filter: blur(10px);
+}
+
+mat-card:hover {
+  transform: translateY(-3px);
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  height: 3.5rem;
+  object-fit: contain;
+}
+
+.title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #004d4d;
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.title2 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #006666;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+mat-form-field.input-box {
+  width: 100%;
+  margin-bottom: 1.3rem;
+}
+
+mat-label {
+  font-weight: 500;
+  color: #004d4d;
+}
+
+input[matInput] {
+  font-size: 1rem;
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+}
+
+.error {
+  font-size: 0.8rem;
+  color: #d32f2f;
+}
+
+.action-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+button[mat-raised-button] {
+  padding: 0.6rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  background-color: #00796b;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #004d40;
+  box-shadow: 0 4px 10px rgba(0, 121, 107, 0.4);
+}
+
+.login-button {
+  width: 60%;
+}
+
+.forgot-password {
+  margin-top: 1.2rem;
+  font-size: 0.95rem;
+  text-align: center;
+  color: #006666;
+}
+
+.forgot-password > a {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #007777;
+}
+
+.eyeicon {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+}

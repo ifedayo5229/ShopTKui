@@ -1,0 +1,331 @@
+:host {
+  // Scoped Design System Tokens
+  --primary: 330 81% 60%;
+  --primary-glow: 330 81% 70%;
+  --secondary: 240 4.8% 95.9%;
+  --accent: 240 4.8% 83.9%;
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --border: 240 5.9% 90%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --destructive: 0 84.2% 60.2%;
+  --success: 142.1 76.2% 36.3%;
+  --shadow-soft: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.3);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.banner {
+  width: 100%;
+  height: 8rem;
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+
+  .banner-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .banner-text {
+      text-align: center;
+      color: white;
+
+      .gift-icon {
+        width: 3rem;
+        height: 3rem;
+        margin: 0 auto 1rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        letter-spacing: 0.025em;
+      }
+
+      p {
+        font-size: 1.125rem;
+        opacity: 0.9;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}
+
+.container {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.card {
+  border: 2px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+
+  .card-header {
+    background: #ffffff;
+    padding: 1rem;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+      margin: 0;
+    }
+  }
+
+  .card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    color: hsl(var(--foreground));
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  border: 2px solid hsl(var(--border));
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  transition: var(--transition-smooth);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+
+  &:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+  }
+
+  &::placeholder {
+    color: hsl(var(--muted-foreground));
+  }
+}
+
+.form-textarea {
+  min-height: 7.5rem;
+  resize: vertical;
+}
+
+.gift-item {
+  border: 2px solid hsl(var(--accent));
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, hsl(var(--card)), hsl(var(--secondary) / 0.2));
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .gift-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+      margin: 0;
+    }
+  }
+
+  .gift-item-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+.remove-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  background: hsl(var(--destructive));
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .trash-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.file-upload-area {
+  border: 2px dashed hsl(var(--accent));
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+
+  &:hover {
+    border-color: hsl(var(--primary));
+  }
+
+  .upload-icon {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 auto 0.5rem;
+    color: hsl(var(--muted-foreground));
+  }
+
+  p {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0.5rem 0;
+  }
+
+  .file-btn {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: hsl(var(--secondary));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+
+    &:hover {
+      background: hsl(var(--muted));
+    }
+  }
+
+  .file-count {
+    color: hsl(var(--success)) !important;
+    font-weight: 500;
+  }
+}
+
+.hidden-input {
+  display: none;
+}
+
+.add-gift-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
+.add-gift-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid hsl(var(--primary));
+  background: transparent;
+  color: hsl(var(--primary));
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+
+  &:hover {
+    background: hsl(var(--primary));
+    color: white;
+  }
+
+  .plus-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+}
+
+.submit-btn,
+.reset-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1.125rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  min-width: 150px;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.submit-btn {
+  background: hsl(var(--primary));
+  color: white;
+  border: none;
+  box-shadow: var(--shadow-elegant);
+
+  &:hover:not(:disabled) {
+    background: hsl(var(--primary-glow));
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px -10px hsl(var(--primary) / 0.4);
+  }
+}
+
+.reset-btn {
+  border: 2px solid hsl(var(--muted-foreground));
+  background: transparent;
+  color: hsl(var(--muted-foreground));
+
+  &:hover {
+    background: hsl(var(--muted));
+  }
+}
