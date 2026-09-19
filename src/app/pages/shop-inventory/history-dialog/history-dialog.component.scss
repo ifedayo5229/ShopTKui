@@ -11,7 +11,7 @@
   align-items: flex-start;
   gap: 1rem;
   padding: 1.5rem 1.5rem 1rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--grey-100);
 
   .header-icon {
     width: 48px;
@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     flex-shrink: 0;
 
     mat-icon {
@@ -38,21 +38,21 @@
       margin: 0;
       font-size: 1.25rem;
       font-weight: 600;
-      color: #111827;
+      color: var(--grey-900);
     }
 
     p {
       margin: 0.25rem 0 0;
-      color: #6b7280;
+      color: var(--grey-500);
       font-size: 0.9rem;
     }
   }
 
   .close-btn {
-    color: #9ca3af;
+    color: var(--grey-400);
 
     &:hover {
-      color: #6b7280;
+      color: var(--grey-500);
     }
   }
 }
@@ -98,7 +98,7 @@
   align-items: center;
   justify-content: center;
   padding: 3rem;
-  color: #6b7280;
+  color: var(--grey-500);
 
   mat-icon {
     font-size: 48px;
@@ -131,7 +131,7 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: #e5e7eb;
+    background: var(--grey-200);
   }
 }
 
@@ -165,10 +165,10 @@
 }
 
 .timeline-content {
-  background: #f9fafb;
+  background: var(--grey-50);
   border-radius: 10px;
   padding: 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--grey-200);
   margin-left: 0.5rem;
 }
 
@@ -187,13 +187,13 @@
 
   .timestamp {
     font-size: 0.75rem;
-    color: #9ca3af;
+    color: var(--grey-400);
   }
 }
 
 .description {
   margin: 0 0 0.75rem;
-  color: #374151;
+  color: var(--grey-700);
   font-size: 0.9rem;
 }
 
@@ -210,23 +210,23 @@
   font-size: 0.8rem;
 
   .label {
-    color: #6b7280;
+    color: var(--grey-500);
   }
 
   .value {
     font-weight: 500;
-    color: #111827;
+    color: var(--grey-900);
 
     &.positive {
-      color: #22c55e;
+      color: var(--success-color);
     }
 
     &.negative {
-      color: #ef4444;
+      color: var(--danger-color);
     }
 
     &.invoice-link {
-      color: #0f7c5c;
+      color: var(--primary-color);
       cursor: pointer;
 
       &:hover {
@@ -236,7 +236,7 @@
   }
 
   .sub-text {
-    color: #9ca3af;
+    color: var(--grey-400);
     font-size: 0.75rem;
   }
 
@@ -247,7 +247,7 @@
     gap: 0.25rem;
     margin-top: 0.25rem;
     padding-top: 0.5rem;
-    border-top: 1px dashed #e5e7eb;
+    border-top: 1px dashed var(--grey-200);
 
     .value {
       font-weight: 400;
@@ -261,11 +261,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
-  border-top: 1px solid #f3f4f6;
+  border-top: 1px solid var(--grey-100);
 
   .record-count {
     font-size: 0.8rem;
-    color: #6b7280;
+    color: var(--grey-500);
   }
 }
 

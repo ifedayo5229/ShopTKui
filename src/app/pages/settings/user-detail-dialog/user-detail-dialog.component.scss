@@ -22,7 +22,7 @@
     width: 56px;
     height: 56px;
     border-radius: 16px;
-    background: linear-gradient(135deg, #0f7c5c, #0ea5a4);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,7 +46,7 @@
 
     .user-email {
       font-size: 13px;
-      color: #64748b;
+      color: var(--grey-500);
     }
   }
 
@@ -70,13 +70,13 @@
     &.active {
       background: #ecfdf5;
       color: #059669;
-      .status-dot { background: #10b981; }
+      .status-dot { background: var(--success-color); }
     }
 
     &.inactive {
       background: #fef2f2;
-      color: #dc2626;
-      .status-dot { background: #ef4444; }
+      color: var(--danger-color);
+      .status-dot { background: var(--danger-color); }
     }
   }
 }
@@ -101,7 +101,7 @@
     gap: 8px;
     font-size: 13px;
     font-weight: 600;
-    color: #64748b;
+    color: var(--grey-500);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin: 0 0 12px;
@@ -110,7 +110,7 @@
       font-size: 18px;
       width: 18px;
       height: 18px;
-      color: #94a3b8;
+      color: var(--grey-400);
     }
 
     .section-count {
@@ -137,7 +137,7 @@
 
     .info-label {
       font-size: 11px;
-      color: #94a3b8;
+      color: var(--grey-400);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       font-weight: 500;
@@ -151,7 +151,7 @@
       &.mono {
         font-family: 'SF Mono', 'Courier New', monospace;
         font-size: 13px;
-        color: #64748b;
+        color: var(--grey-500);
       }
     }
   }
@@ -176,11 +176,11 @@
     justify-content: center;
     color: #fff;
 
-    &.owner { background: linear-gradient(135deg, #f59e0b, #d97706); }
-    &.manager { background: linear-gradient(135deg, #0f7c5c, #075947); }
-    &.cashier { background: linear-gradient(135deg, #10b981, #059669); }
-    &.stockkeeper { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-    &.viewer { background: linear-gradient(135deg, #94a3b8, #64748b); }
+    &.owner { background: linear-gradient(135deg, var(--warning-color), var(--warning-color)); }
+    &.manager { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); }
+    &.cashier { background: linear-gradient(135deg, var(--success-color), #059669); }
+    &.stockkeeper { background: linear-gradient(135deg, var(--info-color), #2563eb); }
+    &.viewer { background: linear-gradient(135deg, var(--grey-400), var(--grey-500)); }
 
     mat-icon {
       font-size: 22px;
@@ -239,7 +239,7 @@
       font-size: 16px;
       width: 16px;
       height: 16px;
-      color: #0f7c5c;
+      color: var(--primary-color);
     }
 
     &:hover {
@@ -255,7 +255,7 @@
   align-items: center;
   gap: 8px;
   padding: 20px;
-  color: #94a3b8;
+  color: var(--grey-400);
   font-size: 13px;
 
   mat-icon {
@@ -269,7 +269,7 @@
 .status-inline {
   font-weight: 500;
   &.active { color: #059669; }
-  &:not(.active) { color: #dc2626; }
+  &:not(.active) { color: var(--danger-color); }
 }
 
 // Footer

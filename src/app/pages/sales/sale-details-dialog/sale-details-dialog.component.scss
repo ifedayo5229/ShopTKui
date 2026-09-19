@@ -162,7 +162,7 @@
 
     .card-label {
       font-size: 11px;
-      color: #9ca3af;
+      color: var(--grey-400);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       font-weight: 600;
@@ -179,10 +179,10 @@
 
     .card-sub {
       font-size: 12px;
-      color: #6b7280;
+      color: var(--grey-500);
 
       &.status-paid {
-        color: #22c55e;
+        color: var(--success-color);
         font-weight: 600;
       }
     }
@@ -215,15 +215,15 @@
     span {
       font-weight: 600;
       font-size: 14px;
-      color: #374151;
+      color: var(--grey-700);
     }
 
     .item-count {
       margin-left: auto;
       font-size: 12px;
-      color: #9ca3af;
+      color: var(--grey-400);
       font-weight: 500;
-      background: #f3f4f6;
+      background: var(--grey-100);
       padding: 4px 10px;
       border-radius: 12px;
     }
@@ -237,7 +237,7 @@
     gap: 12px;
     padding: 14px 18px;
     align-items: center;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--grey-100);
 
     &:last-child {
       border-bottom: none;
@@ -247,7 +247,7 @@
       background: #f8f9fb;
       font-size: 11px;
       font-weight: 600;
-      color: #6b7280;
+      color: var(--grey-500);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       padding: 10px 18px;
@@ -267,7 +267,7 @@
 
       .product-sku {
         font-size: 11px;
-        color: #9ca3af;
+        color: var(--grey-400);
         font-family: 'Monaco', 'Consolas', monospace;
       }
     }
@@ -292,7 +292,7 @@
     .col-price, .col-total {
       text-align: right;
       font-size: 13px;
-      color: #4b5563;
+      color: var(--grey-600);
     }
 
     .col-total {
@@ -318,22 +318,22 @@
     justify-content: space-between;
     padding: 10px 0;
     font-size: 14px;
-    color: #4b5563;
-    border-bottom: 1px solid #f3f4f6;
+    color: var(--grey-600);
+    border-bottom: 1px solid var(--grey-100);
 
     &:last-child {
       border-bottom: none;
     }
 
     &.discount span:last-child {
-      color: #ef4444;
+      color: var(--danger-color);
       font-weight: 500;
     }
 
     &.grand-total {
       margin-top: 8px;
       padding-top: 16px;
-      border-top: 2px dashed #e5e7eb;
+      border-top: 2px dashed var(--grey-200);
       border-bottom: none;
       
       span:first-child {
@@ -369,28 +369,28 @@
       font-size: 18px;
       width: 18px;
       height: 18px;
-      color: #22c55e;
+      color: var(--success-color);
     }
 
     .payment-label {
       font-size: 13px;
-      color: #4b5563;
+      color: var(--grey-600);
       flex: 1;
     }
 
     .payment-value {
       font-size: 14px;
       font-weight: 600;
-      color: #22c55e;
+      color: var(--success-color);
     }
 
     &.change {
       mat-icon {
-        color: #3b82f6;
+        color: var(--info-color);
       }
 
       .payment-value {
-        color: #3b82f6;
+        color: var(--info-color);
       }
     }
   }
@@ -416,7 +416,7 @@
     .action-label {
       font-size: 12px;
       font-weight: 600;
-      color: #6b7280;
+      color: var(--grey-500);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-right: 4px;
@@ -446,11 +446,11 @@
 
     &:not(.download-btn) {
       border-color: #d1d5db;
-      color: #4b5563;
+      color: var(--grey-600);
 
       &:hover:not(:disabled) {
-        background: #e5e7eb;
-        border-color: #9ca3af;
+        background: var(--grey-200);
+        border-color: var(--grey-400);
       }
     }
 

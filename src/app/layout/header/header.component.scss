@@ -2,10 +2,10 @@
 // PREMIUM HEADER - DRIBBBLE INSPIRED
 // ========================================
 
-$primary: #0f7c5c;
-$success: #10b981;
-$danger: #ef4444;
-$warning: #f59e0b;
+$primary: var(--primary-color);
+$success: var(--success-color);
+$danger: var(--danger-color);
+$warning: var(--warning-color);
 
 .header {
   height: 72px;
@@ -114,7 +114,7 @@ $warning: #f59e0b;
   display: flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, #0ea5a4, #0f7c5c) !important;
+  background: linear-gradient(135deg, var(--accent-color), var(--primary-color)) !important;
   color: white !important;
   font-weight: 600;
   padding: 8px 16px;
@@ -240,7 +240,7 @@ $warning: #f59e0b;
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: linear-gradient(135deg, $primary 0%, #0ea5a4 100%);
+    background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -314,7 +314,7 @@ $warning: #f59e0b;
         width: 44px;
         height: 44px;
         border-radius: 12px;
-        background: linear-gradient(135deg, $primary 0%, #0ea5a4 100%);
+        background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -597,12 +597,12 @@ $warning: #f59e0b;
           color: white;
         }
 
-        &.blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-        &.green { background: linear-gradient(135deg, #22c55e, #16a34a); }
-        &.teal { background: linear-gradient(135deg, #0ea5a4, #087f73); }
-        &.orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        &.red { background: linear-gradient(135deg, #ef4444, #dc2626); }
-        &.gray { background: linear-gradient(135deg, #6b7280, #4b5563); }
+        &.blue { background: linear-gradient(135deg, var(--info-color), #2563eb); }
+        &.green { background: linear-gradient(135deg, var(--success-color), var(--success-color)); }
+        &.teal { background: linear-gradient(135deg, var(--accent-color), #087f73); }
+        &.orange { background: linear-gradient(135deg, var(--warning-color), var(--warning-color)); }
+        &.red { background: linear-gradient(135deg, var(--danger-color), var(--danger-color)); }
+        &.gray { background: linear-gradient(135deg, var(--grey-500), var(--grey-600)); }
         &.product { background: linear-gradient(135deg, #06b6d4, #0891b2); }
       }
 

@@ -2,25 +2,25 @@
 $navy-dark: #13201a;
 $navy-mid: #182a22;
 $navy-light: #214c3b;
-$market-green: #0f7c5c;
-$market-green-dark: #075947;
-$checkout-teal: #0ea5a4;
+$market-green: var(--primary-color);
+$market-green-dark: var(--primary-dark);
+$checkout-teal: var(--accent-color);
 $checkout-teal-light: #78d9bd;
 $accent-cyan: #22d3ee;
-$accent-emerald: #10b981;
+$accent-emerald: var(--success-color);
 
 // Neutral Colors
 $white: #ffffff;
-$gray-50: #f9fafb;
-$gray-100: #f3f4f6;
-$gray-200: #e5e7eb;
+$gray-50: var(--grey-50);
+$gray-100: var(--grey-100);
+$gray-200: var(--grey-200);
 $gray-300: #d1d5db;
-$gray-400: #9ca3af;
-$gray-500: #6b7280;
-$gray-600: #4b5563;
-$gray-700: #374151;
+$gray-400: var(--grey-400);
+$gray-500: var(--grey-500);
+$gray-600: var(--grey-600);
+$gray-700: var(--grey-700);
 $gray-800: #1f2937;
-$gray-900: #111827;
+$gray-900: var(--grey-900);
 
 // Typography
 $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
@@ -1718,7 +1718,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             font-size: 16px;
             width: 16px;
             height: 16px;
-            color: #ef4444;
+            color: var(--danger-color);
         }
     }
 }

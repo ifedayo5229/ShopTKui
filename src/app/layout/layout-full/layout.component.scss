@@ -5,7 +5,7 @@
 .layout-container {
   display: flex;
   min-height: 100vh;
-  background: var(--bg-main, #f9fafb);
+  background: var(--bg-main, var(--grey-50));
 }
 
 .main-content {

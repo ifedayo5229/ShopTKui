@@ -54,7 +54,7 @@
       }
 
       .mat-mdc-form-field-icon-prefix {
-        color: #0f7c5c;
+        color: var(--primary-color);
         padding-right: 0.5rem;
       }
     }
@@ -101,12 +101,12 @@
       flex-shrink: 0;
 
       &.active {
-        background: #22c55e;
+        background: var(--success-color);
         box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
       }
 
       &.inactive {
-        background: #ef4444;
+        background: var(--danger-color);
         box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
       }
     }
@@ -125,7 +125,7 @@
   margin-bottom: 1.25rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #0f7c5c;
+  color: var(--primary-color);
 
   mat-icon {
     font-size: 18px;
@@ -174,7 +174,7 @@
     }
 
     &.active {
-      background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
       color: white;
       box-shadow: 0 4px 12px rgba(15, 124, 92, 0.3);
 
@@ -245,7 +245,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   }
 }
 
@@ -364,7 +364,7 @@
 
     .toggle-spinner {
       ::ng-deep circle {
-        stroke: #0f7c5c !important;
+        stroke: var(--primary-color) !important;
       }
     }
   }
@@ -455,7 +455,7 @@
     color: var(--text-secondary);
 
     ::ng-deep circle {
-      stroke: #0f7c5c !important;
+      stroke: var(--primary-color) !important;
     }
   }
 }
@@ -517,7 +517,7 @@
     color: var(--text-primary);
 
     &.low-stock {
-      color: #ef4444;
+      color: var(--danger-color);
       font-weight: 600;
     }
   }
@@ -536,7 +536,7 @@
 
       &:focus {
         outline: none;
-        border-color: #0f7c5c;
+        border-color: var(--primary-color);
         box-shadow: 0 0 0 2px rgba(15, 124, 92, 0.15);
       }
     }
@@ -548,7 +548,7 @@
 
     mat-spinner {
       ::ng-deep circle {
-        stroke: #0f7c5c !important;
+        stroke: var(--primary-color) !important;
       }
     }
   }
@@ -711,7 +711,7 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -761,7 +761,7 @@
 
     &.owner {
       background: #dcfce7;
-      color: #16a34a;
+      color: var(--success-color);
     }
 
     &.manager {
@@ -771,7 +771,7 @@
 
     &.cashier {
       background: #fef3c7;
-      color: #d97706;
+      color: var(--warning-color);
     }
 
     &.stockkeeper {
@@ -794,12 +794,12 @@
 
       &.active {
         background: #dcfce7;
-        color: #16a34a;
+        color: var(--success-color);
       }
 
       &.inactive {
         background: #fee2e2;
-        color: #dc2626;
+        color: var(--danger-color);
       }
     }
   }
@@ -809,7 +809,7 @@
     padding: 4px 14px;
     border-radius: 8px;
     border-color: #e2e8f0;
-    color: #0f7c5c;
+    color: var(--primary-color);
     font-weight: 500;
     min-width: auto;
     line-height: 28px;
@@ -872,7 +872,7 @@
   transition: all 0.2s ease;
 
   &:hover {
-    border-color: #0f7c5c;
+    border-color: var(--primary-color);
     box-shadow: 0 2px 8px rgba(15, 124, 92, 0.1);
   }
 
@@ -894,7 +894,7 @@
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -908,7 +908,7 @@
   }
 
   &.inactive {
-    background: linear-gradient(135deg, #94a3b8, #64748b);
+    background: linear-gradient(135deg, var(--grey-400), var(--grey-500));
   }
 }
 
@@ -941,12 +941,12 @@
 
   &.active {
     background: #dcfce7;
-    color: #16a34a;
+    color: var(--success-color);
   }
 
   &.inactive {
     background: #fef2f2;
-    color: #dc2626;
+    color: var(--danger-color);
   }
 }
 
@@ -995,13 +995,13 @@
     transition: color 0.2s;
 
     &:hover {
-      color: #0f7c5c;
+      color: var(--primary-color);
     }
   }
 
   .delete-action {
     &:hover {
-      color: #dc2626;
+      color: var(--danger-color);
     }
   }
 }
@@ -1081,7 +1081,7 @@
       }
 
       .mat-mdc-form-field-icon-prefix {
-        color: #0f7c5c;
+        color: var(--primary-color);
         padding-right: 0.5rem;
       }
     }
@@ -1089,7 +1089,7 @@
 }
 
 .add-shop-btn {
-  background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%) !important;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%) !important;
   color: #fff !important;
 }
 
@@ -1100,7 +1100,7 @@
 }
 
 .delete-action {
-  color: #dc2626;
+  color: var(--danger-color);
 }
 
 // Responsive

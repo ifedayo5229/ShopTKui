@@ -38,7 +38,7 @@ $custom-theme: mat.define-light-theme((
     .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
-      border-color: #0f7c5c;
+      border-color: var(--primary-color);
     }
   }
 
@@ -72,12 +72,12 @@ $custom-theme: mat.define-light-theme((
 .mat-mdc-raised-button,
 .mat-mdc-outlined-button,
 .mat-mdc-button {
-  background: linear-gradient(135deg, #0f7c5c, #0ea5a4) !important;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color)) !important;
   color: white !important;
   border-radius: 8px !important;
   transition: background 0.3s ease;
 
   &:hover {
-    background: linear-gradient(135deg, #075947, #087f73) !important;
+    background: linear-gradient(135deg, var(--primary-dark), #087f73) !important;
   }
 }

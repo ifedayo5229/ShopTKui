@@ -156,11 +156,11 @@
 
   strong {
     &.positive {
-      color: #16a34a;
+      color: var(--success-color);
     }
 
     &.negative {
-      color: #dc2626;
+      color: var(--danger-color);
     }
   }
 }
@@ -178,7 +178,7 @@
   margin-top: 1.5rem;
 
   mat-icon {
-    color: #f59e0b;
+    color: var(--warning-color);
   }
 
   strong {
@@ -214,7 +214,7 @@
     color: var(--text-secondary);
 
     &:hover {
-      color: #ef4444;
+      color: var(--danger-color);
       background: rgba(239, 68, 68, 0.1);
     }
   }

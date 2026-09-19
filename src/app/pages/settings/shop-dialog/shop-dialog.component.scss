@@ -32,7 +32,7 @@
       margin-bottom: 6px;
 
       .required {
-        color: #ef4444;
+        color: var(--danger-color);
       }
     }
 
@@ -66,7 +66,7 @@
     justify-content: flex-end;
     gap: 10px;
     padding: 12px 24px 20px;
-    border-top: 1px solid var(--border-color, #e5e7eb);
+    border-top: 1px solid var(--border-color, var(--grey-200));
 
     button {
       min-width: 120px;
@@ -92,7 +92,7 @@
     .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
-      border-color: var(--border-color, #e5e7eb) !important;
+      border-color: var(--border-color, var(--grey-200)) !important;
     }
 
     .mat-mdc-form-field-icon-prefix {

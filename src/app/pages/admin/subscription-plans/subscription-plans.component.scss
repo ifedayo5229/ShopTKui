@@ -1,9 +1,9 @@
 // ========== Color Map ==========
 $plan-colors: (
-  gray: #6b7280,
+  gray: var(--grey-500),
   cyan: #06b6d4,
-  professional: #0f7c5c,
-  gold: #f59e0b,
+  professional: var(--primary-color),
+  gold: var(--warning-color),
 );
 
 .subscription-plans-page {
@@ -40,7 +40,7 @@ $plan-colors: (
       height: 46px;
       font-weight: 600;
       font-size: 0.875rem;
-      background: linear-gradient(135deg, #0f7c5c 0%, #0ea5a4 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
       box-shadow: 0 4px 14px rgba(15, 124, 92, 0.35);
       transition: all 0.2s ease;
 
@@ -68,7 +68,7 @@ $plan-colors: (
   // ========== Plan Card ==========
   .plan-card {
     background: var(--surface, #fff);
-    border: 1px solid var(--border, #e5e7eb);
+    border: 1px solid var(--border, var(--grey-200));
     border-radius: 16px;
     padding: 0;
     position: relative;
@@ -86,7 +86,7 @@ $plan-colors: (
     .accent-bar {
       height: 5px;
       width: 100%;
-      background: var(--border, #e5e7eb);
+      background: var(--border, var(--grey-200));
     }
 
     // ---------- Toggle ----------
@@ -124,7 +124,7 @@ $plan-colors: (
         line-height: 1.1;
 
         &.free {
-          color: #10b981;
+          color: var(--success-color);
         }
       }
 
@@ -164,7 +164,7 @@ $plan-colors: (
           font-size: 18px;
           width: 18px;
           height: 18px;
-          color: #10b981;
+          color: var(--success-color);
           flex-shrink: 0;
         }
       }
@@ -189,7 +189,7 @@ $plan-colors: (
           font-size: 18px;
           width: 18px;
           height: 18px;
-          color: var(--text-muted, #9ca3af);
+          color: var(--text-muted, var(--grey-400));
         }
       }
     }
@@ -204,7 +204,7 @@ $plan-colors: (
       font-weight: 700;
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      background: linear-gradient(135deg, #0f7c5c, #0ea5a4);
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
       color: #fff;
       align-self: center;
     }
@@ -216,7 +216,7 @@ $plan-colors: (
       gap: 8px;
       padding: 16px 20px 20px;
       margin-top: auto;
-      border-top: 1px solid var(--border, #e5e7eb);
+      border-top: 1px solid var(--border, var(--grey-200));
 
       .action-btn {
         display: inline-flex;
@@ -239,23 +239,23 @@ $plan-colors: (
 
         &.edit {
           flex: 1;
-          background: var(--background, #f3f4f6);
+          background: var(--background, var(--grey-100));
           color: var(--text-primary);
 
           &:hover {
-            background: #0f7c5c;
+            background: var(--primary-color);
             color: #fff;
           }
         }
 
         &.delete {
           width: 40px;
-          background: var(--background, #f3f4f6);
+          background: var(--background, var(--grey-100));
           color: var(--text-secondary);
 
           &:hover {
             background: #fef2f2;
-            color: #ef4444;
+            color: var(--danger-color);
           }
         }
       }
@@ -293,7 +293,7 @@ $plan-colors: (
     padding: 5rem 2rem;
     background: var(--surface, #fff);
     border-radius: 24px;
-    border: 2px dashed var(--border, #e5e7eb);
+    border: 2px dashed var(--border, var(--grey-200));
 
     .empty-icon {
       width: 80px;
@@ -309,7 +309,7 @@ $plan-colors: (
         font-size: 40px;
         width: 40px;
         height: 40px;
-        color: #0f7c5c;
+        color: var(--primary-color);
         opacity: 0.6;
       }
     }

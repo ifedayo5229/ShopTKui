@@ -7,7 +7,7 @@
   align-items: flex-start;
   gap: 1rem;
   padding: 1.5rem 1.5rem 1rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--grey-100);
 
   .header-icon {
     width: 48px;
@@ -26,7 +26,7 @@
     }
 
     &.danger {
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      background: linear-gradient(135deg, var(--danger-color) 0%, var(--danger-color) 100%);
     }
   }
 
@@ -37,21 +37,21 @@
       margin: 0;
       font-size: 1.25rem;
       font-weight: 600;
-      color: #111827;
+      color: var(--grey-900);
     }
 
     p {
       margin: 0.25rem 0 0;
-      color: #6b7280;
+      color: var(--grey-500);
       font-size: 0.9rem;
     }
   }
 
   .close-btn {
-    color: #9ca3af;
+    color: var(--grey-400);
 
     &:hover {
-      color: #6b7280;
+      color: var(--grey-500);
     }
   }
 }
@@ -61,7 +61,7 @@
 }
 
 .product-info {
-  background: #f9fafb;
+  background: var(--grey-50);
   border-radius: 10px;
   padding: 1rem;
   margin-bottom: 1.5rem;
@@ -72,17 +72,17 @@
     padding: 0.5rem 0;
 
     &:not(:last-child) {
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid var(--grey-200);
     }
 
     .label {
-      color: #6b7280;
+      color: var(--grey-500);
       font-size: 0.9rem;
     }
 
     .value {
       font-weight: 600;
-      color: #111827;
+      color: var(--grey-900);
     }
   }
 }
@@ -94,7 +94,7 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: var(--grey-700);
     margin-bottom: 0.5rem;
   }
 
@@ -104,17 +104,17 @@
 
   ::ng-deep {
     .mat-mdc-text-field-wrapper {
-      background: #f9fafb;
+      background: var(--grey-50);
     }
 
     .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
-      border-color: #e5e7eb !important;
+      border-color: var(--grey-200) !important;
     }
 
     .mat-mdc-form-field-icon-prefix {
-      color: #9ca3af;
+      color: var(--grey-400);
       padding-right: 0.5rem;
     }
   }
@@ -138,12 +138,12 @@
     color: #92400e;
 
     mat-icon {
-      color: #f59e0b;
+      color: var(--warning-color);
     }
   }
 
   mat-icon {
-    color: #3b82f6;
+    color: var(--info-color);
   }
 
   strong {
@@ -164,7 +164,7 @@
   margin-bottom: 0.75rem;
 
   mat-icon {
-    color: #f59e0b;
+    color: var(--warning-color);
   }
 
   &.danger {
@@ -173,7 +173,7 @@
     color: #991b1b;
 
     mat-icon {
-      color: #dc2626;
+      color: var(--danger-color);
     }
   }
 }
@@ -183,7 +183,7 @@
   justify-content: flex-end;
   gap: 0.75rem;
   padding: 1rem 1.5rem 1.5rem;
-  border-top: 1px solid #f3f4f6;
+  border-top: 1px solid var(--grey-100);
 
   .submit-btn {
     min-width: 140px;
@@ -204,7 +204,7 @@
 
 // Create new reason option styling
 ::ng-deep .create-new-option {
-  color: #22c55e !important;
+  color: var(--success-color) !important;
   font-weight: 500;
 
   mat-icon {
@@ -213,7 +213,7 @@
     height: 18px;
     margin-right: 8px;
     vertical-align: middle;
-    color: #22c55e;
+    color: var(--success-color);
   }
 }
 
@@ -228,10 +228,10 @@
 
   .cancel-new-btn {
     margin-top: 4px;
-    color: #6b7280;
+    color: var(--grey-500);
 
     &:hover {
-      color: #ef4444;
+      color: var(--danger-color);
       background: rgba(239, 68, 68, 0.1);
     }
   }

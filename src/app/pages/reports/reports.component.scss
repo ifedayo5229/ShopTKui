@@ -1,7 +1,7 @@
-$primary: #0f7c5c;
-$success: #10b981;
-$danger: #ef4444;
-$warning: #f59e0b;
+$primary: var(--primary-color);
+$success: var(--success-color);
+$danger: var(--danger-color);
+$warning: var(--warning-color);
 
 .reports-container {
   padding: 1.5rem;
@@ -142,11 +142,11 @@ $warning: #f59e0b;
     }
   }
 
-  &.revenue .stat-icon { background: linear-gradient(135deg, $primary, #0ea5a4); }
+  &.revenue .stat-icon { background: linear-gradient(135deg, $primary, var(--accent-color)); }
   &.sales .stat-icon { background: linear-gradient(135deg, $success, #059669); }
-  &.items .stat-icon { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-  &.average .stat-icon { background: linear-gradient(135deg, $warning, #d97706); }
-  &.tax .stat-icon { background: linear-gradient(135deg, #0ea5a4, #087f73); }
+  &.items .stat-icon { background: linear-gradient(135deg, var(--info-color), #2563eb); }
+  &.average .stat-icon { background: linear-gradient(135deg, $warning, var(--warning-color)); }
+  &.tax .stat-icon { background: linear-gradient(135deg, var(--accent-color), #087f73); }
   &.discount .stat-icon { background: linear-gradient(135deg, #f43f5e, #e11d48); }
 }
 

@@ -85,12 +85,12 @@
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
       border: 1px solid rgba(239, 68, 68, 0.3);
 
-      mat-icon { color: #ef4444; }
+      mat-icon { color: var(--danger-color); }
 
       .action-btn.danger {
         background: rgba(239, 68, 68, 0.15);
         border-color: rgba(239, 68, 68, 0.3);
-        color: #ef4444;
+        color: var(--danger-color);
 
         &:hover:not(:disabled) { background: rgba(239, 68, 68, 0.25); }
       }
@@ -100,12 +100,12 @@
       background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(234, 88, 12, 0.1) 100%);
       border: 1px solid rgba(245, 158, 11, 0.3);
 
-      mat-icon { color: #f59e0b; }
+      mat-icon { color: var(--warning-color); }
 
       .action-btn.warning {
         background: rgba(245, 158, 11, 0.15);
         border-color: rgba(245, 158, 11, 0.3);
-        color: #f59e0b;
+        color: var(--warning-color);
 
         &:hover:not(:disabled) { background: rgba(245, 158, 11, 0.25); }
       }
@@ -115,12 +115,12 @@
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
       border: 1px solid rgba(59, 130, 246, 0.3);
 
-      mat-icon { color: #3b82f6; }
+      mat-icon { color: var(--info-color); }
 
       .action-btn.info {
         background: rgba(59, 130, 246, 0.15);
         border-color: rgba(59, 130, 246, 0.3);
-        color: #3b82f6;
+        color: var(--info-color);
 
         &:hover:not(:disabled) { background: rgba(59, 130, 246, 0.25); }
       }
@@ -140,7 +140,7 @@
 
     .selection-count {
       font-weight: 600;
-      color: #0f7c5c;
+      color: var(--primary-color);
       font-size: 0.9375rem;
     }
 
@@ -154,7 +154,7 @@
       font-size: 0.875rem;
       cursor: pointer;
       transition: all 0.2s ease;
-      background: #0f7c5c;
+      background: var(--primary-color);
       color: white;
       border: none;
 
@@ -164,7 +164,7 @@
         height: 18px;
       }
 
-      &:hover:not(:disabled) { background: #075947; }
+      &:hover:not(:disabled) { background: var(--primary-dark); }
       &:disabled { opacity: 0.5; cursor: not-allowed; }
 
       &.clear {
@@ -205,7 +205,7 @@
       }
 
       &.active {
-        background: #0f7c5c;
+        background: var(--primary-color);
         color: white;
       }
     }
@@ -258,9 +258,9 @@
   }
 
   // Text color helpers for menu icons
-  .text-success { color: #22c55e !important; }
-  .text-danger { color: #ef4444 !important; }
-  .text-warning { color: #f59e0b !important; }
+  .text-success { color: var(--success-color) !important; }
+  .text-danger { color: var(--danger-color) !important; }
+  .text-warning { color: var(--warning-color) !important; }
 
   .tenant-cell {
     display: flex;
@@ -271,7 +271,7 @@
       width: 40px;
       height: 40px;
       border-radius: 10px;
-      background: linear-gradient(135deg, #0f7c5c 0%, #0ea5a4 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -321,7 +321,7 @@
 
       &.free {
         background: rgba(107, 114, 128, 0.1);
-        color: #6b7280;
+        color: var(--grey-500);
       }
 
       &.starter {
@@ -331,7 +331,7 @@
 
       &.pro, &.professional {
         background: rgba(14, 165, 164, 0.1);
-        color: #0ea5a4;
+        color: var(--accent-color);
       }
 
       &.enterprise {
@@ -369,27 +369,27 @@
 
       &.success {
         background: rgba(34, 197, 94, 0.1);
-        color: #22c55e;
+        color: var(--success-color);
       }
 
       &.info {
         background: rgba(59, 130, 246, 0.1);
-        color: #3b82f6;
+        color: var(--info-color);
       }
 
       &.warning {
         background: rgba(245, 158, 11, 0.1);
-        color: #f59e0b;
+        color: var(--warning-color);
       }
 
       &.error {
         background: rgba(239, 68, 68, 0.1);
-        color: #ef4444;
+        color: var(--danger-color);
       }
 
       &.muted {
         background: rgba(107, 114, 128, 0.1);
-        color: #6b7280;
+        color: var(--grey-500);
       }
     }
 
@@ -404,7 +404,7 @@
         font-size: 14px;
         width: 14px;
         height: 14px;
-        color: #22c55e;
+        color: var(--success-color);
       }
     }
   }
@@ -435,12 +435,12 @@
       font-weight: 500;
 
       &.critical {
-        color: #ef4444;
+        color: var(--danger-color);
         font-weight: 600;
       }
 
       &.warning {
-        color: #f59e0b;
+        color: var(--warning-color);
       }
 
       &.attention {

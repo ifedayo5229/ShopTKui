@@ -47,7 +47,7 @@
   .logo-icon {
     width: 48px;
     height: 48px;
-    background: linear-gradient(135deg, #0f7c5c 0%, #0ea5a4 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -112,7 +112,7 @@
     color: white;
 
     mat-icon {
-      color: #22c55e;
+      color: var(--success-color);
       font-size: 22px;
       width: 22px;
       height: 22px;
@@ -152,22 +152,22 @@
 
     .login-prompt {
       font-size: 0.9rem;
-      color: #6b7280;
+      color: var(--grey-500);
     }
 
     .login-link {
       font-size: 0.9rem;
       font-weight: 600;
-      color: #0f7c5c;
+      color: var(--primary-color);
       text-decoration: none;
       padding: 0.5rem 1rem;
-      border: 1px solid #e5e7eb;
+      border: 1px solid var(--grey-200);
       border-radius: 8px;
       transition: all 0.2s;
 
       &:hover {
-        background: #f3f4f6;
-        border-color: #0f7c5c;
+        background: var(--grey-100);
+        border-color: var(--primary-color);
       }
     }
   }
@@ -177,13 +177,13 @@
   h2 {
     font-size: 1.75rem;
     font-weight: 700;
-    color: #111827;
+    color: var(--grey-900);
     margin-bottom: 0.5rem;
     letter-spacing: 0;
   }
 
   .welcome-text {
-    color: #6b7280;
+    color: var(--grey-500);
     margin-bottom: 1.5rem;
     font-size: 1rem;
   }
@@ -207,8 +207,8 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: #e5e7eb;
-      color: #6b7280;
+      background: var(--grey-200);
+      color: var(--grey-500);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -219,21 +219,21 @@
 
     span {
       font-size: 0.8rem;
-      color: #9ca3af;
+      color: var(--grey-400);
       font-weight: 500;
     }
 
     &.active .step-number {
-      background: #0f7c5c;
+      background: var(--primary-color);
       color: white;
     }
 
     &.active span {
-      color: #0f7c5c;
+      color: var(--primary-color);
     }
 
     &.completed .step-number {
-      background: #22c55e;
+      background: var(--success-color);
       color: white;
     }
   }
@@ -241,14 +241,14 @@
   .step-line {
     width: 80px;
     height: 3px;
-    background: #e5e7eb;
+    background: var(--grey-200);
     margin: 0 1rem;
     margin-bottom: 1.5rem;
     border-radius: 2px;
     transition: all 0.3s;
 
     &.active {
-      background: #22c55e;
+      background: var(--success-color);
     }
   }
 }
@@ -284,7 +284,7 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: var(--grey-700);
     margin-bottom: 0.5rem;
   }
 
@@ -298,29 +298,29 @@
     }
 
     .mat-mdc-text-field-wrapper {
-      background: #f9fafb;
+      background: var(--grey-50);
     }
 
     .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
-      border-color: #e5e7eb !important;
+      border-color: var(--grey-200) !important;
     }
 
     .mat-mdc-form-field:hover .mdc-notched-outline__leading,
     .mat-mdc-form-field:hover .mdc-notched-outline__notch,
     .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
-      border-color: #0f7c5c !important;
+      border-color: var(--primary-color) !important;
     }
 
     .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
     .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
     .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
-      border-color: #0f7c5c !important;
+      border-color: var(--primary-color) !important;
     }
 
     .mat-mdc-form-field-icon-prefix {
-      color: #9ca3af;
+      color: var(--grey-400);
       padding-right: 0.5rem;
     }
   }
@@ -335,7 +335,7 @@
   .strength-bar {
     flex: 1;
     height: 4px;
-    background: #e5e7eb;
+    background: var(--grey-200);
     border-radius: 2px;
     position: relative;
     overflow: hidden;
@@ -352,29 +352,29 @@
 
     &.weak::after {
       width: 33%;
-      background: #ef4444;
+      background: var(--danger-color);
     }
 
     &.medium::after {
       width: 66%;
-      background: #f59e0b;
+      background: var(--warning-color);
     }
 
     &.strong::after {
       width: 100%;
-      background: #22c55e;
+      background: var(--success-color);
     }
   }
 
   .strength-text {
     font-size: 0.75rem;
-    color: #6b7280;
+    color: var(--grey-500);
     min-width: 50px;
   }
 }
 
 .terms-link {
-  color: #0f7c5c;
+  color: var(--primary-color);
   text-decoration: none;
 
   &:hover {
@@ -395,15 +395,15 @@
     label {
       font-size: 0.875rem;
       font-weight: 600;
-      color: #374151;
+      color: var(--grey-700);
     }
   }
 
   .add-shop-btn {
     font-size: 0.8rem;
     height: 32px;
-    border-color: #0f7c5c;
-    color: #0f7c5c;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
 
     mat-icon {
       font-size: 18px;
@@ -440,7 +440,7 @@
     .shop-number {
       font-size: 0.75rem;
       font-weight: 600;
-      color: #0f7c5c;
+      color: var(--primary-color);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -448,7 +448,7 @@
     .remove-btn {
       width: 28px;
       height: 28px;
-      color: #94a3b8;
+      color: var(--grey-400);
 
       mat-icon {
         font-size: 18px;
@@ -457,7 +457,7 @@
       }
 
       &:hover {
-        color: #ef4444;
+        color: var(--danger-color);
         background: rgba(239, 68, 68, 0.1);
       }
     }
@@ -487,7 +487,7 @@
   font-size: 1rem;
   font-weight: 600;
   border-radius: 10px;
-  background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   box-shadow: 0 4px 14px rgba(15, 124, 92, 0.35);
   transition: all 0.2s;
 
@@ -541,7 +541,7 @@
 
   p {
     font-size: 0.8rem;
-    color: #9ca3af;
+    color: var(--grey-400);
   }
 }
 

@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700;800&display=swap');
+// Inter reads as business software; Nunito Sans is rounded and reads consumer.
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import '../src/custom-theme.scss';
 
@@ -41,101 +42,275 @@ body {
 }
 
 // Market ledger theme: stock green, checkout teal, and practical amber.
+// ============================================================================
+// Design tokens
+//
+// Every variable the app already used is still defined here, so existing rules
+// keep working. What changed is what they resolve to, plus new scales for
+// spacing, radius, shadow and type - the things 98 component stylesheets were
+// each inventing separately.
+//
+// The neutrals are genuinely neutral. They used to carry a green tint
+// (#f6faf7 backgrounds, #dce8e0 borders, #24332d text) inherited from the brand
+// colour. Tinted neutrals are the main reason an interface reads as amateur:
+// the cast shifts from screen to screen and the eye registers it as unfinished
+// without being able to name why. Colour now appears only where it carries
+// meaning - brand, success, warning, danger.
+// ============================================================================
+
 :root {
-    // Brand colors
+    // ---- Neutral ramp -------------------------------------------------------
+    // Very slightly cool so it sits well with the brand green without tinting.
+    --grey-50:  #f8fafc;
+    --grey-100: #f1f5f9;
+    --grey-200: #e2e8f0;
+    --grey-300: #cbd5e1;
+    --grey-400: #94a3b8;
+    --grey-500: #64748b;
+    --grey-600: #475569;
+    --grey-700: #334155;
+    --grey-800: #1e293b;
+    --grey-900: #0f172a;
+
+    // ---- Brand --------------------------------------------------------------
+    // One accent, used sparingly. Restraint is most of what reads as mature.
     --primary-color: #0f7c5c;
-    --primary-dark: #075947;
-    --primary-light: #34c79a;
-    --secondary-color: #f6b343;
+    --primary-dark:  #0b5f46;
+    --primary-light: #d4ede4;
+    --primary-tint:  #f0f9f5;
+    --secondary-color: #b45309;
 
-    // Accent color for checkout and active states
-    --accent-color: #0ea5a4;
-    --accent-dark: #087f73;
-    --success-color: #1f9d55;
-    --warning-color: #f6b343;
-    --danger-color: #dc2626;
+    --accent-color: #0f7c5c;
+    --accent-dark:  #0b5f46;
 
-    // Text colors
-    --text-color: #24332d;
-    --text-primary: #17231d;
-    --text-secondary: #627069;
-    --text-muted: #8a9a92;
+    // ---- Semantic -----------------------------------------------------------
+    --success-color: #15803d;
+    --success-tint:  #f0fdf4;
+    --warning-color: #b45309;
+    --warning-tint:  #fffbeb;
+    --danger-color:  #b91c1c;
+    --danger-tint:   #fef2f2;
+    --info-color:    #1d4ed8;
+    --info-tint:     #eff6ff;
 
-    // Background colors
-    --background-color: #f6faf7;
-    --bg-card: #ffffff;
-    --bg-dark: #edf5f0;
+    // ---- Text ---------------------------------------------------------------
+    --text-color:     var(--grey-700);
+    --text-primary:   var(--grey-900);
+    --text-secondary: var(--grey-500);
+    --text-muted:     var(--grey-400);
+    --text-inverse:   #ffffff;
 
-    // Surface colors
-    --surface-color: #f8fbf9;
-    --surface-hover: #eef7f1;
+    // ---- Surfaces -----------------------------------------------------------
+    --background-color: var(--grey-50);
+    --bg-card:          #ffffff;
+    --bg-dark:          var(--grey-100);
+    --surface-color:    #ffffff;
+    --surface-hover:    var(--grey-100);
+    --surface-sunken:   var(--grey-100);
 
-    // Border colors
-    --border-color: #dce8e0;
-    --border-color-light: #edf4ef;
+    // ---- Borders ------------------------------------------------------------
+    --border-color:       var(--grey-200);
+    --border-color-light: var(--grey-100);
+    --border-strong:      var(--grey-300);
 
-    // Sidebar
-    --sidebar-bg: #ffffff;
-    --sidebar-text: #627069;
-    --sidebar-text-hover: #0f7c5c;
-    --sidebar-hover-bg: rgba(15, 124, 92, 0.1);
-    --sidebar-active-bg: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
-    --sidebar-active-text: #ffffff;
+    // ---- Sidebar ------------------------------------------------------------
+    // Flat, not a gradient. Gradients on chrome are the other reliable tell of
+    // a dated interface; the active item is marked by a tint and a rule.
+    --sidebar-bg:          #ffffff;
+    --sidebar-text:        var(--grey-600);
+    --sidebar-text-hover:  var(--grey-900);
+    --sidebar-hover-bg:    var(--grey-100);
+    --sidebar-active-bg:   var(--primary-tint);
+    --sidebar-active-text: var(--primary-color);
 
-    --primary: var(--primary-color);
-    --primary-dark-token: var(--primary-dark);
+    // ---- Aliases kept for existing rules ------------------------------------
+    --primary:             var(--primary-color);
+    --primary-dark-token:  var(--primary-dark);
     --primary-light-token: var(--primary-light);
-    --surface: var(--bg-card);
-    --background: var(--background-color);
-    --border: var(--border-color);
-  }
+    --surface:             var(--bg-card);
+    --background:          var(--background-color);
+    --border:              var(--border-color);
 
-// Dark mode theme
+    // ---- Spacing ------------------------------------------------------------
+    // A 4px rhythm. Consistent spacing does more for perceived quality than any
+    // colour choice, and it is the thing most obviously missing today.
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+
+    // ---- Radius -------------------------------------------------------------
+    // Restrained. Large radii read playful rather than serious.
+    --radius-sm:   4px;
+    --radius-md:   6px;
+    --radius-lg:   8px;
+    --radius-xl:   12px;
+    --radius-full: 9999px;
+
+    // ---- Elevation ----------------------------------------------------------
+    // Borders carry most of the separation; shadows are a light touch on top.
+    --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.10);
+
+    // ---- Type ---------------------------------------------------------------
+    --font-sans: 'Inter', 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+
+    --text-xs:   0.75rem;
+    --text-sm:   0.8125rem;
+    --text-base: 0.875rem;   // 14px: the working size for dense business UI
+    --text-md:   1rem;
+    --text-lg:   1.125rem;
+    --text-xl:   1.375rem;
+    --text-2xl:  1.75rem;
+
+    --leading-tight:  1.25;
+    --leading-normal: 1.5;
+    --leading-loose:  1.7;
+
+    --weight-normal:   400;
+    --weight-medium:   500;
+    --weight-semibold: 600;
+    --weight-bold:     700;
+
+    --transition-fast: 120ms ease;
+    --transition-base: 180ms ease;
+}
+
+// ============================================================================
+// Dark theme
+//
+// Not the light palette inverted. Surfaces lift as they come forward, borders
+// stay low contrast, and the brand colour is lightened so it still reads as an
+// accent against a dark ground rather than disappearing into it.
+// ============================================================================
+
 [data-theme="dark"] {
-    // Brand colors
+    --grey-50:  #0b1220;
+    --grey-100: #111a2b;
+    --grey-200: #1d2739;
+    --grey-300: #2b3850;
+    --grey-400: #64748b;
+    --grey-500: #94a3b8;
+    --grey-600: #cbd5e1;
+    --grey-700: #e2e8f0;
+    --grey-800: #f1f5f9;
+    --grey-900: #f8fafc;
+
     --primary-color: #34c79a;
-    --primary-dark: #0f7c5c;
-    --primary-light: #78d9bd;
-    --secondary-color: #f6b343;
+    --primary-dark:  #0f7c5c;
+    --primary-light: #1c3b33;
+    --primary-tint:  #15241f;
+    --secondary-color: #fbbf24;
 
-    // Accent color
-    --accent-color: #39c7c4;
-    --accent-dark: #0ea5a4;
+    --accent-color: #34c79a;
+    --accent-dark:  #0f7c5c;
+
     --success-color: #4ade80;
-    --warning-color: #f6b343;
-    --danger-color: #f87171;
+    --success-tint:  #12241a;
+    --warning-color: #fbbf24;
+    --warning-tint:  #2a2113;
+    --danger-color:  #f87171;
+    --danger-tint:   #2b1618;
+    --info-color:    #60a5fa;
+    --info-tint:     #14203a;
 
-    // Text colors
-    --text-color: #eef7f1;
-    --text-primary: #f7fbf8;
-    --text-secondary: #c9d8d0;
-    --text-muted: #94a69d;
+    --text-color:     var(--grey-700);
+    --text-primary:   var(--grey-900);
+    --text-secondary: var(--grey-500);
+    --text-muted:     var(--grey-400);
+    --text-inverse:   #0b1220;
 
-    // Background colors
-    --background-color: #101713;
-    --bg-card: rgba(23, 35, 30, 0.96);
-    --bg-dark: #15201b;
+    --background-color: #0b1220;
+    --bg-card:          #111a2b;
+    --bg-dark:          #0b1220;
+    --surface-color:    #111a2b;
+    --surface-hover:    #1d2739;
+    --surface-sunken:   #0e1626;
 
-    // Surface colors
-    --surface-color: rgba(34, 52, 45, 0.72);
-    --surface-hover: rgba(43, 68, 57, 0.74);
+    --border-color:       #1d2739;
+    --border-color-light: #151e2f;
+    --border-strong:      #2b3850;
 
-    // Border colors
-    --border-color: rgba(142, 171, 156, 0.24);
-    --border-color-light: rgba(142, 171, 156, 0.14);
+    --sidebar-bg:          #0e1626;
+    --sidebar-text:        var(--grey-500);
+    --sidebar-text-hover:  var(--grey-900);
+    --sidebar-hover-bg:    #1d2739;
+    --sidebar-active-bg:   var(--primary-tint);
+    --sidebar-active-text: var(--primary-color);
 
-    // Sidebar
-    --sidebar-bg: #14211b;
-    --sidebar-text: #a9bbb2;
-    --sidebar-text-hover: #34c79a;
-    --sidebar-hover-bg: rgba(15, 124, 92, 0.15);
-    --sidebar-active-bg: linear-gradient(135deg, #34c79a 0%, #0f7c5c 100%);
-    --sidebar-active-text: #ffffff;
-  }
+    // Shadows barely register on a dark ground; separation comes from borders.
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.30);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.36);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.44);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.52);
+}
+
+// Follow the operating system until the user chooses explicitly. The toggle
+// writes data-theme onto <html>, and the attribute selectors above win over
+// this block, so an explicit choice always beats the system preference.
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --grey-50:  #0b1220;
+        --grey-100: #111a2b;
+        --grey-200: #1d2739;
+        --grey-300: #2b3850;
+        --grey-400: #64748b;
+        --grey-500: #94a3b8;
+        --grey-600: #cbd5e1;
+        --grey-700: #e2e8f0;
+        --grey-800: #f1f5f9;
+        --grey-900: #f8fafc;
+
+        --primary-color: #34c79a;
+        --primary-dark:  #0f7c5c;
+        --primary-light: #1c3b33;
+        --primary-tint:  #15241f;
+
+        --accent-color: #34c79a;
+        --accent-dark:  #0f7c5c;
+
+        --success-color: #4ade80;
+        --success-tint:  #12241a;
+        --warning-color: #fbbf24;
+        --warning-tint:  #2a2113;
+        --danger-color:  #f87171;
+        --danger-tint:   #2b1618;
+        --info-color:    #60a5fa;
+        --info-tint:     #14203a;
+
+        --text-inverse: #0b1220;
+
+        --background-color: #0b1220;
+        --bg-card:          #111a2b;
+        --bg-dark:          #0b1220;
+        --surface-color:    #111a2b;
+        --surface-hover:    #1d2739;
+        --surface-sunken:   #0e1626;
+
+        --border-color:       #1d2739;
+        --border-color-light: #151e2f;
+        --border-strong:      #2b3850;
+
+        --sidebar-bg:         #0e1626;
+        --sidebar-hover-bg:   #1d2739;
+
+        --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.30);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.36);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.44);
+        --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.52);
+    }
+}
 
 // Applying the global color variables
 body {
-    font-family: 'Nunito Sans', sans-serif;
+    font-family: var(--font-sans);
     background-color: var(--background-color);
     color: var(--text-color);
   }

@@ -71,17 +71,17 @@
     }
 
     &.today {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      background: linear-gradient(135deg, var(--info-color) 0%, #2563eb 100%);
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
     }
 
     &.revenue {
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      background: linear-gradient(135deg, var(--success-color) 0%, var(--success-color) 100%);
       box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
     }
 
     &.total {
-      background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
       box-shadow: 0 4px 12px rgba(15, 124, 92, 0.3);
     }
 
@@ -125,15 +125,15 @@
     padding: 0.5rem 1rem;
 
     &:hover {
-      border-color: #0f7c5c;
-      color: #0f7c5c;
+      border-color: var(--primary-color);
+      color: var(--primary-color);
       background: rgba(15, 124, 92, 0.08);
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(15, 124, 92, 0.2);
     }
 
     &.active {
-      background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
       color: white;
       border-color: transparent;
       box-shadow: 0 4px 16px rgba(15, 124, 92, 0.4);
@@ -242,7 +242,7 @@
 
 .amount {
   font-weight: 700;
-  color: #22c55e;
+  color: var(--success-color);
 }
 
 .payment-badge {

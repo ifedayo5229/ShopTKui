@@ -2,9 +2,9 @@
 // PREMIUM SIDEBAR - DRIBBBLE INSPIRED
 // ========================================
 
-$primary: #0f7c5c;
+$primary: var(--primary-color);
 $primary-light: #34c79a;
-$success: #10b981;
+$success: var(--success-color);
 
 .sidebar {
   width: 280px;
@@ -49,7 +49,7 @@ $success: #10b981;
   .brand-logo {
     width: 48px;
     height: 48px;
-    background: linear-gradient(135deg, $primary 0%, #0ea5a4 100%);
+    background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
     border-radius: 14px;
     display: flex;
     align-items: center;
@@ -69,7 +69,7 @@ $success: #10b981;
     .logo-glow {
       position: absolute;
       inset: -4px;
-      background: linear-gradient(135deg, $primary 0%, #0ea5a4 100%);
+      background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
       border-radius: 18px;
       opacity: 0.3;
       filter: blur(8px);
@@ -274,7 +274,7 @@ $success: #10b981;
     }
 
     &.active {
-      background: linear-gradient(135deg, $primary 0%, #0ea5a4 100%);
+      background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
       color: white;
       box-shadow: 0 4px 16px rgba($primary, 0.35);
 
@@ -319,7 +319,7 @@ $success: #10b981;
     .plan-icon {
       width: 36px;
       height: 36px;
-      background: linear-gradient(135deg, #f59e0b, #d97706);
+      background: linear-gradient(135deg, var(--warning-color), var(--warning-color));
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -384,7 +384,7 @@ $success: #10b981;
     .upgrade-icon {
       width: 44px;
       height: 44px;
-      background: linear-gradient(135deg, $primary 0%, #0ea5a4 100%);
+      background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -417,7 +417,7 @@ $success: #10b981;
 
     .upgrade-btn {
       width: 100%;
-      background: linear-gradient(135deg, $primary 0%, #0ea5a4 100%) !important;
+      background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%) !important;
       color: white !important;
       font-weight: 600;
       border-radius: 10px;

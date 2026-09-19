@@ -11,17 +11,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--grey-100);
 
   h2 {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #111827;
+    color: var(--grey-900);
     margin: 0;
   }
 
   button {
-    color: #9ca3af;
+    color: var(--grey-400);
   }
 }
 
@@ -47,7 +47,7 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: var(--grey-700);
     margin-bottom: 0.5rem;
   }
 
@@ -57,17 +57,17 @@
 
   ::ng-deep {
     .mat-mdc-text-field-wrapper {
-      background: #f9fafb;
+      background: var(--grey-50);
     }
 
     .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
-      border-color: #e5e7eb !important;
+      border-color: var(--grey-200) !important;
     }
 
     .mat-mdc-form-field-icon-prefix {
-      color: #9ca3af;
+      color: var(--grey-400);
       padding-right: 0.5rem;
     }
   }
@@ -80,7 +80,7 @@
   padding: 0.25rem 0;
 
   mat-icon {
-    color: #0f7c5c;
+    color: var(--primary-color);
     font-size: 20px;
     width: 20px;
     height: 20px;
@@ -92,12 +92,12 @@
 
     .role-name {
       font-weight: 500;
-      color: #111827;
+      color: var(--grey-900);
     }
 
     .role-desc {
       font-size: 0.8rem;
-      color: #6b7280;
+      color: var(--grey-500);
     }
   }
 }
@@ -109,7 +109,7 @@
   padding: 0.25rem 0;
 
   mat-icon {
-    color: #0f7c5c;
+    color: var(--primary-color);
     font-size: 20px;
     width: 20px;
     height: 20px;
@@ -121,12 +121,12 @@
 
     .shop-option-name {
       font-weight: 500;
-      color: #111827;
+      color: var(--grey-900);
     }
 
     .shop-option-address {
       font-size: 0.8rem;
-      color: #6b7280;
+      color: var(--grey-500);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -136,11 +136,11 @@
 }
 
 .required {
-  color: #dc2626;
+  color: var(--danger-color);
 }
 
 .role-preview {
-  background: #f9fafb;
+  background: var(--grey-50);
   border-radius: 12px;
   padding: 1rem;
   margin-top: 0.5rem;
@@ -155,13 +155,13 @@
       font-size: 18px;
       width: 18px;
       height: 18px;
-      color: #0f7c5c;
+      color: var(--primary-color);
     }
 
     span {
       font-size: 0.875rem;
       font-weight: 600;
-      color: #374151;
+      color: var(--grey-700);
     }
   }
 
@@ -176,13 +176,13 @@
       gap: 0.5rem;
       padding: 0.375rem 0;
       font-size: 0.85rem;
-      color: #4b5563;
+      color: var(--grey-600);
 
       mat-icon {
         font-size: 16px;
         width: 16px;
         height: 16px;
-        color: #22c55e;
+        color: var(--success-color);
       }
     }
   }
@@ -193,7 +193,7 @@
   justify-content: flex-end;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  border-top: 1px solid #f3f4f6;
+  border-top: 1px solid var(--grey-100);
 
   button {
     min-width: 120px;
@@ -209,7 +209,7 @@
   }
 
   button[mat-flat-button][color="primary"] {
-    background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   }
 }
 

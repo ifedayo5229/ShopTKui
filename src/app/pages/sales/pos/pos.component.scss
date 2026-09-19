@@ -89,11 +89,11 @@
     &:hover {
       background: var(--surface-hover);
       border-color: #bfe9d8;
-      color: #0f7c5c;
+      color: var(--primary-color);
     }
 
     &.active {
-      background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
       color: white;
       border-color: transparent;
       box-shadow: 0 4px 12px rgba(15, 124, 92, 0.35);
@@ -134,7 +134,7 @@
   &:hover:not(.disabled) {
     transform: translateY(-4px) scale(1.02);
     box-shadow: 0 12px 28px rgba(15, 124, 92, 0.18);
-    border-color: #0f7c5c;
+    border-color: var(--primary-color);
 
     .card-accent {
       height: 4px;
@@ -147,7 +147,7 @@
 
     .product-image mat-icon {
       transform: scale(1.1);
-      color: #0f7c5c;
+      color: var(--primary-color);
     }
   }
 
@@ -162,7 +162,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #0f7c5c 0%, #0ea5a4 50%, #ec4899 100%);
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 50%, #ec4899 100%);
     transition: height 0.2s ease;
   }
 
@@ -216,7 +216,7 @@
 
       .product-price {
         font-weight: 800;
-        color: #0f7c5c;
+        color: var(--primary-color);
         font-size: 0.95rem;
       }
 
@@ -234,18 +234,18 @@
         }
 
         &.in-stock {
-          color: #16a34a;
-          .dot { background: #16a34a; }
+          color: var(--success-color);
+          .dot { background: var(--success-color); }
         }
 
         &.low-stock {
-          color: #d97706;
-          .dot { background: #d97706; }
+          color: var(--warning-color);
+          .dot { background: var(--warning-color); }
         }
 
         &.out-of-stock {
-          color: #dc2626;
-          .dot { background: #dc2626; }
+          color: var(--danger-color);
+          .dot { background: var(--danger-color); }
         }
       }
     }
@@ -257,7 +257,7 @@
     right: 0.5rem;
     width: 28px;
     height: 28px;
-    background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -291,7 +291,7 @@
     span {
       padding: 0.5rem 1rem;
       background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
-      color: #dc2626;
+      color: var(--danger-color);
       border-radius: 100px;
       font-weight: 700;
       font-size: 0.75rem;
@@ -359,7 +359,7 @@
       content: '';
       width: 4px;
       height: 20px;
-      background: linear-gradient(180deg, #0f7c5c 0%, #0ea5a4 100%);
+      background: linear-gradient(180deg, var(--primary-color) 0%, var(--accent-color) 100%);
       border-radius: 2px;
     }
   }
@@ -368,7 +368,7 @@
     color: var(--text-muted);
     
     &:hover {
-      color: #ef4444;
+      color: var(--danger-color);
     }
   }
 }
@@ -450,7 +450,7 @@
     button {
       width: 26px;
       height: 26px;
-      color: #0f7c5c;
+      color: var(--primary-color);
       
       mat-icon {
         font-size: 16px;
@@ -488,7 +488,7 @@
 
   .item-total {
     font-weight: 700;
-    color: #0f7c5c;
+    color: var(--primary-color);
     font-size: 0.85rem;
     min-width: 65px;
     text-align: right;
@@ -506,7 +506,7 @@
     }
 
     &:hover {
-      color: #ef4444;
+      color: var(--danger-color);
       background: rgba(239, 68, 68, 0.08);
     }
   }
@@ -616,7 +616,7 @@
 
         .total-amount {
           font-size: 1.15rem;
-          color: #0f7c5c;
+          color: var(--primary-color);
           font-weight: 800;
         }
       }
@@ -644,7 +644,7 @@
         font-size: 16px;
         width: 16px;
         height: 16px;
-        color: #0f7c5c;
+        color: var(--primary-color);
       }
 
       .option-label {
@@ -725,11 +725,11 @@
         }
 
         &.active {
-          border-color: #0f7c5c;
+          border-color: var(--primary-color);
           background: linear-gradient(135deg, rgba(15, 124, 92, 0.15) 0%, rgba(79, 70, 229, 0.1) 100%);
 
           mat-icon, span {
-            color: #0f7c5c;
+            color: var(--primary-color);
           }
         }
       }
@@ -742,7 +742,7 @@
     font-size: 0.9rem;
     font-weight: 700;
     border-radius: 10px;
-    background: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     box-shadow: 0 4px 12px rgba(15, 124, 92, 0.35);
     transition: all 0.2s ease;
 
