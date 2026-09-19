@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { InventoryMovement } from 'src/app/models/inventory-movement';
 import { StoreLocation } from 'src/app/models/store-location';
 import { StoreLocationService } from 'src/app/services/store-location/store-location.service';
-import { environment } from 'src/app/environments/environment.prod';
+import { environment } from 'src/app/environments/environment';
 
 
 @Component({

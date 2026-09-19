@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponseObject } from 'src/app/models/api-response-object';
-import { environment } from 'src/app/environments/environment.prod';
+import { environment } from 'src/app/environments/environment';
 import { Item } from 'src/app/models/item';
 import { CreateItem } from 'src/app/models/createItemVm';
 import { GhetItem } from 'src/app/models/ghet-itemVm';
