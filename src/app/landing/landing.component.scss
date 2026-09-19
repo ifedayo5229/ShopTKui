@@ -210,11 +210,45 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
 }
 
 .hero {
-    padding: 10rem 2rem 4rem;
+    padding: 8rem 2rem 0;
     position: relative;
-    background: $white;
+    background: #17130f;
     overflow: hidden;
-    min-height: 100vh;
+    min-height: auto;
+    text-align: center;
+
+    // A dark field with a faint warm cast, standing in for the photography the
+    // reference leans on. A point-of-sale product has no product shots to fall
+    // back on, so the weight has to come from the type instead.
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(120% 80% at 50% 0%, rgba(249, 115, 22, 0.10), transparent 60%),
+            #17130f;
+        z-index: 0;
+    }
+
+    > * { position: relative; z-index: 1; }
+
+    h1, .hero-title {
+        color: #faf8f5;
+        font-size: clamp(2.25rem, 5vw, 3.5rem);
+        line-height: 1.1;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        max-width: 18ch;
+        margin-inline: auto;
+    }
+
+    .hero-subtitle {
+        color: rgba(250, 248, 245, 0.66);
+        font-size: 1rem;
+        line-height: 1.6;
+        max-width: 52ch;
+        margin: 1.25rem auto 2rem;
+    }
 
     .hero-bg {
         position: absolute;
@@ -223,6 +257,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
         overflow: hidden;
 
         .gradient-orb {
+            display: none;
             position: absolute;
             border-radius: 50%;
             filter: blur(80px);
