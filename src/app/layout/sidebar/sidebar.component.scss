@@ -26,7 +26,7 @@ $success: var(--success-color);
     left: 0;
     right: 0;
     height: 200px;
-    background: linear-gradient(180deg, rgba($primary, 0.03) 0%, transparent 100%);
+    background: transparent;
     pointer-events: none;
   }
 }
@@ -49,7 +49,7 @@ $success: var(--success-color);
   .brand-logo {
     width: 48px;
     height: 48px;
-    background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
+    background: var(--sidebar-active-bg);
     border-radius: 14px;
     display: flex;
     align-items: center;
@@ -69,7 +69,7 @@ $success: var(--success-color);
     .logo-glow {
       position: absolute;
       inset: -4px;
-      background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
+      background: var(--sidebar-active-bg);
       border-radius: 18px;
       opacity: 0.3;
       filter: blur(8px);
@@ -207,7 +207,7 @@ $success: var(--success-color);
       .section-line {
         flex: 1;
         height: 1px;
-        background: linear-gradient(90deg, var(--border-color) 0%, transparent 100%);
+        background: var(--border-color);
       }
     }
   }
@@ -274,7 +274,7 @@ $success: var(--success-color);
     }
 
     &.active {
-      background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
+      background: var(--sidebar-active-bg);
       color: white;
       box-shadow: 0 4px 16px rgba($primary, 0.35);
 
@@ -319,7 +319,7 @@ $success: var(--success-color);
     .plan-icon {
       width: 36px;
       height: 36px;
-      background: linear-gradient(135deg, var(--warning-color), var(--warning-color));
+      background: var(--warning-color);
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -365,7 +365,7 @@ $success: var(--success-color);
   }
 
   .upgrade-card {
-    background: linear-gradient(135deg, rgba($primary, 0.1) 0%, rgba(14, 165, 164, 0.1) 100%);
+    background: var(--primary-tint);
     border: 1px solid rgba($primary, 0.2);
     border-radius: 16px;
     padding: 1rem;
@@ -384,7 +384,7 @@ $success: var(--success-color);
     .upgrade-icon {
       width: 44px;
       height: 44px;
-      background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
+      background: var(--sidebar-active-bg);
       border-radius: 12px;
       display: flex;
       align-items: center;

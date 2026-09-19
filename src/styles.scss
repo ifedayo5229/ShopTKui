@@ -60,17 +60,20 @@ body {
 
 :root {
     // ---- Neutral ramp -------------------------------------------------------
-    // Very slightly cool so it sits well with the brand green without tinting.
-    --grey-50:  #f8fafc;
-    --grey-100: #f1f5f9;
-    --grey-200: #e2e8f0;
-    --grey-300: #cbd5e1;
-    --grey-400: #94a3b8;
-    --grey-500: #64748b;
-    --grey-600: #475569;
-    --grey-700: #334155;
-    --grey-800: #1e293b;
-    --grey-900: #0f172a;
+    // Warm stone rather than cool slate. This is where the West African feel
+    // actually lives: a sand undertone across every surface reads as warm and
+    // grounded, where cool slate reads Nordic-corporate. It costs nothing in
+    // legibility and needs no pattern or motif to carry it.
+    --grey-50:  #faf8f5;
+    --grey-100: #f4f1ea;
+    --grey-200: #e8e2d7;
+    --grey-300: #d4cabb;
+    --grey-400: #a69b8a;
+    --grey-500: #776d5f;
+    --grey-600: #57503f;
+    --grey-700: #3e382d;
+    --grey-800: #2a251d;
+    --grey-900: #1b1712;
 
     // ---- Brand --------------------------------------------------------------
     // One accent, used sparingly. Restraint is most of what reads as mature.
@@ -78,7 +81,9 @@ body {
     --primary-dark:  #0b5f46;
     --primary-light: #d4ede4;
     --primary-tint:  #f0f9f5;
-    --secondary-color: #b45309;
+    --secondary-color: #9a3412;
+    --secondary-dark:  #7c2d12;
+    --secondary-tint:  #fdf3ee;
 
     --accent-color: #0f7c5c;
     --accent-dark:  #0b5f46;
@@ -192,16 +197,16 @@ body {
 // ============================================================================
 
 [data-theme="dark"] {
-    --grey-50:  #0b1220;
-    --grey-100: #111a2b;
-    --grey-200: #1d2739;
-    --grey-300: #2b3850;
-    --grey-400: #64748b;
-    --grey-500: #94a3b8;
-    --grey-600: #cbd5e1;
-    --grey-700: #e2e8f0;
-    --grey-800: #f1f5f9;
-    --grey-900: #f8fafc;
+    --grey-50:  #14110d;
+    --grey-100: #1d1915;
+    --grey-200: #2a251f;
+    --grey-300: #3b342b;
+    --grey-400: #857b6c;
+    --grey-500: #a89d8d;
+    --grey-600: #cdc4b6;
+    --grey-700: #e5ded2;
+    --grey-800: #f2eee6;
+    --grey-900: #faf8f5;
 
     --primary-color: #34c79a;
     --primary-dark:  #0f7c5c;
@@ -225,23 +230,23 @@ body {
     --text-primary:   var(--grey-900);
     --text-secondary: var(--grey-500);
     --text-muted:     var(--grey-400);
-    --text-inverse:   #0b1220;
+    --text-inverse:   #14110d;
 
-    --background-color: #0b1220;
-    --bg-card:          #111a2b;
-    --bg-dark:          #0b1220;
-    --surface-color:    #111a2b;
-    --surface-hover:    #1d2739;
-    --surface-sunken:   #0e1626;
+    --background-color: #14110d;
+    --bg-card:          #1d1915;
+    --bg-dark:          #14110d;
+    --surface-color:    #1d1915;
+    --surface-hover:    #2a251f;
+    --surface-sunken:   #191511;
 
-    --border-color:       #1d2739;
-    --border-color-light: #151e2f;
-    --border-strong:      #2b3850;
+    --border-color:       #2a251f;
+    --border-color-light: #221d18;
+    --border-strong:      #3b342b;
 
-    --sidebar-bg:          #0e1626;
+    --sidebar-bg:          #191511;
     --sidebar-text:        var(--grey-500);
     --sidebar-text-hover:  var(--grey-900);
-    --sidebar-hover-bg:    #1d2739;
+    --sidebar-hover-bg:    #2a251f;
     --sidebar-active-bg:   var(--primary-tint);
     --sidebar-active-text: var(--primary-color);
 
@@ -285,21 +290,21 @@ body {
         --info-color:    #60a5fa;
         --info-tint:     #14203a;
 
-        --text-inverse: #0b1220;
+        --text-inverse: #14110d;
 
-        --background-color: #0b1220;
-        --bg-card:          #111a2b;
-        --bg-dark:          #0b1220;
-        --surface-color:    #111a2b;
-        --surface-hover:    #1d2739;
-        --surface-sunken:   #0e1626;
+        --background-color: #14110d;
+        --bg-card:          #1d1915;
+        --bg-dark:          #14110d;
+        --surface-color:    #1d1915;
+        --surface-hover:    #2a251f;
+        --surface-sunken:   #191511;
 
-        --border-color:       #1d2739;
-        --border-color-light: #151e2f;
-        --border-strong:      #2b3850;
+        --border-color:       #2a251f;
+        --border-color-light: #221d18;
+        --border-strong:      #3b342b;
 
-        --sidebar-bg:         #0e1626;
-        --sidebar-hover-bg:   #1d2739;
+        --sidebar-bg:         #191511;
+        --sidebar-hover-bg:   #2a251f;
 
         --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.30);
         --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.36);

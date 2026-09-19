@@ -51,11 +51,15 @@ $navy-light: #23372e;
   }
 
   &.trial {
-    background: linear-gradient(135deg, var(--info-color) 0%, var(--primary-color) 100%);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--info-color);
   }
 
   &.expiring {
-    background: linear-gradient(135deg, var(--warning-color) 0%, var(--danger-color) 100%);
+    background: var(--warning-tint);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--warning-color);
   }
 
   .banner-content {
@@ -63,7 +67,7 @@ $navy-light: #23372e;
     align-items: center;
     gap: 16px;
     padding: 16px 24px;
-    color: white;
+    color: var(--text-primary);
   }
 
   .banner-icon {
@@ -159,23 +163,14 @@ $navy-light: #23372e;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 2.5rem;
+  padding: var(--space-6);
   margin-bottom: 2rem;
-  background: linear-gradient(135deg, $primary 0%, var(--accent-color) 50%, #f6b343 100%);
-  border-radius: 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
   position: relative;
   overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -20%;
-    width: 60%;
-    height: 200%;
-    background: radial-gradient(ellipse, rgba(255,255,255,0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
 
   .hero-content {
     position: relative;
@@ -186,13 +181,13 @@ $navy-light: #23372e;
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        background: rgba(255, 255, 255, 0.2);
+        background: var(--grey-100);
         backdrop-filter: blur(10px);
         padding: 0.5rem 1rem;
         border-radius: 100px;
         font-size: 0.8125rem;
         font-weight: 500;
-        color: rgba(255, 255, 255, 0.9);
+        color: var(--text-secondary);
         margin-bottom: 1rem;
 
         mat-icon {
@@ -205,7 +200,7 @@ $navy-light: #23372e;
       h1 {
         font-size: 2.25rem;
         font-weight: 800;
-        color: white;
+        color: var(--text-primary);
         margin: 0 0 0.5rem 0;
         letter-spacing: 0;
 
@@ -218,7 +213,7 @@ $navy-light: #23372e;
 
       .hero-subtitle {
         font-size: 1rem;
-        color: rgba(255, 255, 255, 0.8);
+        color: var(--text-secondary);
         margin: 0;
       }
     }
@@ -231,7 +226,8 @@ $navy-light: #23372e;
     z-index: 2;
 
     .btn-primary-glow {
-      background: white !important;
+      background: var(--primary-color) !important;
+      color: var(--text-inverse) !important;
       color: $primary !important;
       font-weight: 600;
       padding: 0 1.5rem;
@@ -252,12 +248,12 @@ $navy-light: #23372e;
 
     .btn-outline {
       border: 2px solid rgba(255, 255, 255, 0.4) !important;
-      color: white !important;
+      color: var(--text-primary) !important;
       font-weight: 600;
       padding: 0 1.5rem;
       height: 48px;
       border-radius: 14px;
-      background: rgba(255, 255, 255, 0.1) !important;
+      background: var(--grey-100) !important;
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
 
@@ -266,7 +262,7 @@ $navy-light: #23372e;
       }
 
       &:hover {
-        background: rgba(255, 255, 255, 0.2) !important;
+        background: var(--grey-200) !important;
         border-color: rgba(255, 255, 255, 0.6) !important;
       }
     }
@@ -384,8 +380,8 @@ $navy-light: #23372e;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
-    box-shadow: 0 8px 16px rgba($primary, 0.25);
+    background: var(--surface-sunken);
+    box-shadow: none;
 
     mat-icon {
       font-size: 26px;
@@ -395,8 +391,8 @@ $navy-light: #23372e;
     }
 
     &.sales {
-      background: linear-gradient(135deg, $success 0%, $success-light 100%);
-      box-shadow: 0 8px 16px rgba($success, 0.25);
+      background: var(--surface-sunken);
+      box-shadow: none;
     }
 
     &.products {
@@ -405,8 +401,8 @@ $navy-light: #23372e;
     }
 
     &.warning {
-      background: linear-gradient(135deg, $warning 0%, var(--warning-color) 100%);
-      box-shadow: 0 8px 16px rgba($warning, 0.25);
+      background: var(--surface-sunken);
+      box-shadow: none;
     }
   }
 
@@ -476,7 +472,7 @@ $navy-light: #23372e;
 
   // Revenue card specific
   &.revenue-card {
-    background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
+    background: var(--primary-color);
     border: none;
 
     .stat-icon-wrapper {
@@ -706,11 +702,11 @@ $navy-light: #23372e;
     }
 
     &.pos {
-      background: linear-gradient(135deg, $success 0%, $success-light 100%);
+      background: var(--success-color);
     }
 
     &.inventory {
-      background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+      background: var(--primary-color);
     }
 
     &.reports {
@@ -906,7 +902,7 @@ $navy-light: #23372e;
         }
 
         &.active {
-          background: linear-gradient(135deg, $primary 0%, var(--accent-color) 100%);
+          background: var(--primary-color);
           color: white;
           border-color: transparent;
           box-shadow: 0 4px 12px rgba($primary, 0.3);
