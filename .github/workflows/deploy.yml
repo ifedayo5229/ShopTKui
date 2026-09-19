@@ -7,9 +7,17 @@ name: Build and deploy frontend
 # to stop, no file locks to release and no server-side state to preserve. The whole site
 # directory can be mirrored.
 
+# PAUSED: manual trigger only, matching the API pipeline.
+#
+# This one has never run - it also needs its own self-hosted runner, because repo-scoped
+# runners only serve the repo they were registered to and the existing one belongs to
+# shopTKApi. Deploy by hand in the meantime: npx ng build --configuration production,
+# then copy dist/shoptk to C:\inetpub\shoptk-web on the server.
+#
+# To re-enable automatic deploys, restore:
+#   push:
+#     branches: [main]
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 env:
