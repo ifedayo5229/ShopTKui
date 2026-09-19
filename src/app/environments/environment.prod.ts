@@ -7,13 +7,14 @@ export const environment = {
   // than the server, so every request fails for everyone except whoever is sitting at the
   // box - which is exactly how it looks working locally and broken in production.
   //
-  // Swap to https://api.yourdomain.com/api once DNS and certificates are in place, and
-  // update the API's "cors" setting to match this origin.
-  apiUrl: 'http://63.250.58.113:8080/api',
+  // HTTPS, not the raw IP over plain HTTP: the site is served over HTTPS, and a browser
+  // blocks plain-HTTP calls from an HTTPS page as mixed content. The app would load and
+  // every request would fail silently.
+  apiUrl: 'https://api.shoptk.org/api',
 
   // Base URL for documents and uploaded images, used as `${docApiUrl}api/...` and
   // `${docApiUrl}/uploads/...`, so the trailing slash matters.
-  docApiUrl: 'http://63.250.58.113:8080/',
+  docApiUrl: 'https://api.shoptk.org/',
 
   // Public keys only. Secret keys stay on the backend.
   payment: {
