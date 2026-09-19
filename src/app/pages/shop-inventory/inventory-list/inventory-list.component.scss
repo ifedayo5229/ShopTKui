@@ -3,26 +3,26 @@
 }
 
 .inventory-container {
-  padding: 1.5rem;
+  padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
 }
 
 // Page Header
 .page-header {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
 
   .header-content {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .title-section {
     h1 {
-      font-size: 1.75rem;
+      font-size: 2rem;
       font-weight: 700;
       color: var(--text-primary);
       margin: 0 0 0.25rem 0;
@@ -39,7 +39,7 @@
 
   .header-actions {
     display: flex;
-    gap: 0.75rem;
+    gap: 1rem;
 
     .filter-btn {
       border-color: var(--border-color);
@@ -70,8 +70,8 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .stat-card {
@@ -81,7 +81,7 @@
   padding: 1.25rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
@@ -150,7 +150,7 @@
     }
 
     .stat-label {
-      font-size: 0.85rem;
+      font-size: 0.875rem;
       color: var(--text-secondary);
       transition: color 0.3s ease;
     }
@@ -163,7 +163,7 @@
   backdrop-filter: blur(20px);
   border-radius: 16px;
   padding: 1.25rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
@@ -171,7 +171,7 @@
   .filter-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
     align-items: flex-end;
   }
 
@@ -217,7 +217,7 @@
   th.mat-header-cell {
     font-weight: 600;
     color: var(--text-secondary);
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     background: var(--surface-color);
@@ -257,7 +257,7 @@
 .product-cell {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
 
   .product-image {
     width: 48px;

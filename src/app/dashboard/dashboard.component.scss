@@ -34,7 +34,7 @@ $navy-light: #23372e;
 // UPGRADE BANNER
 // ========================================
 .upgrade-banner {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
   border-radius: 16px;
   overflow: hidden;
   animation: slideDown 0.3s ease-out;
@@ -164,7 +164,7 @@ $navy-light: #23372e;
   justify-content: space-between;
   align-items: center;
   padding: var(--space-6);
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
@@ -185,7 +185,7 @@ $navy-light: #23372e;
         backdrop-filter: blur(10px);
         padding: 0.5rem 1rem;
         border-radius: 100px;
-        font-size: 0.8125rem;
+        font-size: 0.75rem;
         font-weight: 500;
         color: var(--text-secondary);
         margin-bottom: 1rem;
@@ -221,7 +221,7 @@ $navy-light: #23372e;
 
   .hero-actions {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     position: relative;
     z-index: 2;
 
@@ -281,7 +281,7 @@ $navy-light: #23372e;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 12px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       font-weight: 600;
       color: $navy;
       animation: float 3s ease-in-out infinite;
@@ -338,7 +338,7 @@ $navy-light: #23372e;
 
 .stat-card {
   @include glass-card;
-  padding: 1.5rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -444,7 +444,7 @@ $navy-light: #23372e;
     background: rgba($success, 0.1);
     color: $success;
     border-radius: 100px;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -593,7 +593,7 @@ $navy-light: #23372e;
     align-items: center;
     gap: 0.5rem;
     margin-top: auto;
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     color: $warning;
 
     .pulse-dot {
@@ -639,10 +639,10 @@ $navy-light: #23372e;
   .section-header {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
 
     h2 {
-      font-size: 1.25rem;
+      font-size: 1.375rem;
       font-weight: 700;
       color: var(--text-primary);
       margin: 0;
@@ -659,7 +659,7 @@ $navy-light: #23372e;
 .actions-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .action-card {
@@ -667,7 +667,7 @@ $navy-light: #23372e;
   padding: 1.25rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -724,7 +724,7 @@ $navy-light: #23372e;
     flex-direction: column;
 
     .action-title {
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       font-weight: 600;
       color: var(--text-primary);
     }
@@ -752,10 +752,10 @@ $navy-light: #23372e;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
 
     h2 {
-      font-size: 1.25rem;
+      font-size: 1.375rem;
       font-weight: 700;
       color: var(--text-primary);
       margin: 0;
@@ -776,7 +776,7 @@ $navy-light: #23372e;
 .activity-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   padding: 1rem;
   border-radius: 16px;
   transition: background 0.2s ease;
@@ -811,7 +811,7 @@ $navy-light: #23372e;
     flex-direction: column;
 
     .activity-title {
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       font-weight: 500;
       color: var(--text-primary);
     }
@@ -824,7 +824,7 @@ $navy-light: #23372e;
   }
 
   .activity-amount {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: $success;
   }
@@ -847,7 +847,7 @@ $navy-light: #23372e;
   }
 
   p {
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     margin: 0.25rem 0 0;
     opacity: 0.7;
   }
@@ -859,7 +859,7 @@ $navy-light: #23372e;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  gap: 0.75rem;
+  gap: 1rem;
   color: var(--text-muted);
 }
 
@@ -867,16 +867,16 @@ $navy-light: #23372e;
 // ANALYTICS SECTION
 // ========================================
 .analytics-section {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 
   .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
 
     h2 {
-      font-size: 1.25rem;
+      font-size: 1.375rem;
       font-weight: 700;
       color: var(--text-primary);
       margin: 0;
@@ -889,7 +889,7 @@ $navy-light: #23372e;
       button {
         padding: 0.5rem 1rem;
         border-radius: 10px;
-        font-size: 0.8125rem;
+        font-size: 0.75rem;
         font-weight: 500;
         border: 1px solid var(--border-color);
         color: var(--text-secondary);
@@ -923,7 +923,7 @@ $navy-light: #23372e;
 
   .chart-card {
     @include glass-card;
-    padding: 1.5rem;
+    padding: 2rem;
     @include glow($primary);
 
     .chart-header {
@@ -933,7 +933,7 @@ $navy-light: #23372e;
       margin-bottom: 1.25rem;
 
       h3 {
-        font-size: 0.9375rem;
+        font-size: 0.875rem;
         font-weight: 600;
         color: var(--text-primary);
         margin: 0;
@@ -941,7 +941,7 @@ $navy-light: #23372e;
 
       .chart-legend {
         display: flex;
-        gap: 1rem;
+        gap: 1.5rem;
 
         .legend-item {
           display: flex;
@@ -1028,11 +1028,11 @@ $navy-light: #23372e;
 
 @media (max-width: 600px) {
   .dashboard-hero {
-    padding: 1.5rem;
+    padding: 2rem;
     border-radius: 20px;
 
     .hero-content .greeting h1 {
-      font-size: 1.75rem;
+      font-size: 2rem;
     }
 
     .hero-actions {
