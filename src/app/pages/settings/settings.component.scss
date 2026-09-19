@@ -1,0 +1,504 @@
+:host {
+  display: block;
+}
+
+.settings-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.settings-header {
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .subtitle {
+    color: #6b7280;
+    margin: 0;
+  }
+}
+
+.settings-content {
+  display: flex;
+  gap: 2rem;
+}
+
+// Settings Navigation
+.settings-nav {
+  width: 240px;
+  flex-shrink: 0;
+
+  .nav-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #6b7280;
+    transition: all 0.2s;
+    text-align: left;
+    margin-bottom: 0.25rem;
+
+    mat-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+    }
+
+    &:hover {
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    &.active {
+      background: linear-gradient(135deg, #01925a 0%, #017a4b 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(1, 146, 90, 0.3);
+
+      mat-icon {
+        color: white;
+      }
+    }
+  }
+}
+
+// Settings Panel
+.settings-panel {
+  flex: 1;
+  background: white;
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f3f4f6;
+  min-height: 500px;
+}
+
+.panel-content {
+  padding: 2rem;
+  color: #111827;
+}
+
+.panel-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.25rem 0;
+  }
+
+  p {
+    color: #6b7280;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  button {
+    background: linear-gradient(135deg, #01925a 0%, #017a4b 100%);
+  }
+}
+
+// Form Styles
+.form-row {
+  display: flex;
+  gap: 1rem;
+
+  .flex-1 {
+    flex: 1;
+  }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background: #f9fafb;
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #e5e7eb !important;
+    }
+
+    .mat-mdc-form-field-icon-prefix {
+      color: #9ca3af;
+      padding-right: 0.5rem;
+    }
+  }
+}
+
+.form-actions {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f3f4f6;
+
+  button {
+    min-width: 140px;
+
+    &[color="primary"] {
+      background: linear-gradient(135deg, #01925a 0%, #017a4b 100%);
+    }
+  }
+}
+
+// Branding Section
+.branding-section {
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 1rem 0;
+  }
+}
+
+.logo-upload {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #f3f4f6;
+
+  .current-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    background: #f9fafb;
+    border: 2px dashed #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .logo-placeholder mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      color: #d1d5db;
+    }
+  }
+
+  .upload-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    p {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    button {
+      align-self: flex-start;
+    }
+  }
+}
+
+.color-picker {
+  margin-bottom: 1.5rem;
+
+  .color-options {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .color-option {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 3px solid transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+
+    mat-icon {
+      color: white;
+      font-size: 20px;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.selected {
+      border-color: #111827;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .custom-color {
+    width: 200px;
+  }
+}
+
+// Setting Cards
+.setting-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+
+  .setting-info {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+
+    mat-icon {
+      color: #0f7c5c;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+
+    h4 {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    p {
+      margin: 0.25rem 0 0;
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+  }
+
+  .threshold-input {
+    width: 100px;
+
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      background: white;
+    }
+  }
+}
+
+// Users Table
+.users-table {
+  margin-top: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #f3f4f6;
+
+  table {
+    width: 100%;
+  }
+
+  th.mat-header-cell {
+    background: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.85rem;
+  }
+
+  td.mat-cell {
+    padding: 1rem;
+  }
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0f7c5c 0%, #0ea5a4 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+
+    .user-name {
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .user-email {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+  }
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  &.tenantowner {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  &.shopmanager {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  &.cashier {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  &.stockkeeper {
+    background: #e6f5ee;
+    color: #3730a3;
+  }
+
+  &.viewer {
+    background: #f3f4f6;
+    color: #374151;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: #fee2e2;
+  color: #991b1b;
+
+  &.active {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  &.locked {
+    background: #fef3c7;
+    color: #92400e;
+  }
+}
+
+.delete-action {
+  color: #dc2626;
+}
+
+// Security Section
+.security-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #f3f4f6;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 1rem 0;
+  }
+}
+
+// Danger Zone
+.danger-zone {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #fef2f2;
+  border-radius: 12px;
+  border: 1px solid #fecaca;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #991b1b;
+    margin: 0 0 0.25rem 0;
+  }
+
+  p {
+    color: #7f1d1d;
+    font-size: 0.85rem;
+    margin: 0 0 1rem 0;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .settings-content {
+    flex-direction: column;
+  }
+
+  .settings-nav {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    .nav-item {
+      flex-shrink: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .logo-upload {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .upload-actions {
+      align-items: center;
+    }
+  }
+}

@@ -1,38 +1,539 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import '../src/custom-theme.scss';
+
+// Ensure Material Icons font is always applied to mat-icon elements
+.material-icons,
+.mat-ligature-font,
+mat-icon.mat-icon {
+  font-family: 'Material Icons' !important;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+}
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+  transition: background-color 0.3s ease;
+}
+body {
+  margin: 0;
+  font-family: 'Nunito Sans', "Helvetica Neue", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-// Setting the global colour variables
+// Market ledger theme: stock green, checkout teal, and practical amber.
 :root {
-    --primary-color: rgb(1, 146, 90);
-    --secondary-color: #FFC107;
-    --text-color: rgba(0, 0, 0, 0.8);
-    --background-color:rgba(163, 233, 206, 0.1);
+    // Brand colors
+    --primary-color: #0f7c5c;
+    --primary-dark: #075947;
+    --primary-light: #34c79a;
+    --secondary-color: #f6b343;
+
+    // Accent color for checkout and active states
+    --accent-color: #0ea5a4;
+    --accent-dark: #087f73;
+    --success-color: #1f9d55;
+    --warning-color: #f6b343;
+    --danger-color: #dc2626;
+
+    // Text colors
+    --text-color: #24332d;
+    --text-primary: #17231d;
+    --text-secondary: #627069;
+    --text-muted: #8a9a92;
+
+    // Background colors
+    --background-color: #f6faf7;
+    --bg-card: #ffffff;
+    --bg-dark: #edf5f0;
+
+    // Surface colors
+    --surface-color: #f8fbf9;
+    --surface-hover: #eef7f1;
+
+    // Border colors
+    --border-color: #dce8e0;
+    --border-color-light: #edf4ef;
+
+    // Sidebar
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #627069;
+    --sidebar-text-hover: #0f7c5c;
+    --sidebar-hover-bg: rgba(15, 124, 92, 0.1);
+    --sidebar-active-bg: linear-gradient(135deg, #0f7c5c 0%, #075947 100%);
+    --sidebar-active-text: #ffffff;
+
+    --primary: var(--primary-color);
+    --primary-dark-token: var(--primary-dark);
+    --primary-light-token: var(--primary-light);
+    --surface: var(--bg-card);
+    --background: var(--background-color);
+    --border: var(--border-color);
+  }
+
+// Dark mode theme
+[data-theme="dark"] {
+    // Brand colors
+    --primary-color: #34c79a;
+    --primary-dark: #0f7c5c;
+    --primary-light: #78d9bd;
+    --secondary-color: #f6b343;
+
+    // Accent color
+    --accent-color: #39c7c4;
+    --accent-dark: #0ea5a4;
+    --success-color: #4ade80;
+    --warning-color: #f6b343;
+    --danger-color: #f87171;
+
+    // Text colors
+    --text-color: #eef7f1;
+    --text-primary: #f7fbf8;
+    --text-secondary: #c9d8d0;
+    --text-muted: #94a69d;
+
+    // Background colors
+    --background-color: #101713;
+    --bg-card: rgba(23, 35, 30, 0.96);
+    --bg-dark: #15201b;
+
+    // Surface colors
+    --surface-color: rgba(34, 52, 45, 0.72);
+    --surface-hover: rgba(43, 68, 57, 0.74);
+
+    // Border colors
+    --border-color: rgba(142, 171, 156, 0.24);
+    --border-color-light: rgba(142, 171, 156, 0.14);
+
+    // Sidebar
+    --sidebar-bg: #14211b;
+    --sidebar-text: #a9bbb2;
+    --sidebar-text-hover: #34c79a;
+    --sidebar-hover-bg: rgba(15, 124, 92, 0.15);
+    --sidebar-active-bg: linear-gradient(135deg, #34c79a 0%, #0f7c5c 100%);
+    --sidebar-active-text: #ffffff;
   }
 
 // Applying the global color variables
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
-    color: var(--primary-color);
+    color: var(--text-primary);
   }
-  
+
   button {
     background-color: var(--primary-color);
     color: white;
   }
-  
-  
+
+// ========================================
+// GLOBAL DARK THEME PAGE OVERRIDES
+// ========================================
+
+// Page containers - apply dark theme to all pages
+.settings-container,
+.inventory-container,
+.pos-container,
+.store-container,
+.users-container,
+.reports-container,
+.sales-container,
+.requests-container {
+  background: transparent;
+}
+
+// Page headers
+.page-header,
+.panel-header,
+.settings-header {
+  h1, h2 {
+    color: var(--text-primary) !important;
+    background: none !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+  }
+
+  .subtitle, p {
+    color: var(--text-secondary) !important;
+  }
+}
+
+// Global stat cards and info cards - only in main app layout, not auth pages
+.layout-container {
+  .stat-card,
+  .info-card,
+  .summary-card,
+  .data-card {
+    background: var(--bg-card) !important;
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.15) !important;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    &.warning {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.1) 100%) !important;
+      border-color: rgba(245, 158, 11, 0.5) !important;
+    }
+
+    &.danger {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%) !important;
+      border-color: rgba(239, 68, 68, 0.5) !important;
+    }
+
+    .stat-value,
+    .value,
+    .card-value {
+      color: var(--text-primary) !important;
+    }
+
+    .stat-label,
+    .label,
+    .card-label {
+      color: var(--text-secondary) !important;
+    }
+  }
+}
+
+// Settings panel and similar panels
+.settings-panel,
+.content-panel,
+.main-panel {
+  background: var(--bg-card) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+  .panel-content {
+    color: var(--text-primary);
+  }
+}
+
+// Navigation items (for settings and other pages, not sidebar)
+.settings-nav .nav-item,
+.panel-nav .menu-item {
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+  }
+
+  &.active {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(1, 146, 90, 0.3);
+  }
+}
+
+// Products panel and similar panels (POS, inventory grids)
+.products-panel {
+  background: transparent !important;
+}
+
+// Product cards
+.product-card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+
+  &:hover:not(.disabled) {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 12px 28px rgba(15, 124, 92, 0.25);
+  }
+
+  .product-name,
+  .product-title {
+    color: var(--text-primary) !important;
+  }
+
+  .product-price,
+  .price {
+    color: var(--primary-light) !important;
+  }
+
+  .product-stock,
+  .stock {
+    color: var(--text-secondary) !important;
+  }
+}
+
+// Category tabs
+.category-tabs .category-tab,
+.filter-tab,
+.tab-button {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-secondary) !important;
+
+  &:hover {
+    background: var(--surface-hover) !important;
+    border-color: var(--primary-light) !important;
+    color: var(--primary-light) !important;
+  }
+
+  &.active {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%) !important;
+    color: white !important;
+    border-color: transparent !important;
+    box-shadow: 0 4px 12px rgba(15, 124, 92, 0.35);
+  }
+}
+
+// Cart panel styling
+.cart-panel,
+.order-panel,
+.checkout-panel {
+  background: var(--bg-dark) !important;
+  border-left: 1px solid var(--border-color);
+}
+
+// Search fields
+.search-field,
+.filter-field {
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background: var(--bg-card) !important;
+      border-radius: 12px;
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--border-color) !important;
+    }
+
+    .mat-mdc-input-element {
+      color: var(--text-primary) !important;
+    }
+
+    .mat-mdc-form-field-icon-prefix {
+      color: var(--text-muted) !important;
+    }
+  }
+}
+
+// Table styling
+.mat-mdc-table,
+.data-table,
+table {
+  background: transparent !important;
+
+  th,
+  .mat-mdc-header-cell {
+    background: var(--surface-color) !important;
+    color: var(--text-secondary) !important;
+    border-bottom-color: var(--border-color) !important;
+    transition: all 0.3s ease;
+  }
+
+  td,
+  .mat-mdc-cell {
+    color: var(--text-primary) !important;
+    border-bottom-color: var(--border-color-light) !important;
+    transition: all 0.3s ease;
+  }
+
+  tr:hover,
+  .mat-mdc-row:hover {
+    background: var(--surface-hover) !important;
+  }
+}
+
+// Dark mode specific overrides
+[data-theme="dark"] {
+  .mat-mdc-dialog-container {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color);
+  }
+
+  .mat-mdc-menu-panel {
+    background: var(--bg-dark) !important;
+    border: 1px solid var(--border-color);
+  }
+
+  .mat-mdc-menu-item {
+    color: var(--text-primary) !important;
+
+    &:hover {
+      background: var(--surface-hover) !important;
+    }
+  }
+
+  .mat-mdc-paginator {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .mat-mdc-select-panel {
+    background: var(--bg-dark) !important;
+  }
+
+  .mat-mdc-option {
+    color: var(--text-primary) !important;
+
+    &:hover {
+      background: var(--surface-hover) !important;
+    }
+  }
+
+  .mat-mdc-form-field {
+    .mdc-text-field--outlined {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--border-color) !important;
+      }
+    }
+
+    .mat-mdc-input-element {
+      color: var(--text-primary) !important;
+    }
+
+    .mat-mdc-floating-label {
+      color: var(--text-secondary) !important;
+    }
+  }
+
+  .mat-mdc-text-field-wrapper {
+    background: var(--surface-color) !important;
+  }
+
+  // Stat cards icon backgrounds in dark mode stay vibrant
+  .stat-icon {
+    &.blue {
+      background: linear-gradient(135deg, #34c79a 0%, #0f7c5c 100%);
+    }
+    &.green {
+      background: linear-gradient(135deg, #34d399 0%, #22c55e 100%);
+    }
+    &.orange {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    }
+    &.red {
+      background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+    }
+  }
+}
+
+// Empty state styling
+.empty-state,
+.no-data {
+  color: var(--text-secondary) !important;
+
+  mat-icon {
+    color: var(--text-muted) !important;
+  }
+}
+
+// Buttons with icons
+button.filter-btn,
+button.export-btn {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+
+  &:hover {
+    background: var(--surface-hover) !important;
+  }
+}
+
+// Action cards
+.action-card,
+.quick-action {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  span,
+  .action-label {
+    color: var(--text-primary) !important;
+  }
+}
+
+// Help card styling
+.help-card {
+  background: var(--surface-color) !important;
+  border: 1px solid var(--border-color) !important;
+
+  span {
+    color: var(--text-primary) !important;
+  }
+
+  p {
+    color: var(--text-muted) !important;
+  }
+}
+
+// Badge and chip styling
+.badge,
+.chip,
+.tag {
+  background: var(--surface-color) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+
+  &.success {
+    background: rgba(34, 197, 94, 0.2) !important;
+    color: #4ade80 !important;
+    border-color: rgba(34, 197, 94, 0.3) !important;
+  }
+
+  &.warning {
+    background: rgba(245, 158, 11, 0.2) !important;
+    color: #fbbf24 !important;
+    border-color: rgba(245, 158, 11, 0.3) !important;
+  }
+
+  &.danger, &.error {
+    background: rgba(239, 68, 68, 0.2) !important;
+    color: #f87171 !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+  }
+}
+
+// Form labels and hints
+.mat-mdc-form-field-hint,
+.form-hint,
+label {
+  color: var(--text-secondary) !important;
+}
+
+// Dividers
+hr,
+.divider,
+.mat-divider {
+  border-color: var(--border-color) !important;
+}
+
+
 

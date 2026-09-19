@@ -1,0 +1,266 @@
+.dialog-container {
+  max-width: 100%;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  transition: border-color 0.3s ease;
+
+  .header-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    mat-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+      color: white;
+    }
+
+    &.primary {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      box-shadow: 0 4px 12px rgba(1, 146, 90, 0.3);
+    }
+  }
+
+  .header-content {
+    flex: 1;
+
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    p {
+      margin: 0.25rem 0 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+  }
+
+  .close-btn {
+    color: var(--text-muted);
+
+    &:hover {
+      color: var(--text-primary);
+      background: var(--surface-hover);
+    }
+  }
+}
+
+.dialog-body {
+  padding: 1.5rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  background: var(--bg-card);
+  transition: background-color 0.3s ease;
+}
+
+.form-section {
+  margin-bottom: 1.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+
+  .flex-1 {
+    flex: 1;
+  }
+
+  .flex-2 {
+    flex: 2;
+  }
+}
+
+.form-group {
+  margin-bottom: 0.75rem;
+
+  label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background: var(--surface-color);
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--border-color) !important;
+    }
+
+    .mat-mdc-form-field-icon-prefix {
+      color: var(--text-muted);
+      padding-right: 0.5rem;
+    }
+
+    .mat-mdc-input-element {
+      color: var(--text-primary) !important;
+    }
+  }
+}
+
+.profit-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface-color);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+
+  mat-icon {
+    color: var(--primary-color);
+  }
+
+  strong {
+    &.positive {
+      color: #16a34a;
+    }
+
+    &.negative {
+      color: #dc2626;
+    }
+  }
+}
+
+.tax-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface-color);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin-top: 1.5rem;
+
+  mat-icon {
+    color: #f59e0b;
+  }
+
+  strong {
+    color: var(--text-primary);
+  }
+}
+
+// Create new category option styling
+.create-new-option {
+  color: var(--primary-color);
+  font-weight: 500;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+}
+
+.new-category-input {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+
+  mat-form-field {
+    flex: 1;
+  }
+
+  .cancel-new-btn {
+    margin-top: 4px;
+    color: var(--text-secondary);
+
+    &:hover {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-card);
+  transition: all 0.3s ease;
+
+  button[mat-stroked-button] {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    background: transparent;
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+  }
+
+  .submit-btn {
+    min-width: 130px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+
+    &:disabled {
+      opacity: 0.7;
+    }
+
+    mat-spinner {
+      display: inline-block;
+
+      ::ng-deep circle {
+        stroke: white !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

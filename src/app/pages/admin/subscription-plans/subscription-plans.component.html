@@ -1,0 +1,101 @@
+<div class="subscription-plans-page">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Subscription Plans</h1>
+      <p class="subtitle">Manage pricing plans and features for your platform</p>
+    </div>
+    <div class="header-actions">
+      <button mat-flat-button color="primary" class="add-btn" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        Add Plan
+      </button>
+    </div>
+  </header>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- Plans Grid -->
+  <div class="plans-grid" *ngIf="!isLoading">
+    <div class="plan-card" *ngFor="let plan of plans" [ngClass]="getPlanColor(plan.code)">
+      
+      <!-- Top Accent Bar -->
+      <div class="accent-bar"></div>
+
+      <!-- Status Toggle -->
+      <div class="card-toggle">
+        <mat-slide-toggle [checked]="plan.isActive" 
+                          (change)="togglePlanStatus(plan)"
+                          color="primary">
+        </mat-slide-toggle>
+      </div>
+
+      <!-- Plan Name -->
+      <h3 class="plan-name">{{ plan.name }}</h3>
+
+      <!-- Price -->
+      <div class="plan-price">
+        <span class="price-amount" *ngIf="plan.price > 0">₦{{ plan.price | number }}</span>
+        <span class="price-amount free" *ngIf="plan.price === 0">Free</span>
+        <span class="price-cycle" *ngIf="plan.price > 0">/ {{ plan.billingCycle === 'Monthly' ? 'Month' : plan.billingCycle }}</span>
+      </div>
+
+      <!-- Description -->
+      <p class="plan-description">{{ plan.description }}</p>
+
+      <!-- Features -->
+      <div class="plan-features" *ngIf="plan.features && plan.features.length > 0">
+        <div class="feature-row" *ngFor="let feature of plan.features">
+          <mat-icon class="feature-check">check</mat-icon>
+          <span>{{ feature }}</span>
+        </div>
+      </div>
+
+      <!-- Limits -->
+      <div class="plan-limits">
+        <div class="limit-row">
+          <mat-icon>store</mat-icon>
+          <span>{{ formatLimit(plan.maxShops) }} Shops</span>
+        </div>
+        <div class="limit-row">
+          <mat-icon>inventory_2</mat-icon>
+          <span>{{ formatLimit(plan.maxProducts) }} Products</span>
+        </div>
+        <div class="limit-row">
+          <mat-icon>people</mat-icon>
+          <span>{{ formatLimit(plan.maxUsers) }} Users</span>
+        </div>
+      </div>
+
+      <!-- Popular Badge -->
+      <div class="popular-tag" *ngIf="getPlanColor(plan.code) === 'professional'">
+        Most Popular
+      </div>
+
+      <!-- Actions -->
+      <div class="plan-actions">
+        <button class="action-btn edit" (click)="openEditDialog(plan)">
+          <mat-icon>edit</mat-icon> Edit Plan
+        </button>
+        <button class="action-btn delete" (click)="deletePlan(plan)" matTooltip="Delete plan">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && plans.length === 0">
+    <div class="empty-icon">
+      <mat-icon>loyalty</mat-icon>
+    </div>
+    <h3>No plans configured</h3>
+    <p>Create your first subscription plan to get started</p>
+    <button mat-flat-button color="primary" class="add-btn" (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon>
+      Create Plan
+    </button>
+  </div>
+</div>

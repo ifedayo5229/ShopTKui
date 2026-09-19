@@ -1,0 +1,226 @@
+<div class="inventory-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1>Inventory</h1>
+        <p class="subtitle">Manage your product stock and inventory levels</p>
+      </div>
+      <div class="header-actions">
+        <button mat-stroked-button class="filter-btn" (click)="toggleFilters()">
+          <mat-icon>filter_list</mat-icon>
+          Filters
+        </button>
+        <button mat-flat-button color="primary" class="add-btn" (click)="openAddProductDialog()">
+          <mat-icon>add</mat-icon>
+          Add Product
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon blue">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+      <div class="stat-content">
+        <span class="stat-value">{{ totalProducts }}</span>
+        <span class="stat-label">Total Products</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+      <div class="stat-content">
+        <span class="stat-value">{{ inStockCount }}</span>
+        <span class="stat-label">In Stock</span>
+      </div>
+    </div>
+    <div class="stat-card warning">
+      <div class="stat-icon orange">
+        <mat-icon>warning</mat-icon>
+      </div>
+      <div class="stat-content">
+        <span class="stat-value">{{ lowStockCount }}</span>
+        <span class="stat-label">Low Stock</span>
+      </div>
+    </div>
+    <div class="stat-card danger">
+      <div class="stat-icon red">
+        <mat-icon>error</mat-icon>
+      </div>
+      <div class="stat-content">
+        <span class="stat-value">{{ outOfStockCount }}</span>
+        <span class="stat-label">Out of Stock</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Panel -->
+  <div class="filters-panel" *ngIf="showFilters" [@slideDown]>
+    <div class="filter-row">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Search Products</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" placeholder="Search by name, SKU...">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="selectedCategory" (selectionChange)="onFilterChange()">
+          <mat-option value="">All Categories</mat-option>
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Stock Status</mat-label>
+        <mat-select [(ngModel)]="selectedStockStatus" (selectionChange)="onFilterChange()">
+          <mat-option value="">All Status</mat-option>
+          <mat-option value="in_stock">In Stock</mat-option>
+          <mat-option value="low_stock">Low Stock</mat-option>
+          <mat-option value="out_of_stock">Out of Stock</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-stroked-button (click)="clearFilters()" class="clear-btn">
+        <mat-icon>clear</mat-icon>
+        Clear
+      </button>
+    </div>
+  </div>
+
+  <!-- Inventory Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="inventory-table">
+      <!-- Product Column -->
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="product-cell">
+            <div class="product-image">
+              <mat-icon>inventory_2</mat-icon>
+            </div>
+            <div class="product-info">
+              <span class="product-name">{{ item.product }}</span>
+              <span class="product-sku">SKU: {{ item.sku }}</span>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Category Column -->
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let item">
+          <span class="category-badge">{{ item.category || 'Uncategorized' }}</span>
+        </td>
+      </ng-container>
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="price-cell">
+            <span class="selling-price">{{ item.price | currency:'₦' }}</span>
+            <span class="cost-price">Cost: {{ item.costPrice | currency:'₦' }}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Stock Column -->
+      <ng-container matColumnDef="stock">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="stock-cell">
+            <span class="stock-quantity" [class]="getStockClass(item)">
+              {{ item.quantity }}
+            </span>
+            <span class="stock-threshold" *ngIf="item.status === 'Low Stock'">
+              Min: {{ item.reorderLevel }}
+            </span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let item">
+          <span class="status-badge" [class]="getStatusClass(item)">
+            {{ getStatusText(item) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="action-buttons">
+            <button mat-icon-button matTooltip="Add Stock" (click)="openStockInDialog(item)" class="action-add">
+              <mat-icon>add_circle</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Remove Stock" (click)="openStockOutDialog(item)" class="action-remove">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="View History" (click)="viewHistory(item)">
+              <mat-icon>history</mat-icon>
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="editProduct(item)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Product</span>
+              </button>
+              <button mat-menu-item (click)="viewDetails(item)">
+                <mat-icon>visibility</mat-icon>
+                <span>View Details</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item disabled class="delete-disabled">
+                <mat-icon>delete</mat-icon>
+                <span>Delete (Disabled)</span>
+              </button>
+            </mat-menu>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+          [class.low-stock-row]="row.status === 'Low Stock'"
+          [class.out-of-stock-row]="row.status === 'Out of Stock' || row.quantity === 0"></tr>
+
+      <!-- No Data Row -->
+      <tr class="mat-row no-data-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          <div class="no-data">
+            <mat-icon>inbox</mat-icon>
+            <span>No products found</span>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Loading -->
+    <div class="loading-container" *ngIf="isLoading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  </div>
+
+  <!-- Paginator -->
+  <mat-paginator [length]="totalItems"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="[10, 25, 50, 100]"
+                 (page)="onPageChange($event)"
+                 showFirstLastButtons>
+  </mat-paginator>
+</div>

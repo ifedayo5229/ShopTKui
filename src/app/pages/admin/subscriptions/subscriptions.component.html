@@ -1,0 +1,263 @@
+<div class="subscriptions-page">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Subscription Management</h1>
+      <p class="subtitle">Manage tenant subscriptions, view usage, and handle billing</p>
+    </div>
+  </header>
+
+  <!-- Expired Trials Alert -->
+  <div class="alert-card danger" *ngIf="expiredTrials.length > 0">
+    <div class="alert-content">
+      <mat-icon>hourglass_disabled</mat-icon>
+      <div class="alert-text">
+        <strong>{{ expiredTrials.length }} expired free trial{{ expiredTrials.length > 1 ? 's' : '' }}</strong>
+        <span>These users have exceeded their 1-month trial period</span>
+      </div>
+    </div>
+    <button class="action-btn danger" 
+            (click)="suspendAllExpiredTrials()" 
+            [disabled]="isBatchProcessing">
+      <mat-icon>block</mat-icon>
+      Suspend All
+    </button>
+  </div>
+
+  <!-- Expired Subscriptions Alert -->
+  <div class="alert-card warning" *ngIf="expiredSubscriptions.length > 0">
+    <div class="alert-content">
+      <mat-icon>event_busy</mat-icon>
+      <div class="alert-text">
+        <strong>{{ expiredSubscriptions.length }} expired subscription{{ expiredSubscriptions.length > 1 ? 's' : '' }}</strong>
+        <span>These paid subscriptions have ended</span>
+      </div>
+    </div>
+    <button class="action-btn warning" 
+            (click)="suspendAllExpiredSubscriptions()" 
+            [disabled]="isBatchProcessing">
+      <mat-icon>block</mat-icon>
+      Suspend All
+    </button>
+  </div>
+
+  <!-- Expiring Soon Alert -->
+  <div class="alert-card info" *ngIf="expiringSubscriptions.length > 0">
+    <div class="alert-content">
+      <mat-icon>schedule</mat-icon>
+      <div class="alert-text">
+        <strong>{{ expiringSubscriptions.length }} subscription{{ expiringSubscriptions.length > 1 ? 's' : '' }} expiring soon</strong>
+        <span>within the next 7 days</span>
+      </div>
+    </div>
+    <button class="action-btn info" (click)="onStatusFilterChange('Trial')">View Details</button>
+  </div>
+
+  <!-- Status Filter Tabs -->
+  <div class="filter-tabs">
+    <button *ngFor="let status of statusOptions"
+            [class.active]="statusFilter === status.value"
+            (click)="onStatusFilterChange(status.value)">
+      {{ status.label }}
+    </button>
+  </div>
+
+  <!-- Batch Actions Toolbar -->
+  <div class="batch-toolbar" *ngIf="selection.selected.length > 0">
+    <span class="selection-count">{{ selection.selected.length }} selected</span>
+    <button class="batch-btn" (click)="batchSuspendSelected()" [disabled]="isBatchProcessing">
+      <mat-icon>block</mat-icon>
+      Suspend Selected
+    </button>
+    <button class="batch-btn clear" (click)="selection.clear()">
+      <mat-icon>close</mat-icon>
+      Clear
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- Subscriptions Table -->
+  <div class="table-container" *ngIf="!isLoading">
+    <table mat-table [dataSource]="dataSource" class="subscriptions-table">
+      
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Tenant Column -->
+      <ng-container matColumnDef="tenant">
+        <th mat-header-cell *matHeaderCellDef>Tenant</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="tenant-cell">
+            <div class="tenant-avatar">{{ getInitials(row.tenantName) }}</div>
+            <div class="tenant-info">
+              <span class="tenant-name">{{ row.tenantName }}</span>
+              <span class="tenant-email">{{ row.tenantEmail }}</span>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Plan Column -->
+      <ng-container matColumnDef="plan">
+        <th mat-header-cell *matHeaderCellDef>Plan</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="plan-cell">
+            <span class="plan-badge" [class]="row.planCode?.toLowerCase() || 'free'">
+              <mat-icon>{{ getPlanIcon(row.planCode) }}</mat-icon>
+              {{ row.planName || 'Free' }}
+            </span>
+            <span class="plan-price">{{ formatPrice(row.price) }}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="status-cell">
+            <span class="status-badge" [class]="getStatusColor(row.status)">
+              <mat-icon>{{ getStatusIcon(row.status) }}</mat-icon>
+              {{ row.status }}
+            </span>
+            <span class="auto-renew" *ngIf="row.autoRenew">
+              <mat-icon>autorenew</mat-icon>
+              Auto-renew
+            </span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Dates Column -->
+      <ng-container matColumnDef="dates">
+        <th mat-header-cell *matHeaderCellDef>Period</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="dates-cell">
+            <div class="date-range">
+              <span>{{ formatDate(row.startDate) }}</span>
+              <mat-icon>arrow_forward</mat-icon>
+              <span>{{ formatDate(row.endDate) }}</span>
+            </div>
+            <div class="days-remaining" 
+                 [class]="getDaysRemainingClass(getDaysRemaining(row.endDate))"
+                 *ngIf="row.status === 'Active' || row.status === 'Trial' || row.status === 'PendingActivation'">
+              {{ getDaysRemaining(row.endDate) }} days left
+            </div>
+            <div class="days-remaining critical" *ngIf="row.status === 'Expired'">
+              Expired
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Usage Column -->
+      <ng-container matColumnDef="usage">
+        <th mat-header-cell *matHeaderCellDef>Usage</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="usage-cell">
+            <div class="usage-item">
+              <mat-icon>store</mat-icon>
+              <span>{{ row.currentShops || 0 }}/{{ formatLimit(row.maxShops) }}</span>
+            </div>
+            <div class="usage-item">
+              <mat-icon>inventory_2</mat-icon>
+              <span>{{ row.currentProducts || 0 }}/{{ formatLimit(row.maxProducts) }}</span>
+            </div>
+            <div class="usage-item">
+              <mat-icon>people</mat-icon>
+              <span>{{ row.currentUsers || 0 }}/{{ formatLimit(row.maxUsers) }}</span>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <div class="actions-cell">
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-btn">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <!-- Activate -->
+              <button mat-menu-item *ngIf="row.status === 'Suspended' || row.status === 'Expired' || row.status === 'PendingActivation'" 
+                      (click)="activateSubscription(row)">
+                <mat-icon class="text-success">check_circle</mat-icon>
+                <span>Activate Subscription</span>
+              </button>
+              
+              <!-- Suspend -->
+              <button mat-menu-item *ngIf="row.status === 'Active' || row.status === 'Trial'"
+                      (click)="suspendSubscription(row)">
+                <mat-icon class="text-danger">pause_circle</mat-icon>
+                <span>Suspend (Lock Out)</span>
+              </button>
+
+              <!-- Extend Trial -->
+              <button mat-menu-item *ngIf="row.status === 'Trial'"
+                      (click)="extendTrial(row)">
+                <mat-icon class="text-info">more_time</mat-icon>
+                <span>Extend Trial</span>
+              </button>
+
+              <!-- End Free Trial -->
+              <button mat-menu-item *ngIf="row.status === 'Trial'"
+                      (click)="endFreeTrial(row)">
+                <mat-icon class="text-warning">hourglass_disabled</mat-icon>
+                <span>End Free Trial</span>
+              </button>
+
+              <mat-divider></mat-divider>
+
+              <!-- View Tenant -->
+              <button mat-menu-item [routerLink]="['/home/admin/tenants', row.tenantId]">
+                <mat-icon>visibility</mat-icon>
+                <span>View Tenant Details</span>
+              </button>
+            </mat-menu>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+          [class.suspended-row]="row.status === 'Suspended'"
+          [class.expired-row]="row.status === 'Expired'"
+          [class.pending-row]="row.status === 'PendingActivation'"
+          [class.selected-row]="selection.isSelected(row)"></tr>
+    </table>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="dataSource.data.length === 0">
+      <mat-icon>subscriptions</mat-icon>
+      <h3>No subscriptions found</h3>
+      <p>Try adjusting your filter criteria</p>
+    </div>
+
+    <!-- Paginator -->
+    <mat-paginator [length]="totalCount"
+                   [pageSize]="pageSize"
+                   [pageIndex]="currentPage"
+                   [pageSizeOptions]="[10, 20, 50, 100]"
+                   (page)="onPageChange($event)"
+                   showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>

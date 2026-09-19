@@ -1,0 +1,160 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-icon view">
+      <mat-icon>inventory_2</mat-icon>
+    </div>
+    <div class="header-content">
+      <h2>Product Details</h2>
+      <p>{{ product.product }}</p>
+    </div>
+    <button mat-icon-button class="close-btn" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="dialog-body">
+    <!-- Product Header -->
+    <div class="product-header">
+      <div class="product-image">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+      <div class="product-title">
+        <h3>{{ product.product }}</h3>
+        <span class="sku">SKU: {{ product.sku }}</span>
+        <span class="status-badge" [class]="getStatusClass()">{{ product.status }}</span>
+      </div>
+    </div>
+
+    <!-- Info Grid -->
+    <div class="info-grid">
+      <!-- Stock Card -->
+      <div class="info-card stock-card" [class]="getStockClass()">
+        <div class="card-icon">
+          <mat-icon>inventory</mat-icon>
+        </div>
+        <div class="card-content">
+          <span class="card-value">{{ product.quantity }}</span>
+          <span class="card-label">Current Stock</span>
+        </div>
+      </div>
+
+      <!-- Selling Price Card -->
+      <div class="info-card price-card">
+        <div class="card-icon">
+          <mat-icon>sell</mat-icon>
+        </div>
+        <div class="card-content">
+          <span class="card-value">{{ formatCurrency(product.price) }}</span>
+          <span class="card-label">Selling Price</span>
+        </div>
+      </div>
+
+      <!-- Cost Price Card -->
+      <div class="info-card cost-card">
+        <div class="card-icon">
+          <mat-icon>payments</mat-icon>
+        </div>
+        <div class="card-content">
+          <span class="card-value">{{ formatCurrency(product.costPrice) }}</span>
+          <span class="card-label">Cost Price</span>
+        </div>
+      </div>
+
+      <!-- Profit Card -->
+      <div class="info-card profit-card">
+        <div class="card-icon">
+          <mat-icon>trending_up</mat-icon>
+        </div>
+        <div class="card-content">
+          <span class="card-value">{{ formatCurrency(getProfit()) }}</span>
+          <span class="card-label">Profit per Unit</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details Sections -->
+    <div class="details-section">
+      <h4>Product Information</h4>
+      <div class="details-grid">
+        <div class="detail-item">
+          <span class="detail-label">Category</span>
+          <span class="detail-value">{{ product.category || 'Uncategorized' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Barcode</span>
+          <span class="detail-value">{{ product.barcode || 'Not set' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Low Stock Threshold</span>
+          <span class="detail-value">{{ product.reorderLevel }} units</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Status</span>
+          <span class="detail-value">{{ product.isActive ? 'Active' : 'Inactive' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-section" *ngIf="product.description">
+      <h4>Description</h4>
+      <p class="description-text">{{ product.description }}</p>
+    </div>
+
+    <!-- Profit Analysis -->
+    <div class="profit-analysis" *ngIf="getProfitMargin() !== null">
+      <div class="analysis-header">
+        <mat-icon>analytics</mat-icon>
+        <h4>Profit Analysis</h4>
+      </div>
+      <div class="analysis-content">
+        <div class="analysis-item">
+          <span class="analysis-label">Profit Margin</span>
+          <span class="analysis-value" [class.positive]="getProfitMargin()! > 0" [class.negative]="getProfitMargin()! < 0">
+            {{ getProfitMargin() | number:'1.1-1' }}%
+          </span>
+        </div>
+        <div class="analysis-item">
+          <span class="analysis-label">Profit per Unit</span>
+          <span class="analysis-value positive">{{ formatCurrency(getProfit()) }}</span>
+        </div>
+        <div class="analysis-item">
+          <span class="analysis-label">Potential Revenue</span>
+          <span class="analysis-value">{{ formatCurrency(product.price * product.quantity) }}</span>
+        </div>
+        <div class="analysis-item">
+          <span class="analysis-label">Potential Profit</span>
+          <span class="analysis-value positive">{{ formatCurrency(getProfit() * product.quantity) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stock History -->
+    <div class="details-section dates-section">
+      <h4>Stock History</h4>
+      <div class="dates-grid">
+        <div class="date-item" *ngIf="product.lastRestockedDate">
+          <mat-icon>add_circle</mat-icon>
+          <div class="date-content">
+            <span class="date-label">Last Restocked</span>
+            <span class="date-value">{{ product.lastRestockedDate | date:'MMM d, y' }}</span>
+          </div>
+        </div>
+        <div class="date-item" *ngIf="product.lastSoldDate">
+          <mat-icon>remove_circle</mat-icon>
+          <div class="date-content">
+            <span class="date-label">Last Sold</span>
+            <span class="date-value">{{ product.lastSoldDate | date:'MMM d, y' }}</span>
+          </div>
+        </div>
+        <div class="date-item empty" *ngIf="!product.lastRestockedDate && !product.lastSoldDate">
+          <mat-icon>info</mat-icon>
+          <span>No stock history available</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-flat-button color="primary" (click)="onClose()">Close</button>
+  </div>
+</div>

@@ -1,0 +1,166 @@
+.dialog-container {
+  max-width: 100%;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid #f3f4f6;
+
+  .header-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    mat-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+      color: white;
+    }
+
+    &.success {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    }
+  }
+
+  .header-content {
+    flex: 1;
+
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    p {
+      margin: 0.25rem 0 0;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+  }
+
+  .close-btn {
+    color: #9ca3af;
+
+    &:hover {
+      color: #6b7280;
+    }
+  }
+}
+
+.dialog-body {
+  padding: 1.5rem;
+}
+
+.product-info {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .label {
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    .value {
+      font-weight: 600;
+      color: #111827;
+    }
+  }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background: #f9fafb;
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #e5e7eb !important;
+    }
+
+    .mat-mdc-form-field-icon-prefix {
+      color: #9ca3af;
+      padding-right: 0.5rem;
+    }
+  }
+}
+
+.preview-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #eff6ff;
+  border-radius: 10px;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  font-size: 0.9rem;
+
+  mat-icon {
+    color: #3b82f6;
+  }
+
+  strong {
+    color: #1e40af;
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.5rem;
+  border-top: 1px solid #f3f4f6;
+
+  .submit-btn {
+    min-width: 120px;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+
+    &:disabled {
+      opacity: 0.7;
+    }
+
+    mat-spinner {
+      display: inline-block;
+
+      ::ng-deep circle {
+        stroke: white !important;
+      }
+    }
+  }
+}

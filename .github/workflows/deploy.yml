@@ -1,0 +1,120 @@
+name: Build and deploy frontend
+
+# Same shape as the API pipeline: build on a GitHub-hosted runner, deploy through a
+# self-hosted runner on the Windows server.
+#
+# This is simpler than the API deploy - the output is static files, so there is no app pool
+# to stop, no file locks to release and no server-side state to preserve. The whole site
+# directory can be mirrored.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18.x'
+  SITE_PATH: 'C:\inetpub\shoptk-web'
+  # Angular writes here, not to dist/ - see outputPath in angular.json. Deploying dist/
+  # itself would publish a folder containing shoptk rather than the site, leaving no
+  # index.html at the site root.
+  BUILD_DIR: 'dist/shoptk'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npx ng build --configuration production
+
+      # The production configuration swaps environment.ts for environment.prod.ts. If that
+      # swap ever breaks, the bundle ships a localhost API URL - which resolves to each
+      # visitor's own machine, so every request fails for everyone but the developer. It
+      # looks perfect locally and is completely broken in production, so fail the build.
+      - name: Verify the production API URL was baked in
+        run: |
+          if grep -rq "localhost:44318" "${{ env.BUILD_DIR }}"/main*.js; then
+            echo "Build contains a localhost API URL - fileReplacements did not apply."
+            exit 1
+          fi
+          echo "Bundle API URL:"
+          grep -oh "http[s]\?://[^\"']*/api" "${{ env.BUILD_DIR }}"/main*.js | sort -u
+
+      - name: Verify web.config shipped
+        run: test -f "${{ env.BUILD_DIR }}/web.config" || { echo "web.config missing - SPA routes will 404 on refresh"; exit 1; }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: ${{ env.BUILD_DIR }}/
+          retention-days: 7
+
+  deploy:
+    needs: build
+    runs-on: [self-hosted, windows, shoptk]
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: web
+          path: incoming
+
+      - name: Deploy to IIS
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $site = '${{ env.SITE_PATH }}'
+
+          if (-not (Test-Path $site)) {
+            New-Item -ItemType Directory -Path $site -Force | Out-Null
+          }
+
+          # /MIR is safe here - unlike the API site there is no config, log or upload folder
+          # to protect, so a clean mirror is exactly what is wanted. Stale hashed bundles
+          # from previous builds get removed rather than accumulating.
+          robocopy incoming $site /MIR /NFL /NDL /NJH /NP /R:3 /W:2
+
+          # robocopy returns 0-7 on success; only 8 and above are failures.
+          if ($LASTEXITCODE -ge 8) { throw "robocopy failed with exit code $LASTEXITCODE" }
+          Write-Host "robocopy completed (exit $LASTEXITCODE)"
+          $global:LASTEXITCODE = 0
+
+      - name: Verify the site responds
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+
+          $deadline = (Get-Date).AddMinutes(2)
+          while ((Get-Date) -lt $deadline) {
+            try {
+              $r = Invoke-WebRequest 'http://localhost/' -UseBasicParsing -TimeoutSec 20
+              if ($r.StatusCode -eq 200) {
+                Write-Host "Frontend healthy: HTTP 200, $([math]::Round($r.RawContentLength/1KB,1)) KB"
+
+                # A 200 on / only proves IIS served index.html. Check a deep route too -
+                # that is what exercises the URL Rewrite fallback, and it is the thing that
+                # breaks when web.config is missing or the rewrite module is not installed.
+                $deep = Invoke-WebRequest 'http://localhost/home/dashboard' -UseBasicParsing -TimeoutSec 20
+                if ($deep.StatusCode -eq 200) {
+                  Write-Host 'SPA fallback working: deep route returns 200'
+                  exit 0
+                }
+              }
+            } catch {
+              Write-Host "not ready yet: $($_.Exception.Message)"
+            }
+            Start-Sleep -Seconds 5
+          }
+
+          throw 'Frontend did not return HTTP 200 within 2 minutes.'

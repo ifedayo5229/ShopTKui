@@ -1,0 +1,145 @@
+<div class="invoice-dialog">
+  <!-- Header with gradient -->
+  <div class="invoice-header">
+    <div class="header-left">
+      <div class="shop-badge">
+        <mat-icon>storefront</mat-icon>
+      </div>
+      <div class="shop-details">
+        <h1>{{ sale.shopName || 'Shop' }}</h1>
+        <span class="invoice-label">Sales Invoice</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="invoice-number-box">
+        <span class="label">Invoice #</span>
+        <span class="number">{{ sale.invoiceNumber }}</span>
+      </div>
+      <button mat-icon-button class="close-btn" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Invoice Content -->
+  <div class="invoice-content">
+    <!-- Customer & Sale Info Cards -->
+    <div class="info-cards">
+      <div class="info-card customer-card">
+        <div class="card-icon">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="card-content">
+          <span class="card-label">Customer</span>
+          <span class="card-value">{{ sale.customerName || 'Walk-in Customer' }}</span>
+          <span class="card-sub" *ngIf="sale.customerPhone">{{ sale.customerPhone }}</span>
+        </div>
+      </div>
+
+      <div class="info-card date-card">
+        <div class="card-icon">
+          <mat-icon>calendar_today</mat-icon>
+        </div>
+        <div class="card-content">
+          <span class="card-label">Date & Time</span>
+          <span class="card-value">{{ sale.saleDate | date:'MMM d, yyyy' }}</span>
+          <span class="card-sub">{{ sale.saleDate | date:'h:mm a' }}</span>
+        </div>
+      </div>
+
+      <div class="info-card payment-card">
+        <div class="card-icon payment">
+          <mat-icon>{{ getPaymentMethodIcon(sale.paymentMethod) }}</mat-icon>
+        </div>
+        <div class="card-content">
+          <span class="card-label">Payment</span>
+          <span class="card-value">{{ sale.paymentMethod }}</span>
+          <span class="card-sub status-paid">Paid</span>
+        </div>
+      </div>
+
+      <div class="info-card cashier-card">
+        <div class="card-icon">
+          <mat-icon>badge</mat-icon>
+        </div>
+        <div class="card-content">
+          <span class="card-label">Cashier</span>
+          <span class="card-value">{{ cashierName }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Items Table -->
+    <div class="items-container">
+      <div class="section-header">
+        <mat-icon>shopping_cart</mat-icon>
+        <span>Order Items</span>
+        <span class="item-count">{{ saleItems.length }} item(s)</span>
+      </div>
+      
+      <div class="items-list">
+        <div class="item-row header-row">
+          <span class="col-product">Product</span>
+          <span class="col-qty">Qty</span>
+          <span class="col-price">Price</span>
+          <span class="col-total">Total</span>
+        </div>
+        <div class="item-row" *ngFor="let item of saleItems">
+          <div class="col-product">
+            <span class="product-name">{{ item.productName }}</span>
+            <span class="product-sku">{{ item.productSKU || item.productSku }}</span>
+          </div>
+          <span class="col-qty">
+            <span class="qty-badge">{{ item.quantity }}</span>
+          </span>
+          <span class="col-price">{{ formatCurrency(item.unitPrice) }}</span>
+          <span class="col-total">{{ formatCurrency(item.totalPrice) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Totals Section -->
+    <div class="totals-container">
+      <div class="totals-grid">
+        <div class="total-line">
+          <span>Subtotal</span>
+          <span>{{ formatCurrency(sale.subTotal || sale.totalAmount) }}</span>
+        </div>
+        <div class="total-line discount">
+          <span>Discount</span>
+          <span>-{{ formatCurrency(sale.discount || 0) }}</span>
+        </div>
+        <div class="total-line">
+          <span>Tax</span>
+          <span>{{ formatCurrency(sale.tax || 0) }}</span>
+        </div>
+        <div class="total-line grand-total">
+          <span>Total Amount</span>
+          <span>{{ formatCurrency(sale.totalAmount) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="invoice-actions">
+    <div class="action-group">
+      <span class="action-label">Receipt</span>
+      <button mat-stroked-button class="action-btn" (click)="printReceipt()" [disabled]="isPrinting" matTooltip="Print Receipt">
+        <mat-icon>print</mat-icon>
+      </button>
+      <button mat-stroked-button class="action-btn" (click)="downloadReceipt()" [disabled]="isDownloading" matTooltip="Download Receipt">
+        <mat-icon>download</mat-icon>
+      </button>
+    </div>
+    <div class="action-group">
+      <span class="action-label">Invoice</span>
+      <button mat-stroked-button class="action-btn" (click)="printInvoice()" [disabled]="isPrinting" matTooltip="Print Invoice">
+        <mat-icon>print</mat-icon>
+      </button>
+      <button mat-flat-button class="action-btn download-btn" (click)="downloadInvoice()" [disabled]="isDownloading" matTooltip="Download Invoice">
+        <mat-icon>download</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

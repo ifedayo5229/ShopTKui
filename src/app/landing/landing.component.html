@@ -1,0 +1,531 @@
+<div class="landing-page">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <mat-icon>storefront</mat-icon>
+                </div>
+                <span class="logo-text">ShopTK</span>
+            </div>
+
+            <div class="nav-links">
+                <a (click)="scrollTo('features')">Features</a>
+                <a (click)="scrollTo('pricing')">Pricing</a>
+                <a (click)="scrollTo('testimonials')">Testimonials</a>
+                <a (click)="scrollTo('contact')">Contact</a>
+            </div>
+
+            <div class="nav-actions">
+                <button mat-button class="btn-login" (click)="navigateToLogin()">Log In</button>
+                <button class="btn-demo" (click)="openDemoModal()">Book a demo</button>
+            </div>
+
+            <button mat-icon-button class="mobile-menu-btn" [matMenuTriggerFor]="mobileMenu">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #mobileMenu="matMenu">
+                <button mat-menu-item (click)="scrollTo('features')">Features</button>
+                <button mat-menu-item (click)="scrollTo('pricing')">Pricing</button>
+                <button mat-menu-item (click)="scrollTo('testimonials')">Testimonials</button>
+                <button mat-menu-item (click)="scrollTo('contact')">Contact</button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="navigateToLogin()">Log In</button>
+                <button mat-menu-item (click)="navigateToRegister()">Get Started</button>
+            </mat-menu>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+            <div class="grid-pattern"></div>
+        </div>
+
+        <div class="hero-container">
+            <div class="hero-header">
+                <div class="trusted-badge">
+                    <div class="pulse-dot"></div>
+                    <span>Trusted by 5,000+ businesses worldwide</span>
+                </div>
+
+                <h1>Streamline Your <span class="gradient-text">Business Operations</span></h1>
+
+                <p class="hero-subtitle">
+                    The modern platform for inventory management, point of sale, and real-time analytics. Built for businesses that want to grow smarter.
+                </p>
+
+                <div class="hero-cta">
+                    <button class="btn-primary" (click)="navigateToRegister()">Get Started Free</button>
+                    <button class="btn-secondary" (click)="openDemoModal()">
+                        <mat-icon>play_circle</mat-icon>
+                        Book a demo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Preview -->
+            <div class="dashboard-showcase">
+                <div class="dashboard-main">
+                    <div class="dashboard-header">
+                        <div class="window-controls">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="search-bar">
+                            <mat-icon>search</mat-icon>
+                            <span>Search products, sales, reports...</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-body">
+                        <div class="dashboard-sidebar">
+                            <div class="sidebar-header">
+                                <div class="user-avatar">JD</div>
+                                <div class="user-info">
+                                    <div class="user-name">Good Morning, Sarah</div>
+                                    <div class="user-role">Store Manager</div>
+                                </div>
+                            </div>
+
+                            <div class="nav-section">
+                                <div class="nav-label">Main Menu</div>
+                                <div class="nav-item active">
+                                    <mat-icon>dashboard</mat-icon>
+                                    <span>Dashboard</span>
+                                </div>
+                                <div class="nav-item">
+                                    <mat-icon>inventory_2</mat-icon>
+                                    <span>Inventory</span>
+                                </div>
+                                <div class="nav-item">
+                                    <mat-icon>point_of_sale</mat-icon>
+                                    <span>Point of Sale</span>
+                                </div>
+                                <div class="nav-item">
+                                    <mat-icon>analytics</mat-icon>
+                                    <span>Analytics</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-content">
+                            <div class="content-header">
+                                <h3>Dashboard</h3>
+                                <div class="header-actions">
+                                    <button class="action-btn">Export</button>
+                                    <button class="action-btn primary">+ Add Product</button>
+                                </div>
+                            </div>
+
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-header">
+                                        <div class="stat-icon blue">
+                                            <mat-icon>inventory_2</mat-icon>
+                                        </div>
+                                        <div class="stat-trend up">+12%</div>
+                                    </div>
+                                    <div class="stat-value">2,450</div>
+                                    <div class="stat-label">Total Products</div>
+                                </div>
+
+                                <div class="stat-card">
+                                    <div class="stat-header">
+                                        <div class="stat-icon green">
+                                            <mat-icon>attach_money</mat-icon>
+                                        </div>
+                                        <div class="stat-trend up">+8%</div>
+                                    </div>
+                                    <div class="stat-value">$48.5k</div>
+                                    <div class="stat-label">Total Revenue</div>
+                                </div>
+
+                                <div class="stat-card">
+                                    <div class="stat-header">
+                                        <div class="stat-icon cyan">
+                                            <mat-icon>shopping_cart</mat-icon>
+                                        </div>
+                                        <div class="stat-trend up">+23%</div>
+                                    </div>
+                                    <div class="stat-value">1,284</div>
+                                    <div class="stat-label">Orders Today</div>
+                                </div>
+
+                                <div class="stat-card">
+                                    <div class="stat-header">
+                                        <div class="stat-icon teal-accent">
+                                            <mat-icon>groups</mat-icon>
+                                        </div>
+                                        <div class="stat-trend up">+5%</div>
+                                    </div>
+                                    <div class="stat-value">892</div>
+                                    <div class="stat-label">Active Customers</div>
+                                </div>
+                            </div>
+
+                            <div class="chart-area"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Cards -->
+                <div class="floating-cards">
+                    <div class="floating-card card-1">
+                        <div class="card-header">
+                            <div class="card-icon blue">
+                                <mat-icon>trending_up</mat-icon>
+                            </div>
+                            <div class="card-title">Sales Today</div>
+                        </div>
+                        <div class="card-value">$12,450</div>
+                        <div class="card-trend">+23% from yesterday</div>
+                    </div>
+
+                    <div class="floating-card card-2">
+                        <div class="card-header">
+                            <div class="card-icon green">
+                                <mat-icon>check_circle</mat-icon>
+                            </div>
+                            <div class="card-title">Orders Completed</div>
+                        </div>
+                        <div class="card-value">284</div>
+                        <div class="card-trend">Peak performance</div>
+                    </div>
+
+                    <div class="floating-card card-3">
+                        <div class="card-header">
+                            <div class="card-icon teal-accent">
+                                <mat-icon>inventory_2</mat-icon>
+                            </div>
+                            <div class="card-title">Low Stock Alert</div>
+                        </div>
+                        <div class="card-value">5 items</div>
+                        <div class="card-trend">Needs attention</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trusted By Section -->
+            <div class="trusted-by">
+                <p class="trusted-label">Trusted by innovative businesses</p>
+                <div class="logo-marquee">
+                    <div class="logo-track">
+                        <div class="company-logo">TechVenture</div>
+                        <div class="company-logo">RetailPro</div>
+                        <div class="company-logo">ShopMaster</div>
+                        <div class="company-logo">StoreHub</div>
+                        <div class="company-logo">QuickSell</div>
+                        <div class="company-logo">MarketEdge</div>
+                        <div class="company-logo">TechVenture</div>
+                        <div class="company-logo">RetailPro</div>
+                        <div class="company-logo">ShopMaster</div>
+                        <div class="company-logo">StoreHub</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Features</span>
+                <h2 class="section-title">Everything you need to succeed</h2>
+                <p class="section-subtitle">Powerful tools designed to help you manage, analyze, and grow your business
+                    effortlessly.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" *ngFor="let feature of features">
+                    <div class="feature-icon">
+                        <mat-icon>{{feature.icon}}</mat-icon>
+                    </div>
+                    <h3 class="feature-title">{{feature.title}}</h3>
+                    <p class="feature-description">{{feature.description}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Pricing</span>
+                <h2 class="section-title">Simple, transparent pricing</h2>
+                <p class="section-subtitle">Choose the plan that fits your business. No hidden fees, cancel anytime.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card" *ngFor="let plan of pricingPlans" [class.highlighted]="plan.highlighted">
+                    <div class="popular-badge" *ngIf="plan.highlighted">Most Popular</div>
+                    <h3 class="plan-name">{{plan.name}}</h3>
+                    <div class="plan-price">
+                        <span class="currency">$</span>
+                        <span class="amount">{{plan.price}}</span>
+                        <span class="period">{{plan.period}}</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li *ngFor="let feature of plan.features">
+                            <mat-icon>check_circle</mat-icon>
+                            <span>{{feature}}</span>
+                        </li>
+                    </ul>
+                    <button class="btn-plan" (click)="navigateToRegister()">{{plan.cta}}</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Testimonials</span>
+                <h2 class="section-title">Loved by businesses worldwide</h2>
+                <p class="section-subtitle">See what our customers have to say about their experience with ShopTK.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+                    <div class="quote-icon">
+                        <mat-icon>format_quote</mat-icon>
+                    </div>
+                    <p class="testimonial-quote">"{{testimonial.quote}}"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">{{testimonial.avatar}}</div>
+                        <div class="author-info">
+                            <span class="author-name">{{testimonial.name}}</span>
+                            <span class="author-role">{{testimonial.role}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <div class="cta-content">
+                <h2>Ready to transform your business?</h2>
+                <p>Join thousands of businesses already using ShopTK to streamline their operations.</p>
+                <div class="cta-buttons">
+                    <button class="btn-white" (click)="navigateToRegister()">Get Started Free</button>
+                    <button class="btn-outline" (click)="openDemoModal()">Schedule Demo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="section-container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <span class="section-tag">Contact Us</span>
+                    <h2 class="section-title">Let's talk</h2>
+                    <p class="contact-description">
+                        Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as
+                        possible.
+                    </p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <mat-icon>email</mat-icon>
+                            </div>
+                            <div class="method-details">
+                                <span class="method-label">Email us</span>
+                                <span class="method-value">shoptkcare&#64;gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <mat-icon>phone</mat-icon>
+                            </div>
+                            <div class="method-details">
+                                <span class="method-label">Call us</span>
+                                <span class="method-value">+234 814 834 7968</span>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <mat-icon>location_on</mat-icon>
+                            </div>
+                            <div class="method-details">
+                                <span class="method-label">Visit us</span>
+                                <span class="method-value">116 Ebenezer Street, Otta, Lagos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <form [formGroup]="contactForm" (ngSubmit)="submitContactForm()">
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Your Name</mat-label>
+                                <input matInput formControlName="name" placeholder="John Doe">
+                                <mat-icon matPrefix>person</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email Address</mat-label>
+                                <input matInput formControlName="email" placeholder="john@example.com" type="email">
+                                <mat-icon matPrefix>email</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Subject</mat-label>
+                                <input matInput formControlName="subject" placeholder="How can we help?">
+                                <mat-icon matPrefix>subject</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Message</mat-label>
+                                <textarea matInput formControlName="message" placeholder="Tell us more..."
+                                    rows="4"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <button class="btn-submit" type="submit" [disabled]="isSubmitting">
+                            <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+                            <mat-spinner *ngIf="isSubmitting" diameter="20"></mat-spinner>
+                            {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <mat-icon>storefront</mat-icon>
+                        </div>
+                        <span class="logo-text">ShopTK</span>
+                    </div>
+                    <p class="footer-tagline">Empowering businesses with smart inventory solutions.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><mat-icon>facebook</mat-icon></a>
+                        <a href="#" class="social-link"><mat-icon>twitter</mat-icon></a>
+                        <a href="#" class="social-link"><mat-icon>linkedin</mat-icon></a>
+                        <a href="#" class="social-link"><mat-icon>instagram</mat-icon></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#">Features</a>
+                        <a href="#">Pricing</a>
+                        <a href="#">Integrations</a>
+                        <a href="#">Updates</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="#">About</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Press</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="#">Help Center</a>
+                        <a href="#">Documentation</a>
+                        <a href="#">API Reference</a>
+                        <a href="#">Status</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="#">Privacy</a>
+                        <a href="#">Terms</a>
+                        <a href="#">Security</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {{currentYear}} ShopTK. All rights reserved.</p>
+                <p>Made with <mat-icon class="heart-icon">favorite</mat-icon> for businesses worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Demo Modal -->
+    <div class="modal-overlay" *ngIf="showDemoModal" (click)="closeDemoModal()">
+        <div class="modal-container" (click)="$event.stopPropagation()">
+            <button class="modal-close" (click)="closeDemoModal()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <mat-icon>calendar_month</mat-icon>
+                </div>
+                <h2>Book a Demo</h2>
+                <p>See ShopTK in action with a personalized demo from our team.</p>
+            </div>
+            <form [formGroup]="demoForm" (ngSubmit)="submitDemoForm()" class="modal-form">
+                <div class="form-row two-cols">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Full Name</mat-label>
+                        <input matInput formControlName="fullName" placeholder="John Doe">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Work Email</mat-label>
+                        <input matInput formControlName="email" placeholder="john@company.com" type="email">
+                    </mat-form-field>
+                </div>
+                <div class="form-row two-cols">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Company Name</mat-label>
+                        <input matInput formControlName="company" placeholder="Your Company">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Phone (Optional)</mat-label>
+                        <input matInput formControlName="phone" placeholder="+1 555 123 4567">
+                    </mat-form-field>
+                </div>
+                <div class="form-row two-cols">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Preferred Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="preferredDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Preferred Time</mat-label>
+                        <mat-select formControlName="preferredTime">
+                            <mat-option value="9:00 AM">9:00 AM</mat-option>
+                            <mat-option value="10:00 AM">10:00 AM</mat-option>
+                            <mat-option value="11:00 AM">11:00 AM</mat-option>
+                            <mat-option value="1:00 PM">1:00 PM</mat-option>
+                            <mat-option value="2:00 PM">2:00 PM</mat-option>
+                            <mat-option value="3:00 PM">3:00 PM</mat-option>
+                            <mat-option value="4:00 PM">4:00 PM</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="form-row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Additional Notes (Optional)</mat-label>
+                        <textarea matInput formControlName="notes" placeholder="Tell us about your business needs..."
+                            rows="3"></textarea>
+                    </mat-form-field>
+                </div>
+                <button class="btn-submit" type="submit" [disabled]="isSubmitting">
+                    <mat-icon *ngIf="!isSubmitting">event_available</mat-icon>
+                    <mat-spinner *ngIf="isSubmitting" diameter="20"></mat-spinner>
+                    {{ isSubmitting ? 'Scheduling...' : 'Schedule Demo' }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

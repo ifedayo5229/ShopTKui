@@ -4,8 +4,8 @@
 @include mat.core();
 
 // Define your custom color palettes
-$custom-primary: mat.define-palette(mat.$green-palette);
-$custom-accent: mat.define-palette(mat.$light-green-palette);
+$custom-primary: mat.define-palette(mat.$green-palette, 800, 100, 900);
+$custom-accent: mat.define-palette(mat.$teal-palette, 600, 100, 900);
 $custom-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object
@@ -23,14 +23,14 @@ $custom-theme: mat.define-light-theme((
 // Custom styles for input fields
 .mat-mdc-form-field {
   .mdc-text-field--filled {
-    background-color: rgba(227, 18, 39, 0.1); // Light green background
+    background-color: rgba(15, 124, 92, 0.06);
   }
 
   .mdc-text-field--outlined {
     .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
-      border-color: rgb(8, 8, 8); // outline when not focused
+      border-color: rgba(15, 124, 92, 0.32);
     }
   }
 
@@ -38,7 +38,7 @@ $custom-theme: mat.define-light-theme((
     .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
-      border-color: darkgreen; // Darker green outline when focused
+      border-color: #0f7c5c;
     }
   }
 
@@ -72,11 +72,12 @@ $custom-theme: mat.define-light-theme((
 .mat-mdc-raised-button,
 .mat-mdc-outlined-button,
 .mat-mdc-button {
-  background: linear-gradient(45deg, #1976d2, #42a5f5) !important;
+  background: linear-gradient(135deg, #0f7c5c, #0ea5a4) !important;
   color: white !important;
+  border-radius: 8px !important;
   transition: background 0.3s ease;
 
   &:hover {
-    background: linear-gradient(45deg, #1565c0, #1e88e5) !important;
+    background: linear-gradient(135deg, #075947, #087f73) !important;
   }
 }

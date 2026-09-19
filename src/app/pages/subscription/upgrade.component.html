@@ -1,0 +1,263 @@
+<div class="upgrade-container">
+  <!-- Header -->
+  <div class="page-header">
+    <button mat-icon-button (click)="goBack()" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-content">
+      <h1>Upgrade Your Plan</h1>
+      <p class="subtitle">{{ subscriptionStatusText }}</p>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="48"></mat-spinner>
+    <p>Loading plans...</p>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!isLoading" class="upgrade-content">
+    <!-- Alert Banner -->
+    <div *ngIf="isFreeTrial" class="alert-banner trial">
+      <mat-icon>info</mat-icon>
+      <div class="alert-text">
+        <strong>Free Trial Active</strong>
+        <p>You have {{ currentSubscription?.daysRemaining }} days remaining. Upgrade now to continue using ShopTK without interruption.</p>
+      </div>
+    </div>
+
+    <div *ngIf="isExpiringSoon && !isFreeTrial" class="alert-banner warning">
+      <mat-icon>warning</mat-icon>
+      <div class="alert-text">
+        <strong>Subscription Expiring Soon</strong>
+        <p>Your subscription will expire in {{ currentSubscription?.daysRemaining }} days. Renew now to avoid service interruption.</p>
+      </div>
+    </div>
+
+    <!-- Plan Selection -->
+    <section class="section plans-section">
+      <h2>Choose Your Plan</h2>
+      <p class="section-subtitle">Choose the right program for your business</p>
+      
+      <div class="plans-grid">
+        <div 
+          *ngFor="let plan of displayPlans; let i = index" 
+          class="plan-card"
+          [class.selected]="selectedPlan?.id === plan.id"
+          [class.disabled]="!plan.isAvailable"
+          [ngClass]="getPlanAccent(i)"
+          (click)="selectPlan(plan)">
+          
+          <!-- Top Accent Bar -->
+          <div class="accent-bar"></div>
+
+          <!-- Plan Name -->
+          <h3 class="plan-name">{{ plan.name }}</h3>
+
+          <!-- Price -->
+          <div class="plan-price">
+            <span class="price-amount">{{ currencySymbol }}{{ plan.price | number }}</span>
+            <span class="price-cycle">/ {{ plan.billingCycle === 'Monthly' ? 'Month' : plan.billingCycle }}</span>
+          </div>
+
+          <!-- Description -->
+          <p class="plan-description">{{ plan.description }}</p>
+
+          <!-- Features -->
+          <div class="plan-features" *ngIf="plan.features && plan.features.length > 0">
+            <div class="feature-row" *ngFor="let feature of plan.features">
+              <mat-icon class="feature-check">check</mat-icon>
+              <span>{{ feature }}</span>
+            </div>
+          </div>
+
+          <!-- Limits -->
+          <div class="plan-limits">
+            <div class="limit-row">
+              <mat-icon>store</mat-icon>
+              <span>{{ plan.maxShops === -1 ? 'Unlimited' : plan.maxShops }} Shops</span>
+            </div>
+            <div class="limit-row">
+              <mat-icon>inventory_2</mat-icon>
+              <span>{{ plan.maxProducts === -1 ? 'Unlimited' : plan.maxProducts }} Products</span>
+            </div>
+            <div class="limit-row">
+              <mat-icon>people</mat-icon>
+              <span>{{ plan.maxUsers === -1 ? 'Unlimited' : plan.maxUsers }} Users</span>
+            </div>
+          </div>
+
+          <!-- Popular Badge -->
+          <div class="popular-tag" *ngIf="plan.popular">
+            Most Popular
+          </div>
+
+          <!-- Select Button -->
+          <button 
+            *ngIf="plan.isAvailable"
+            class="select-plan-btn"
+            [class.selected]="selectedPlan?.id === plan.id">
+            {{ selectedPlan?.id === plan.id ? 'Selected' : 'Select Plan' }}
+          </button>
+          
+          <button 
+            *ngIf="!plan.isAvailable"
+            class="select-plan-btn disabled"
+            disabled>
+            Coming Soon
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Payment Method Section -->
+    <section *ngIf="selectedPlan" class="section payment-section">
+      <h2>Payment Method</h2>
+      <p class="section-subtitle">Choose how you'd like to pay</p>
+
+      <!-- Saved Cards -->
+      <div *ngIf="savedPaymentMethods.length > 0" class="saved-cards">
+        <div class="cards-list">
+          <div 
+            *ngFor="let method of savedPaymentMethods"
+            class="card-item"
+            [class.selected]="selectedPaymentMethod?.id === method.id"
+            (click)="selectPaymentMethod(method)">
+            
+            <div class="card-icon">
+              <mat-icon>credit_card</mat-icon>
+            </div>
+            
+            <div class="card-details">
+              <span class="card-brand">{{ method.cardType }}</span>
+              <span class="card-number">**** **** **** {{ method.last4 }}</span>
+              <span class="card-expiry">Expires {{ method.expiryMonth }}/{{ method.expiryYear }}</span>
+            </div>
+
+            <div class="card-badges">
+              <span *ngIf="method.isDefault" class="default-badge">Default</span>
+              <span class="gateway-badge">{{ method.gateway | titlecase }}</span>
+            </div>
+
+            <button mat-icon-button class="delete-btn" (click)="deletePaymentMethod(method, $event)">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+            <mat-icon class="check-icon" *ngIf="selectedPaymentMethod?.id === method.id">check_circle</mat-icon>
+          </div>
+        </div>
+
+        <div class="divider-line">
+          <span class="divider-text">or pay with</span>
+        </div>
+      </div>
+
+      <!-- Payment Gateways -->
+      <div class="gateways-grid">
+        
+        <!-- Paystack -->
+        <div 
+          class="gateway-tile"
+          [class.selected]="selectedGateway === 'paystack' && !selectedPaymentMethod"
+          (click)="selectGateway('paystack'); selectedPaymentMethod = null">
+          
+          <div class="gateway-icon paystack">
+            <img src="assets/images/icons/paystack icon.jpeg" alt="Paystack">
+          </div>
+          <div class="gateway-info">
+            <span class="gateway-name">Pay with Paystack</span>
+            <span class="gateway-desc">Cards, Bank Transfer, USSD</span>
+          </div>
+          <div class="gateway-check">
+            <mat-icon *ngIf="selectedGateway === 'paystack' && !selectedPaymentMethod">check_circle</mat-icon>
+            <mat-icon *ngIf="selectedGateway !== 'paystack' || selectedPaymentMethod" class="unchecked">radio_button_unchecked</mat-icon>
+          </div>
+        </div>
+
+        <!-- OPay -->
+        <div 
+          class="gateway-tile"
+          [class.selected]="selectedGateway === 'opay' && !selectedPaymentMethod"
+          (click)="selectGateway('opay'); selectedPaymentMethod = null">
+          
+          <div class="gateway-icon opay">
+            <img src="assets/images/icons/opay icon.png" alt="OPay">
+          </div>
+          <div class="gateway-info">
+            <span class="gateway-name">Pay with OPay</span>
+            <span class="gateway-desc">OPay Wallet &amp; Cards</span>
+          </div>
+          <div class="gateway-check">
+            <mat-icon *ngIf="selectedGateway === 'opay' && !selectedPaymentMethod">check_circle</mat-icon>
+            <mat-icon *ngIf="selectedGateway !== 'opay' || selectedPaymentMethod" class="unchecked">radio_button_unchecked</mat-icon>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Order Summary -->
+    <section *ngIf="selectedPlan" class="section order-summary">
+      <h2>Order Summary</h2>
+      
+      <div class="summary-card">
+        <div class="summary-row">
+          <span class="label">Plan</span>
+          <span class="value">{{ selectedPlan.name }}</span>
+        </div>
+        
+        <div class="summary-row">
+          <span class="label">Billing Cycle</span>
+          <span class="value">{{ selectedPlan.billingCycle }}</span>
+        </div>
+
+        <div *ngIf="upgradeDetails?.proratedCredit" class="summary-row">
+          <span class="label">Prorated Credit</span>
+          <span class="value credit">-{{ currencySymbol }}{{ upgradeDetails?.proratedCredit | number }}</span>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row total">
+          <span class="label">Total Due Today</span>
+          <span class="value">{{ currencySymbol }}{{ (upgradeDetails?.amountDue || selectedPlan.price) }}</span>
+        </div>
+
+        <div class="auto-renew-note">
+          <mat-icon>info</mat-icon>
+          <span>Auto-renews {{ selectedPlan.billingCycle | lowercase }}. Cancel anytime.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pay Button -->
+    <div *ngIf="selectedPlan" class="pay-section">
+      <button 
+        class="pay-btn"
+        [class.processing]="isProcessingPayment"
+        [disabled]="isProcessingPayment"
+        (click)="processPayment()">
+        
+        <mat-spinner *ngIf="isProcessingPayment" diameter="20"></mat-spinner>
+        <ng-container *ngIf="!isProcessingPayment">
+          <mat-icon>lock</mat-icon>
+          Pay {{ currencySymbol }}{{ (upgradeDetails?.amountDue || selectedPlan.price) }}
+        </ng-container>
+      </button>
+
+      <div class="security-badges">
+        <div class="badge">
+          <mat-icon>verified_user</mat-icon>
+          <span>SSL Secured</span>
+        </div>
+        <div class="badge">
+          <mat-icon>lock</mat-icon>
+          <span>256-bit Encryption</span>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

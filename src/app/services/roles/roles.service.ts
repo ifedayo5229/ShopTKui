@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RoleDto } from 'src/app/models/RoleDto';
 import { ApiResponseObject } from 'src/app/models/api-response-object';
-import { environment } from 'src/app/environments/environment.prod';
+import { environment } from 'src/app/environments/environment';
 import { RoleRequest } from 'src/app/models/role-request';
 import { Profile } from 'src/app/models/profile';
 

@@ -1,0 +1,103 @@
+.shop-dialog {
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px 12px;
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .close-btn {
+      color: var(--text-muted);
+    }
+  }
+
+  .dialog-body {
+    padding: 8px 24px 16px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+
+    label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+
+      .required {
+        color: #ef4444;
+      }
+    }
+
+    .full-width {
+      width: 100%;
+    }
+
+    .hint {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: -8px;
+    }
+  }
+
+  .threshold-field {
+    width: 140px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+
+    .flex-1 {
+      flex: 1;
+    }
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 12px 24px 20px;
+    border-top: 1px solid var(--border-color, #e5e7eb);
+
+    button {
+      min-width: 120px;
+      height: 42px;
+      border-radius: 10px;
+      font-weight: 600;
+
+      mat-spinner {
+        display: inline-block;
+
+        ::ng-deep circle {
+          stroke: white !important;
+        }
+      }
+    }
+  }
+
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background: var(--surface-color, #fff);
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--border-color, #e5e7eb) !important;
+    }
+
+    .mat-mdc-form-field-icon-prefix {
+      color: var(--text-muted);
+      padding-right: 0.5rem;
+    }
+  }
+}

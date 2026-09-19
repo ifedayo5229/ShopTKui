@@ -1,0 +1,171 @@
+<div class="pos-container">
+  <!-- Left Panel - Product Selection -->
+  <div class="products-panel">
+    <div class="panel-header">
+      <h2>Products</h2>
+      <mat-form-field appearance="outline" class="search-field">
+        <input matInput placeholder="Search products..." [(ngModel)]="searchTerm" (ngModelChange)="onSearch()">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="category-tabs">
+      <button class="category-tab" [class.active]="selectedCategory === ''" (click)="filterByCategory('')">
+        All
+      </button>
+      <button class="category-tab" *ngFor="let category of categories" 
+              [class.active]="selectedCategory === category.id.toString()"
+              (click)="filterByCategory(category.id.toString())">
+        {{ category.name }}
+      </button>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card" *ngFor="let product of filteredProducts" 
+           (click)="addToCart(product)"
+           [class.disabled]="product.quantity === 0">
+        <div class="card-accent"></div>
+        <div class="product-image">
+          <mat-icon>inventory_2</mat-icon>
+        </div>
+        <div class="product-details">
+          <span class="product-name">{{ product.product }}</span>
+          <div class="product-meta">
+            <span class="product-price">{{ product.price | currency:'₦' }}</span>
+            <span class="stock-indicator" [class]="getStockClass(product)">
+              <span class="dot"></span>
+              {{ product.quantity }}
+            </span>
+          </div>
+        </div>
+        <div class="add-indicator">
+          <mat-icon>add</mat-icon>
+        </div>
+        <div class="out-of-stock-overlay" *ngIf="product.quantity === 0">
+          <span>Out of Stock</span>
+        </div>
+      </div>
+
+      <div class="no-products" *ngIf="filteredProducts.length === 0">
+        <mat-icon>inbox</mat-icon>
+        <span>No products found</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel - Cart -->
+  <div class="cart-panel">
+    <div class="cart-header">
+      <h2>Current Sale</h2>
+      <button mat-icon-button (click)="clearCart()" matTooltip="Clear Cart" *ngIf="cartItems.length > 0">
+        <mat-icon>delete_sweep</mat-icon>
+      </button>
+    </div>
+
+    <div class="cart-items" *ngIf="cartItems.length > 0">
+      <div class="cart-item" *ngFor="let cartItem of cartItems; let i = index">
+        <div class="item-info">
+          <span class="item-name">{{ cartItem.item.product }}</span>
+          <span class="item-price">{{ cartItem.item.price | currency:'₦' }}</span>
+        </div>
+        <div class="item-quantity">
+          <button mat-icon-button (click)="decreaseQuantity(i)" [disabled]="cartItem.quantity <= 1">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <input type="number" [(ngModel)]="cartItem.quantity" 
+                 (change)="updateQuantity(i)" 
+                 [max]="cartItem.item.quantity" min="1">
+          <button mat-icon-button (click)="increaseQuantity(i)" 
+                  [disabled]="cartItem.quantity >= cartItem.item.quantity">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <div class="item-total">
+          {{ cartItem.item.price * cartItem.quantity | currency:'₦' }}
+        </div>
+        <button mat-icon-button class="remove-btn" (click)="removeFromCart(i)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="empty-cart" *ngIf="cartItems.length === 0">
+      <mat-icon>shopping_cart</mat-icon>
+      <span>Your cart is empty</span>
+      <p>Add products to start a sale</p>
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary" *ngIf="cartItems.length > 0">
+      <!-- Totals Section -->
+      <div class="totals-section">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span class="value">{{ subtotal | currency:'₦' }}</span>
+        </div>
+        
+        <div class="summary-row inline-input">
+          <span>Discount</span>
+          <div class="inline-field">
+            <span class="currency">₦</span>
+            <input type="number" [(ngModel)]="discount" min="0" [max]="subtotal" placeholder="0">
+          </div>
+        </div>
+
+        <div class="summary-row">
+          <span>Tax</span>
+          <span class="value">{{ tax | currency:'₦' }}</span>
+        </div>
+
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span class="total-amount">{{ total | currency:'₦' }}</span>
+        </div>
+      </div>
+
+      <!-- Sale Options -->
+      <div class="sale-options">
+        <div class="option-row">
+          <mat-icon class="option-icon">calendar_today</mat-icon>
+          <span class="option-label">Date</span>
+          <input type="text" class="date-input" [matDatepicker]="saleDatePicker" [(ngModel)]="saleDate" [max]="maxDate" readonly (click)="saleDatePicker.open()">
+          <mat-datepicker #saleDatePicker></mat-datepicker>
+        </div>
+
+        <div class="option-row">
+          <mat-icon class="option-icon">person_outline</mat-icon>
+          <span class="option-label">Customer</span>
+          <input type="text" class="text-input" [(ngModel)]="customerName" placeholder="Walk-in customer">
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="payment-section">
+        <span class="section-label">Payment</span>
+        <div class="payment-options">
+          <button class="payment-btn" [class.active]="paymentMethod === PaymentMethod.Cash" (click)="paymentMethod = PaymentMethod.Cash">
+            <mat-icon>payments</mat-icon>
+            <span>Cash</span>
+          </button>
+          <button class="payment-btn" [class.active]="paymentMethod === PaymentMethod.Card" (click)="paymentMethod = PaymentMethod.Card">
+            <mat-icon>credit_card</mat-icon>
+            <span>Card</span>
+          </button>
+          <button class="payment-btn" [class.active]="paymentMethod === PaymentMethod.BankTransfer" (click)="paymentMethod = PaymentMethod.BankTransfer">
+            <mat-icon>account_balance</mat-icon>
+            <span>Transfer</span>
+          </button>
+        </div>
+      </div>
+
+      <button mat-flat-button color="primary" class="checkout-btn" 
+              [disabled]="isProcessing" (click)="processSale()">
+        <span *ngIf="!isProcessing">
+          <mat-icon>point_of_sale</mat-icon>
+          Complete Sale • {{ total | currency:'₦' }}
+        </span>
+        <mat-spinner *ngIf="isProcessing" diameter="24"></mat-spinner>
+      </button>
+    </div>
+  </div>
+</div>

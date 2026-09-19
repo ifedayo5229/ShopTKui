@@ -1,20 +1,187 @@
-<div class="header">
-    <div class="logo" (click)="logoHome()">
-      <img alt="Logo" src="../../../assets/images/no_background/lafarge_logo_no_bg.png"/>
-      <span>
-        Inventory 
-      </span>
-    </div>
-    <div class="user-info">
-      <button class="hamburger" (click)="toggleSidebar()">
-        <img src="../../../assets/images/icons/hamburger-button.png" alt="harmburger">
-      </button>
-      <div class="user-name">Hello {{ firstName }}!</div>
-      <button class="logout-button" (click)="onLogout()">Logout</button>
+<header class="header">
+  <div class="header-left">
+    <button class="menu-toggle" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- Search Bar -->
+    <div class="search-bar" (click)="openSearch()">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" placeholder="Search products, sales, reports..." readonly />
+      <div class="search-shortcut">
+        <span>⌘K</span>
+      </div>
     </div>
   </div>
 
-  <div class="sidebar">
-    <!-- Sidebar content here -->
-    <app-sidebar></app-sidebar>
+  <div class="header-right">
+    <!-- Upgrade Button -->
+    <button *ngIf="showUpgradeButton" 
+            mat-raised-button 
+            class="upgrade-header-btn"
+            (click)="goToUpgrade()">
+      <mat-icon>rocket_launch</mat-icon>
+      <span class="btn-text">{{ isFreeTrial ? 'Upgrade' : 'Renew' }}</span>
+      <span class="days-badge" *ngIf="daysRemaining <= 7">{{ daysRemaining }}d</span>
+    </button>
+
+    <!-- Notifications -->
+    <button mat-icon-button class="header-btn notification-btn" matTooltip="Notifications" [matMenuTriggerFor]="notifMenu">
+      <mat-icon>notifications_none</mat-icon>
+      <span class="notification-badge">3</span>
+    </button>
+
+    <mat-menu #notifMenu="matMenu" class="notification-menu" xPosition="before">
+      <div class="notif-header">
+        <span>Notifications</span>
+        <button mat-button>Mark all read</button>
+      </div>
+      <div class="notif-item unread">
+        <div class="notif-icon sale"><mat-icon>shopping_bag</mat-icon></div>
+        <div class="notif-content">
+          <span class="notif-title">New sale completed</span>
+          <span class="notif-time">2 minutes ago</span>
+        </div>
+      </div>
+      <div class="notif-item unread">
+        <div class="notif-icon stock"><mat-icon>inventory</mat-icon></div>
+        <div class="notif-content">
+          <span class="notif-title">Low stock alert: Widget A</span>
+          <span class="notif-time">1 hour ago</span>
+        </div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-icon system"><mat-icon>system_update</mat-icon></div>
+        <div class="notif-content">
+          <span class="notif-title">System updated successfully</span>
+          <span class="notif-time">Yesterday</span>
+        </div>
+      </div>
+    </mat-menu>
+
+    <!-- Theme Toggle -->
+    <button class="header-btn theme-toggle" (click)="toggleTheme()" 
+            [matTooltip]="isDarkMode ? 'Light Mode' : 'Dark Mode'">
+      <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+
+    <!-- Divider -->
+    <div class="header-divider"></div>
+
+    <!-- User Menu -->
+    <div class="user-menu" [matMenuTriggerFor]="userMenu">
+      <div class="user-avatar">
+        <span>{{ userInitials }}</span>
+        <div class="avatar-status"></div>
+      </div>
+      <div class="user-details">
+        <span class="user-name">{{ userName }}</span>
+        <span class="user-role">Shop Owner</span>
+      </div>
+      <mat-icon class="dropdown-icon">unfold_more</mat-icon>
+    </div>
+
+    <mat-menu #userMenu="matMenu" xPosition="before" class="user-dropdown">
+      <div class="menu-header">
+        <div class="menu-avatar">
+          <span>{{ userInitials }}</span>
+        </div>
+        <div class="menu-user-info">
+          <span class="menu-name">{{ userName }}</span>
+          <span class="menu-email">{{ userEmail }}</span>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="goToDashboard()">
+        <mat-icon>space_dashboard</mat-icon>
+        <span>Dashboard</span>
+      </button>
+      <button mat-menu-item routerLink="/home/settings">
+        <mat-icon>tune</mat-icon>
+        <span>Settings</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>help_outline</mat-icon>
+        <span>Help Center</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onLogout()" class="logout-item">
+        <mat-icon>logout</mat-icon>
+        <span>Sign Out</span>
+      </button>
+    </mat-menu>
   </div>
+</header>
+
+<!-- Search Overlay -->
+<div class="search-overlay" *ngIf="isSearchOpen" (click)="closeSearch()">
+  <div class="search-modal" (click)="$event.stopPropagation()">
+    <div class="search-modal-header">
+      <mat-icon>search</mat-icon>
+      <input #searchInput type="text" placeholder="Search products, pages, or type a command..."
+             [(ngModel)]="searchQuery" (ngModelChange)="onSearchQueryChange()" (keydown.escape)="closeSearch()"
+             (keydown.arrowDown)="navigateResults(1)" (keydown.arrowUp)="navigateResults(-1)"
+             (keydown.enter)="selectResult()">
+      <span class="esc-hint">ESC</span>
+    </div>
+    <div class="search-modal-body">
+      <!-- Quick Navigation -->
+      <div class="search-section" *ngIf="!searchQuery">
+        <span class="section-label">Quick Navigation</span>
+        <div class="search-result" *ngFor="let nav of quickNavItems; let i = index"
+             [class.active]="i === selectedIndex" (click)="navigateTo(nav.route)">
+          <div class="result-icon" [class]="nav.color">
+            <mat-icon>{{ nav.icon }}</mat-icon>
+          </div>
+          <div class="result-info">
+            <span class="result-title">{{ nav.label }}</span>
+            <span class="result-subtitle">{{ nav.description }}</span>
+          </div>
+          <mat-icon class="result-arrow">arrow_forward</mat-icon>
+        </div>
+      </div>
+
+      <!-- Search Results -->
+      <div class="search-section" *ngIf="searchQuery">
+        <!-- Page matches -->
+        <ng-container *ngIf="filteredNavItems.length > 0">
+          <span class="section-label">Pages</span>
+          <div class="search-result" *ngFor="let nav of filteredNavItems; let i = index"
+               [class.active]="i === selectedIndex" (click)="navigateTo(nav.route)">
+            <div class="result-icon" [class]="nav.color">
+              <mat-icon>{{ nav.icon }}</mat-icon>
+            </div>
+            <div class="result-info">
+              <span class="result-title">{{ nav.label }}</span>
+              <span class="result-subtitle">{{ nav.description }}</span>
+            </div>
+            <mat-icon class="result-arrow">arrow_forward</mat-icon>
+          </div>
+        </ng-container>
+
+        <!-- Product matches -->
+        <ng-container *ngIf="filteredProducts.length > 0">
+          <span class="section-label">Products</span>
+          <div class="search-result" *ngFor="let product of filteredProducts; let i = index"
+               [class.active]="(filteredNavItems.length + i) === selectedIndex"
+               (click)="navigateTo('/home/inventory')">
+            <div class="result-icon product">
+              <mat-icon>inventory_2</mat-icon>
+            </div>
+            <div class="result-info">
+              <span class="result-title">{{ product.product }}</span>
+              <span class="result-subtitle">SKU: {{ product.sku }} · {{ product.price | currency:'₦' }} · Stock: {{ product.quantity }}</span>
+            </div>
+            <span class="result-badge" [class]="getProductStockClass(product)">{{ product.status }}</span>
+          </div>
+        </ng-container>
+
+        <!-- No results -->
+        <div class="no-results" *ngIf="filteredNavItems.length === 0 && filteredProducts.length === 0">
+          <mat-icon>search_off</mat-icon>
+          <span>No results found for "{{ searchQuery }}"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,31 +1,73 @@
-<div class="sidebar" *ngIf="isSidebarVisible$ | async" [class.active]="isOpen">
-  <ul class="menu">
-    <li *ngFor="let item of filteredSingleMenu">
-      <a [routerLink]="item.route" class="menu-item" [class.active]="isActive(item)">
-        <img [src]="item.image" alt="{{ item.label }}" class="menu-icon" />
-        {{ item.label }}
-      </a>
-    </li>
-  </ul>
-  <ul class="menu">
-    <li *ngFor="let item of filteredMenuItems">
-      <div class="menu-item" 
-           [class.active]="isActive(item)"
-           (click)="toggleSubMenu(item)">
-        <img [src]="item.image" alt="{{ item.label }}" class="menu-icon" />
-        {{ item.label }}
-        <span *ngIf="item.subMenu" class="submenu-indicator">
-          {{ item.isSubMenuOpen ? '-' : '+' }}
-        </span>
+<div class="sidebar">
+  <!-- Premium Header -->
+  <div class="sidebar-header">
+    <div class="brand">
+      <div class="brand-logo">
+        <mat-icon>storefront</mat-icon>
+        <div class="logo-glow"></div>
       </div>
-      <ul *ngIf="item.subMenu && item.isSubMenuOpen" class="submenu">
-        <li *ngFor="let subItem of item.subMenu" 
-            [class.active]="isActive(subItem)"
-            (click)="onSubMenuItemClick(subItem)">
-          <img [src]="subItem.image" alt="{{ subItem.label }}" class="menu-icon" />
-          {{ subItem.label }}
-        </li>
-      </ul>
-    </li>
-  </ul>
+      <div class="brand-info">
+        <span class="brand-name">{{ shopName }}</span>
+        <div class="brand-badges">
+          <div class="brand-badge">
+            <span class="status-dot"></span>
+            <span>Active</span>
+          </div>
+          <div class="plan-badge" *ngIf="planName">
+            <mat-icon>workspace_premium</mat-icon>
+            <span>{{ planName }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <ng-container *ngFor="let section of menuSections">
+      <div class="nav-section" *ngIf="shouldShowSection(section)">
+        <div class="section-header">
+          <span class="section-title">{{ section.title }}</span>
+          <div class="section-line"></div>
+        </div>
+        <a *ngFor="let item of section.items"
+           class="nav-item"
+           [class.active]="isActive(item.route)"
+           (click)="navigate(item.route)">
+          <div class="nav-icon">
+            <mat-icon>{{ item.icon }}</mat-icon>
+          </div>
+          <span class="nav-label">{{ item.label }}</span>
+          <div class="nav-indicator"></div>
+        </a>
+      </div>
+    </ng-container>
+  </nav>
+
+  <!-- Premium Footer -->
+  <div class="sidebar-footer">
+    <!-- Current Plan Info -->
+    <div class="current-plan-card" *ngIf="planName">
+      <div class="plan-icon">
+        <mat-icon>workspace_premium</mat-icon>
+      </div>
+      <div class="plan-details">
+        <span class="plan-label">Current Plan</span>
+        <span class="plan-name-display">{{ planName }}</span>
+        <span class="plan-status" *ngIf="daysRemaining > 0">{{ daysRemaining }} days remaining</span>
+      </div>
+    </div>
+
+    <!-- Upgrade Card -->
+    <div class="upgrade-card">
+      <div class="upgrade-icon">
+        <mat-icon>auto_awesome</mat-icon>
+      </div>
+      <div class="upgrade-content">
+        <span class="upgrade-title">Upgrade Your Plan</span>
+        <p class="upgrade-desc">Unlock all features</p>
+      </div>
+      <button mat-flat-button class="upgrade-btn" (click)="goToUpgrade()">Upgrade</button>
+    </div>
+  </div>
 </div>

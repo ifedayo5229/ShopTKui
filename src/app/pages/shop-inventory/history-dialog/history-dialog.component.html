@@ -1,0 +1,127 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-icon">
+      <mat-icon>history</mat-icon>
+    </div>
+    <div class="header-content">
+      <h2>Activity History</h2>
+      <p>{{ data.inventory.product }}</p>
+    </div>
+    <button mat-icon-button class="close-btn" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="dialog-body">
+    <!-- Filters -->
+    <div class="filters-section">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Activity Type</mat-label>
+        <mat-select [(ngModel)]="selectedType" (selectionChange)="onTypeChange()">
+          <mat-option *ngFor="let type of activityTypes" [value]="type.value">
+            {{ type.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="dateRange.start" 
+               (dateChange)="onDateChange()">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>End Date</mat-label>
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="dateRange.end"
+               (dateChange)="onDateChange()">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-stroked-button class="clear-btn" (click)="clearFilters()" 
+              *ngIf="selectedType || dateRange.start || dateRange.end">
+        <mat-icon>clear</mat-icon>
+        Clear
+      </button>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading history...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && filteredHistory.length === 0">
+      <mat-icon>inbox</mat-icon>
+      <p>No activity history found</p>
+      <span *ngIf="selectedType || dateRange.start || dateRange.end">
+        Try adjusting your filters
+      </span>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline" *ngIf="!isLoading && filteredHistory.length > 0">
+      <div class="timeline-item" *ngFor="let item of filteredHistory">
+        <div class="timeline-marker" [style.background]="getActivityColor(item.activityType)">
+          <mat-icon>{{ getActivityIcon(item.activityType) }}</mat-icon>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <span class="activity-type" [style.color]="getActivityColor(item.activityType)">
+              {{ item.activityType }}
+            </span>
+            <span class="timestamp">{{ item.createdDate | date:'MMM d, y, h:mm a' }}</span>
+          </div>
+          <p class="description">{{ item.description }}</p>
+          
+          <div class="details">
+            <div class="detail-item" *ngIf="item.quantityChanged">
+              <span class="label">Qty Change:</span>
+              <span class="value" [class]="getQuantityChangeClass(item.quantityChanged)">
+                {{ formatQuantityChange(item.quantityChanged) }}
+              </span>
+              <span class="sub-text" *ngIf="item.quantityBefore !== null && item.quantityAfter !== null">
+                ({{ item.quantityBefore }} → {{ item.quantityAfter }})
+              </span>
+            </div>
+            
+            <div class="detail-item" *ngIf="item.reason">
+              <span class="label">Reason:</span>
+              <span class="value">{{ item.reason }}</span>
+            </div>
+            
+            <div class="detail-item" *ngIf="item.referenceNumber">
+              <span class="label">Reference:</span>
+              <span class="value">{{ item.referenceNumber }}</span>
+            </div>
+            
+            <div class="detail-item" *ngIf="item.invoiceNumber">
+              <span class="label">Invoice:</span>
+              <span class="value invoice-link">{{ item.invoiceNumber }}</span>
+            </div>
+            
+            <div class="detail-item" *ngIf="item.performedBy">
+              <span class="label">By:</span>
+              <span class="value">{{ item.performedBy }}</span>
+            </div>
+            
+            <div class="detail-item notes" *ngIf="item.notes">
+              <span class="label">Notes:</span>
+              <span class="value">{{ item.notes }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialog-footer">
+    <span class="record-count" *ngIf="!isLoading">
+      Showing {{ filteredHistory.length }} of {{ history.length }} records
+    </span>
+    <button mat-flat-button color="primary" (click)="onClose()">Close</button>
+  </div>
+</div>

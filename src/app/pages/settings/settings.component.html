@@ -1,0 +1,335 @@
+<div class="settings-container">
+  <div class="settings-header">
+    <h1>Settings</h1>
+    <p class="subtitle">Manage your shop and account settings</p>
+  </div>
+
+  <div class="settings-content">
+    <!-- Settings Navigation -->
+    <div class="settings-nav">
+      <button class="nav-item" [class.active]="activeSection === 'shop'" (click)="activeSection = 'shop'">
+        <mat-icon>storefront</mat-icon>
+        <span>Shop Details</span>
+      </button>
+      <button class="nav-item" [class.active]="activeSection === 'branding'" (click)="activeSection = 'branding'">
+        <mat-icon>palette</mat-icon>
+        <span>Branding</span>
+      </button>
+      <button class="nav-item" [class.active]="activeSection === 'inventory'" (click)="activeSection = 'inventory'">
+        <mat-icon>inventory</mat-icon>
+        <span>Inventory Settings</span>
+      </button>
+      <button class="nav-item" [class.active]="activeSection === 'users'" (click)="activeSection = 'users'">
+        <mat-icon>group</mat-icon>
+        <span>Users & Roles</span>
+      </button>
+      <button class="nav-item" [class.active]="activeSection === 'account'" (click)="activeSection = 'account'">
+        <mat-icon>person</mat-icon>
+        <span>My Account</span>
+      </button>
+    </div>
+
+    <!-- Settings Panels -->
+    <div class="settings-panel">
+      <!-- Shop Details -->
+      <div class="panel-content" *ngIf="activeSection === 'shop'">
+        <div class="panel-header">
+          <h2>Shop Details</h2>
+          <p>Update your shop information</p>
+        </div>
+
+        <form [formGroup]="shopForm" (ngSubmit)="saveShopDetails()">
+          <div class="form-group">
+            <label for="shopName">Shop Name</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="shopName" formControlName="name">
+              <mat-icon matPrefix>store</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <textarea matInput id="description" formControlName="description" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="phone">Phone</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput id="phone" formControlName="phone">
+                <mat-icon matPrefix>phone</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="form-group flex-1">
+              <label for="email">Email</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput id="email" formControlName="email" type="email">
+                <mat-icon matPrefix>email</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Address</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <textarea matInput id="address" formControlName="address" rows="2"></textarea>
+              <mat-icon matPrefix>location_on</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" type="submit" [disabled]="!shopForm.dirty || isSaving">
+              <span *ngIf="!isSaving">Save Changes</span>
+              <mat-spinner *ngIf="isSaving" diameter="20"></mat-spinner>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Branding -->
+      <div class="panel-content" *ngIf="activeSection === 'branding'">
+        <div class="panel-header">
+          <h2>Branding</h2>
+          <p>Customize your shop appearance</p>
+        </div>
+
+        <div class="branding-section">
+          <h3>Shop Logo</h3>
+          <div class="logo-upload">
+            <div class="current-logo">
+              <img *ngIf="currentShop?.logoUrl" [src]="currentShop?.logoUrl" alt="Shop Logo">
+              <div class="logo-placeholder" *ngIf="!currentShop?.logoUrl">
+                <mat-icon>storefront</mat-icon>
+              </div>
+            </div>
+            <div class="upload-actions">
+              <p>Upload a logo for your shop. Recommended size: 200x200px</p>
+              <input type="file" #fileInput (change)="onLogoSelected($event)" accept="image/*" hidden>
+              <button mat-stroked-button (click)="fileInput.click()">
+                <mat-icon>upload</mat-icon>
+                Upload Logo
+              </button>
+              <button mat-stroked-button color="warn" *ngIf="currentShop?.logoUrl" (click)="removeLogo()">
+                <mat-icon>delete</mat-icon>
+                Remove
+              </button>
+            </div>
+          </div>
+
+          <h3>Brand Color</h3>
+          <div class="color-picker">
+            <div class="color-options">
+              <button class="color-option" *ngFor="let color of brandColors" 
+                      [style.background]="color.value"
+                      [class.selected]="selectedBrandColor === color.value"
+                      (click)="selectBrandColor(color.value)">
+                <mat-icon *ngIf="selectedBrandColor === color.value">check</mat-icon>
+              </button>
+            </div>
+            <mat-form-field appearance="outline" class="custom-color">
+              <mat-label>Custom Color</mat-label>
+              <input matInput [(ngModel)]="customBrandColor" placeholder="#0f7c5c">
+              <button mat-icon-button matSuffix type="button" (click)="selectBrandColor(customBrandColor)">
+                <mat-icon>check</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" (click)="saveBranding()">Save Branding</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Settings -->
+      <div class="panel-content" *ngIf="activeSection === 'inventory'">
+        <div class="panel-header">
+          <h2>Inventory Settings</h2>
+          <p>Configure inventory thresholds and alerts</p>
+        </div>
+
+        <form [formGroup]="inventoryForm" (ngSubmit)="saveInventorySettings()">
+          <div class="setting-card">
+            <div class="setting-info">
+              <mat-icon>warning</mat-icon>
+              <div>
+                <h4>Default Low Stock Threshold</h4>
+                <p>Products will show a low stock warning when quantity falls below this value</p>
+              </div>
+            </div>
+            <mat-form-field appearance="outline" class="threshold-input">
+              <input matInput type="number" formControlName="lowStockThreshold" min="0">
+            </mat-form-field>
+          </div>
+
+          <div class="setting-card">
+            <div class="setting-info">
+              <mat-icon>email</mat-icon>
+              <div>
+                <h4>Email Alerts</h4>
+                <p>Receive email notifications for low stock alerts</p>
+              </div>
+            </div>
+            <mat-slide-toggle formControlName="emailAlerts" color="primary"></mat-slide-toggle>
+          </div>
+
+          <div class="setting-card">
+            <div class="setting-info">
+              <mat-icon>notifications</mat-icon>
+              <div>
+                <h4>Push Notifications</h4>
+                <p>Receive in-app notifications for important events</p>
+              </div>
+            </div>
+            <mat-slide-toggle formControlName="pushNotifications" color="primary"></mat-slide-toggle>
+          </div>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" type="submit" [disabled]="isSaving">
+              Save Settings
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Users & Roles -->
+      <div class="panel-content" *ngIf="activeSection === 'users'">
+        <div class="panel-header">
+          <h2>Users & Roles</h2>
+          <p>Manage shop users and their permissions</p>
+          <button mat-flat-button color="primary" (click)="openAddUserDialog()">
+            <mat-icon>person_add</mat-icon>
+            Add User
+          </button>
+        </div>
+
+        <div class="users-table">
+          <table mat-table [dataSource]="users">
+            <ng-container matColumnDef="user">
+              <th mat-header-cell *matHeaderCellDef>User</th>
+              <td mat-cell *matCellDef="let user">
+                <div class="user-cell">
+                  <div class="user-avatar">
+                    {{ user.firstName?.charAt(0) }}{{ user.lastName?.charAt(0) }}
+                  </div>
+                  <div class="user-info">
+                    <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+                    <span class="user-email">{{ user.email }}</span>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="role">
+              <th mat-header-cell *matHeaderCellDef>Role</th>
+              <td mat-cell *matCellDef="let user">
+                <span class="role-badge" [class]="user.role.toLowerCase()">{{ user.role }}</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let user">
+                <span class="status-badge" [class.active]="user.isActive" [class.locked]="user.isLocked">
+                  {{ user.isLocked ? 'Locked' : (user.isActive ? 'Active' : 'Inactive') }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let user">
+                <button mat-icon-button [matMenuTriggerFor]="userMenu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #userMenu="matMenu">
+                  <button mat-menu-item (click)="editUser(user)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="toggleUserLock(user)">
+                    <mat-icon>{{ user.isLocked ? 'lock_open' : 'lock' }}</mat-icon>
+                    <span>{{ user.isLocked ? 'Unlock' : 'Lock' }}</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteUser(user)" class="delete-action">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: userColumns;"></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- My Account -->
+      <div class="panel-content" *ngIf="activeSection === 'account'">
+        <div class="panel-header">
+          <h2>My Account</h2>
+          <p>Manage your personal account settings</p>
+        </div>
+
+        <form [formGroup]="accountForm" (ngSubmit)="saveAccountDetails()">
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="firstName">First Name</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput id="firstName" formControlName="firstName">
+              </mat-form-field>
+            </div>
+            <div class="form-group flex-1">
+              <label for="lastName">Last Name</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput id="lastName" formControlName="lastName">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="accountEmail">Email</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="accountEmail" formControlName="email" type="email">
+              <mat-icon matPrefix>email</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <label for="accountPhone">Phone</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="accountPhone" formControlName="phone">
+              <mat-icon matPrefix>phone</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" type="submit" [disabled]="!accountForm.dirty || isSaving">
+              Save Changes
+            </button>
+          </div>
+        </form>
+
+        <div class="security-section">
+          <h3>Security</h3>
+          <button mat-stroked-button (click)="openChangePasswordDialog()">
+            <mat-icon>lock</mat-icon>
+            Change Password
+          </button>
+        </div>
+
+        <div class="danger-zone">
+          <h3>Danger Zone</h3>
+          <p>Irreversible and destructive actions</p>
+          <button mat-stroked-button color="warn" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

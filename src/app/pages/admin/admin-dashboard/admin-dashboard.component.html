@@ -1,0 +1,173 @@
+<div class="admin-dashboard">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Admin Dashboard</h1>
+      <p class="subtitle">Overview of all tenants, subscriptions, and platform metrics</p>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button (click)="loadStats()">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+    </div>
+  </header>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner diameter="48"></mat-spinner>
+    <p>Loading dashboard...</p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-section" *ngIf="!isLoading && stats">
+    <div class="stats-grid">
+      <div class="stat-card primary">
+        <div class="stat-icon">
+          <mat-icon>business</mat-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value">{{ stats.totalTenants }}</span>
+          <span class="stat-label">Total Tenants</span>
+          <span class="stat-detail">{{ stats.activeTenants }} active</span>
+        </div>
+      </div>
+
+      <div class="stat-card success">
+        <div class="stat-icon">
+          <mat-icon>store</mat-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value">{{ stats.totalShops }}</span>
+          <span class="stat-label">Total Shops</span>
+        </div>
+      </div>
+
+      <div class="stat-card info">
+        <div class="stat-icon">
+          <mat-icon>inventory_2</mat-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value">{{ stats.totalProducts | number }}</span>
+          <span class="stat-label">Total Products</span>
+        </div>
+      </div>
+
+      <div class="stat-card warning">
+        <div class="stat-icon">
+          <mat-icon>people</mat-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value">{{ stats.totalUsers | number }}</span>
+          <span class="stat-label">Total Users</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revenue Cards -->
+    <div class="revenue-section">
+      <div class="revenue-card">
+        <div class="revenue-header">
+          <mat-icon>payments</mat-icon>
+          <span>Total Revenue</span>
+        </div>
+        <div class="revenue-value">{{ formatCurrency(stats.totalRevenue) }}</div>
+        <div class="revenue-label">All time</div>
+      </div>
+
+      <div class="revenue-card highlight">
+        <div class="revenue-header">
+          <mat-icon>trending_up</mat-icon>
+          <span>Monthly Recurring Revenue</span>
+        </div>
+        <div class="revenue-value">{{ formatCurrency(stats.monthlyRecurringRevenue) }}</div>
+        <div class="revenue-label">Current MRR</div>
+      </div>
+
+      <div class="revenue-card alert" *ngIf="stats.expiringSubscriptions > 0">
+        <div class="revenue-header">
+          <mat-icon>warning</mat-icon>
+          <span>Expiring Soon</span>
+        </div>
+        <div class="revenue-value">{{ stats.expiringSubscriptions }}</div>
+        <div class="revenue-label">Subscriptions expiring in 7 days</div>
+      </div>
+    </div>
+
+    <!-- Subscription Breakdown -->
+    <div class="cards-row">
+      <div class="card subscription-breakdown">
+        <div class="card-header">
+          <h3>Subscription Plans</h3>
+        </div>
+        <div class="card-body">
+          <div class="plan-item" *ngFor="let plan of stats.subscriptionBreakdown">
+            <div class="plan-info">
+              <span class="plan-name">{{ plan.planName }}</span>
+              <span class="plan-count">{{ plan.count }} tenants</span>
+            </div>
+            <div class="plan-bar">
+              <div class="bar-fill" 
+                   [style.width.%]="getPercentage(plan.count, stats.totalTenants)"
+                   [class.free]="plan.planCode === 'FREE'"
+                   [class.pro]="plan.planCode === 'PRO'"
+                   [class.enterprise]="plan.planCode === 'ENTERPRISE'">
+              </div>
+            </div>
+            <span class="plan-percentage">{{ getPercentage(plan.count, stats.totalTenants) }}%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card recent-signups">
+        <div class="card-header">
+          <h3>Recent Signups</h3>
+          <a routerLink="/home/admin/tenants" class="view-all">View all →</a>
+        </div>
+        <div class="card-body">
+          <div class="signup-list">
+            <div class="signup-item" *ngFor="let signup of stats.recentSignups">
+              <div class="signup-avatar">
+                {{ signup.name.charAt(0).toUpperCase() }}
+              </div>
+              <div class="signup-info">
+                <span class="signup-name">{{ signup.name }}</span>
+                <span class="signup-email">{{ signup.email }}</span>
+              </div>
+              <div class="signup-meta">
+                <span class="signup-plan" [class]="signup.plan.toLowerCase()">{{ signup.plan }}</span>
+                <span class="signup-date">{{ signup.createdAt | date:'shortDate' }}</span>
+              </div>
+            </div>
+            <div class="empty-state" *ngIf="!stats.recentSignups?.length">
+              <mat-icon>person_add</mat-icon>
+              <p>No recent signups</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions" *ngIf="!isLoading">
+    <h3>Quick Actions</h3>
+    <div class="actions-grid">
+      <a routerLink="/home/admin/tenants" class="action-card">
+        <mat-icon>business</mat-icon>
+        <span>Manage Tenants</span>
+      </a>
+      <a routerLink="/home/admin/subscriptions" class="action-card">
+        <mat-icon>card_membership</mat-icon>
+        <span>Subscriptions</span>
+      </a>
+      <a routerLink="/home/admin/plans" class="action-card">
+        <mat-icon>loyalty</mat-icon>
+        <span>Manage Plans</span>
+      </a>
+      <a routerLink="/home/admin/users" class="action-card">
+        <mat-icon>group</mat-icon>
+        <span>All Users</span>
+      </a>
+    </div>
+  </div>
+</div>

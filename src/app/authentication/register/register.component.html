@@ -1,0 +1,232 @@
+<div class="auth-container">
+  <!-- Left Panel - Branding -->
+  <div class="branding-panel">
+    <div class="brand-content">
+      <div class="logo-section">
+        <div class="logo-icon">
+          <mat-icon>storefront</mat-icon>
+        </div>
+        <span class="logo-text">ShopTK</span>
+      </div>
+
+      <div class="tagline">
+        <span class="badge">Start Your Journey</span>
+        <h1>Manage your<br>shop inventory<br>effortlessly</h1>
+        <p class="description">
+          Join thousands of shop owners who trust ShopTK for their inventory
+          management, sales tracking, and business analytics.
+        </p>
+      </div>
+
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <mat-icon>check_circle</mat-icon>
+          <span>Real-time inventory tracking</span>
+        </div>
+        <div class="benefit-item">
+          <mat-icon>check_circle</mat-icon>
+          <span>Low stock alerts & notifications</span>
+        </div>
+        <div class="benefit-item">
+          <mat-icon>check_circle</mat-icon>
+          <span>Multi-store management</span>
+        </div>
+        <div class="benefit-item">
+          <mat-icon>check_circle</mat-icon>
+          <span>Detailed sales reports</span>
+        </div>
+        <div class="benefit-item">
+          <mat-icon>check_circle</mat-icon>
+          <span>Role-based user access</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel - Registration Form -->
+  <div class="form-panel">
+    <div class="form-content">
+      <div class="form-header">
+        <div class="header-actions">
+          <span class="login-prompt">Already have an account?</span>
+          <a class="login-link" routerLink="/login">Sign in</a>
+        </div>
+      </div>
+
+      <div class="form-body">
+        <h2>Create your account</h2>
+        <p class="welcome-text">Get started with a free account today.</p>
+
+        <!-- Step Indicators -->
+        <div class="step-indicators">
+          <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+            <div class="step-number">1</div>
+            <span>Account</span>
+          </div>
+          <div class="step-line" [class.active]="currentStep > 1"></div>
+          <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
+            <div class="step-number">2</div>
+            <span>Shop</span>
+          </div>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+          <!-- Step 1: Account Information -->
+          <div class="step-content" *ngIf="currentStep === 1">
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="firstName">First Name</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput id="firstName" formControlName="firstName" placeholder="John">
+                  <mat-error *ngIf="registerForm.get('firstName')?.hasError('required')">Required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group half">
+                <label for="lastName">Last Name</label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <input matInput id="lastName" formControlName="lastName" placeholder="Doe">
+                  <mat-error *ngIf="registerForm.get('lastName')?.hasError('required')">Required</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput id="email" formControlName="email" placeholder="john@example.com" type="email">
+                <mat-icon matPrefix>email</mat-icon>
+                <mat-error *ngIf="registerForm.get('email')?.hasError('required')">Email is required</mat-error>
+                <mat-error *ngIf="registerForm.get('email')?.hasError('email')">Enter a valid email</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number (Optional)</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput id="phone" formControlName="phone" placeholder="+234 800 000 0000">
+                <mat-icon matPrefix>phone</mat-icon>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput id="password" formControlName="password" [type]="hidePassword ? 'password' : 'text'"
+                  placeholder="Create a strong password">
+                <mat-icon matPrefix>lock</mat-icon>
+                <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+                  <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+                <mat-error *ngIf="registerForm.get('password')?.hasError('required')">Password is required</mat-error>
+                <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">Minimum 8 characters</mat-error>
+              </mat-form-field>
+              <div class="password-strength" *ngIf="registerForm.get('password')?.value">
+                <div class="strength-bar" [class]="passwordStrength"></div>
+                <span class="strength-text">{{ passwordStrengthText }}</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput id="confirmPassword" formControlName="confirmPassword"
+                  [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm your password">
+                <mat-icon matPrefix>lock_outline</mat-icon>
+                <button mat-icon-button matSuffix type="button" (click)="hideConfirmPassword = !hideConfirmPassword">
+                  <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+                <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('required')">Please confirm
+                  password</mat-error>
+                <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('mismatch')">Passwords do not
+                  match</mat-error>
+              </mat-form-field>
+            </div>
+
+            <button mat-flat-button color="primary" type="button" class="next-btn" [disabled]="!isStep1Valid"
+              (click)="nextStep()">
+              Continue
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+
+          <!-- Step 2: Shop Information -->
+          <div class="step-content" *ngIf="currentStep === 2">
+            <div class="form-group">
+              <label for="tenantName">Business/Company Name</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput id="tenantName" formControlName="tenantName" placeholder="My Business Ltd">
+                <mat-icon matPrefix>business</mat-icon>
+                <mat-error *ngIf="registerForm.get('tenantName')?.hasError('required')">Business name is
+                  required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- Shops List -->
+            <div class="shops-section">
+              <div class="section-header">
+                <label>Your Shops</label>
+                <button mat-stroked-button type="button" class="add-shop-btn" (click)="addShop()"
+                  *ngIf="shopsArray.length < 5">
+                  <mat-icon>add</mat-icon>
+                  Add Shop
+                </button>
+              </div>
+
+              <div formArrayName="shops">
+                <div *ngFor="let shop of shopsArray.controls; let i = index" [formGroupName]="i" class="shop-card">
+                  <div class="shop-header">
+                    <span class="shop-number">Shop {{ i + 1 }}</span>
+                    <button mat-icon-button type="button" class="remove-btn" (click)="removeShop(i)"
+                      *ngIf="shopsArray.length > 1">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Shop Name</label>
+                    <mat-form-field appearance="outline" class="full-width">
+                      <input matInput formControlName="name" placeholder="Main Store">
+                      <mat-icon matPrefix>storefront</mat-icon>
+                      <mat-error>Shop name is required</mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Address (Optional)</label>
+                    <mat-form-field appearance="outline" class="full-width">
+                      <input matInput formControlName="address" placeholder="123 Main St, City">
+                      <mat-icon matPrefix>location_on</mat-icon>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group terms-group">
+              <mat-checkbox formControlName="agreeTerms" color="primary">
+                I agree to the <a href="#" class="terms-link">Terms of Service</a> and
+                <a href="#" class="terms-link">Privacy Policy</a>
+              </mat-checkbox>
+            </div>
+
+            <div class="button-group">
+              <button mat-stroked-button type="button" class="back-btn" (click)="prevStep()">
+                <mat-icon>arrow_back</mat-icon>
+                Back
+              </button>
+              <button mat-flat-button color="primary" type="submit" class="register-btn"
+                [disabled]="!registerForm.valid || isLoading">
+                <span *ngIf="!isLoading">Create Account</span>
+                <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-footer">
+        <p>© {{ currentYear }} ShopTK. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</div>

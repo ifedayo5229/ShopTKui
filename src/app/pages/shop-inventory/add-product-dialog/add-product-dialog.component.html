@@ -1,0 +1,183 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-icon primary">
+      <mat-icon>add_shopping_cart</mat-icon>
+    </div>
+    <div class="header-content">
+      <h2>Add New Product</h2>
+      <p>Create a new product in your inventory</p>
+    </div>
+    <button mat-icon-button class="close-btn" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="dialog-body">
+      <div class="form-section">
+        <h3>Product Information</h3>
+        
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <label for="name">Product Name *</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="name" formControlName="name" placeholder="Enter product name">
+              <mat-error *ngIf="productForm.get('name')?.hasError('required')">Name is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group flex-1">
+            <label for="sku">SKU</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="sku" formControlName="sku" placeholder="Auto-generated">
+              <mat-hint>Auto-generated from name</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="categoryId">Category</label>
+            <mat-form-field appearance="outline" class="full-width" *ngIf="!isCreatingNewCategory">
+              <mat-select id="categoryId" formControlName="categoryId" (selectionChange)="onCategoryChange($event)">
+                <mat-option value="">Select Category</mat-option>
+                <mat-option value="new" class="create-new-option">
+                  <mat-icon>add_circle</mat-icon> Create New Category
+                </mat-option>
+                <mat-divider></mat-divider>
+                <mat-option *ngFor="let category of categories" [value]="category.id">
+                  {{ category.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+            <!-- New Category Input -->
+            <div class="new-category-input" *ngIf="isCreatingNewCategory">
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="newCategoryName" placeholder="Enter new category name">
+                <mat-icon matPrefix>category</mat-icon>
+                <mat-error>Category name is required</mat-error>
+              </mat-form-field>
+              <button mat-icon-button type="button" class="cancel-new-btn" (click)="cancelNewCategory()" 
+                      matTooltip="Cancel">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="form-group flex-1">
+            <label for="barcode">Barcode</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="barcode" formControlName="barcode" placeholder="Optional">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <textarea matInput id="description" formControlName="description" 
+                      placeholder="Product description" rows="2"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Pricing</h3>
+        
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="costPrice">Cost Price *</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <span matPrefix>₦&nbsp;</span>
+              <input matInput id="costPrice" type="number" formControlName="costPrice" 
+                     placeholder="0.00" min="0" step="0.01">
+              <mat-error *ngIf="productForm.get('costPrice')?.hasError('required')">Cost price is required</mat-error>
+              <mat-error *ngIf="productForm.get('costPrice')?.hasError('min')">Must be positive</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group flex-1">
+            <label for="sellingPrice">Selling Price *</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <span matPrefix>₦&nbsp;</span>
+              <input matInput id="sellingPrice" type="number" formControlName="sellingPrice" 
+                     placeholder="0.00" min="0" step="0.01">
+              <mat-error *ngIf="productForm.get('sellingPrice')?.hasError('required')">Selling price is required</mat-error>
+              <mat-error *ngIf="productForm.get('sellingPrice')?.hasError('min')">Must be positive</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="profit-preview" *ngIf="profitMargin !== null">
+          <mat-icon>trending_up</mat-icon>
+          <span>Profit Margin: <strong [class.positive]="profitMargin > 0" [class.negative]="profitMargin < 0">
+            {{ profitMargin | number:'1.1-1' }}%
+          </strong></span>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Tax</h3>
+        
+        <div class="form-row" style="align-items: center;">
+          <div class="form-group flex-1">
+            <mat-slide-toggle formControlName="isTaxable" color="primary">
+              This product is taxable
+            </mat-slide-toggle>
+          </div>
+        </div>
+
+        <div class="form-row" *ngIf="productForm.get('isTaxable')?.value">
+          <div class="form-group flex-1">
+            <label for="taxPercentage">Tax Percentage *</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="taxPercentage" type="number" formControlName="taxPercentage" 
+                     placeholder="0" min="0" max="100" step="0.5">
+              <span matSuffix>%</span>
+              <mat-error *ngIf="productForm.get('taxPercentage')?.hasError('min')">Must be 0 or more</mat-error>
+              <mat-error *ngIf="productForm.get('taxPercentage')?.hasError('max')">Cannot exceed 100%</mat-error>
+              <mat-hint>e.g. 7.5 for VAT</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group flex-1">
+            <div class="tax-preview" *ngIf="productForm.get('taxPercentage')?.value > 0">
+              <mat-icon>receipt</mat-icon>
+              <span>Tax per unit: <strong>{{ (productForm.get('sellingPrice')?.value * productForm.get('taxPercentage')?.value / 100) | currency:'₦' }}</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Initial Stock</h3>
+        
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="initialStock">Initial Quantity</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="initialStock" type="number" formControlName="initialStock" 
+                     placeholder="0" min="0">
+              <mat-icon matPrefix>inventory_2</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="form-group flex-1">
+            <label for="lowStockThreshold">Low Stock Alert</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="lowStockThreshold" type="number" formControlName="lowStockThreshold" 
+                     placeholder="10" min="0">
+              <mat-icon matPrefix>warning</mat-icon>
+              <mat-hint>Alert when below this quantity</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button mat-stroked-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-flat-button color="primary" type="submit" 
+              [disabled]="!productForm.valid || isLoading" class="submit-btn">
+        <span *ngIf="!isLoading">Add Product</span>
+        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+      </button>
+    </div>
+  </form>
+</div>

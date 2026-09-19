@@ -1,70 +1,275 @@
-<!-- Admin chart -->
-<section *ngIf="isAdmin">
-      <div class="card-container">
-        <div class="card card-approved"(click)="goToAllRequestsReport()">
-          <h3>All Requests</h3>
-          <p class="value">{{ allRequests }}</p>
-        </div>
-        <div class="card card-default"(click)="goToAllRequestsReport()">
-          <h3>All Approved Requests</h3>
-          <p class="value">{{ approvedRequestsCount }}</p>
-        </div>
-        <div class="card card-pending"(click)="goToAllRequestsReport()">
-          <h3>All Pending Requests</h3>
-          <p class="value">{{ pendingRequestsCount }}</p>
-        </div>
-        <div class="card card-rejected"(click)="goToAllRequestsReport()">
-          <h3>All Rejected Requests</h3>
-          <p class="value">{{ rejectedRequestsCount }}</p>
-        </div>
+<div class="dashboard">
+  <!-- Upgrade Banner -->
+  <div *ngIf="showUpgradeBanner" class="upgrade-banner" [class.trial]="isFreeTrial" [class.expiring]="isExpiringSoon && !isFreeTrial">
+    <div class="banner-content">
+      <div class="banner-icon">
+        <mat-icon>{{ isFreeTrial ? 'rocket_launch' : 'schedule' }}</mat-icon>
       </div>
-
-      <div class="charts-container">
-        <div class="chart">
-            <canvas id="doughnutChart"></canvas>
-        </div>
-        <div class="chart">
-            <canvas id="barLineChart"></canvas>
-        </div>
-     </div>
-</section>
-
-
-<!-- Requester charts -->
-<section *ngIf="isRequesterOnly || isStoreManager || isMainStoreManager || isLineManager || isHoS 
-                || isITStoreManager || isITSupport || isHoD || isCPASDStoreManager">
-  <div class="card-container">
-    <div class="card card-default"  (click)="goToAllRequests()">  
-      <h3>All My Requests</h3>
-      <p class="value">{{ allMyRequests }}</p>
-    </div>
-    <div class="card card-approved" (click)="goToAllRequests()">
-      <h3>My Approved Requests</h3>
-      <p class="value">{{ myapprovedRequestsCount }}</p>
-    </div>
-    <div class="card card-pending" (click)="goToAllRequests()">
-      <h3>My Pending Requests</h3>
-      <p class="value">{{ mypendingRequestsCount }}</p>
-    </div>
-    <div class="card card-rejected" (click)="goToAllRequests()">
-      <h3>My Rejected Requests</h3>
-      <p class="value">{{ myrejectedRequestsCount }}</p>
-    </div>
-    <div class="card card-approval" (click)="goToPendingRequests()" *ngIf="isLineManager || isHoS || isStoreManager || isAdmin">
-      <h3>Pending Approvals</h3>
-      <p class="value">{{ allPendingRequestsCount }}</p>
+      <div class="banner-text">
+        <strong *ngIf="isFreeTrial">Free Trial - {{ daysRemaining }} days remaining</strong>
+        <strong *ngIf="isExpiringSoon && !isFreeTrial">Subscription expiring in {{ daysRemaining }} days</strong>
+        <p *ngIf="isFreeTrial">Upgrade to Starter plan to keep your data and unlock all features.</p>
+        <p *ngIf="isExpiringSoon && !isFreeTrial">Renew now to avoid service interruption.</p>
+      </div>
+      <div class="banner-actions">
+        <button mat-flat-button class="upgrade-btn" (click)="navigateToUpgrade()">
+          <mat-icon>upgrade</mat-icon>
+          {{ isFreeTrial ? 'Upgrade Now' : 'Renew Now' }}
+        </button>
+        <button mat-icon-button class="dismiss-btn" (click)="dismissUpgradeBanner()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 
-  <div class="charts-container">
-    <div class="chart">
-        <canvas id="myDoughnutChart"></canvas>
+  <!-- Hero Header with Gradient -->
+  <div class="dashboard-hero">
+    <div class="hero-content">
+      <div class="greeting">
+        <span class="time-badge">
+          <mat-icon>{{ getTimeIcon() }}</mat-icon>
+          {{ getGreeting() }}
+        </span>
+        <h1>{{ userName }}<span class="wave">👋</span></h1>
+        <p class="hero-subtitle">Here's your business performance at a glance</p>
+      </div>
+      <div class="hero-actions">
+        <button mat-flat-button class="btn-primary-glow" (click)="navigateTo('/home/pos')">
+          <mat-icon>add_shopping_cart</mat-icon>
+          New Sale
+        </button>
+        <button mat-stroked-button class="btn-outline" (click)="navigateTo('/home/inventory')">
+          <mat-icon>inventory_2</mat-icon>
+          Add Product
+        </button>
+      </div>
     </div>
-    <div class="chart">
-        <canvas id="myBarLineChart"></canvas>
+    <div class="hero-visual">
+      <div class="floating-card card-1">
+        <mat-icon>trending_up</mat-icon>
+        <span>+24% growth</span>
+      </div>
+      <div class="floating-card card-2">
+        <mat-icon>star</mat-icon>
+        <span>Top seller</span>
+      </div>
     </div>
- </div>
-</section>
+  </div>
 
-  
-  
+  <!-- Premium Stats Grid -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <!-- Revenue Card - Highlight -->
+      <div class="stat-card stat-highlight revenue-card">
+        <div class="stat-glow"></div>
+        <div class="stat-header">
+          <div class="stat-icon-wrapper">
+            <mat-icon>payments</mat-icon>
+          </div>
+          <div class="stat-trend positive">
+            <mat-icon>trending_up</mat-icon>
+            <span>+12.5%</span>
+          </div>
+        </div>
+        <div class="stat-body">
+          <span class="stat-value">₦{{ todayRevenue | number:'1.0-0' }}</span>
+          <span class="stat-label">Today's Revenue</span>
+        </div>
+        <div class="stat-footer">
+          <div class="mini-chart">
+            <div class="bar" style="height: 40%"></div>
+            <div class="bar" style="height: 60%"></div>
+            <div class="bar" style="height: 45%"></div>
+            <div class="bar" style="height: 80%"></div>
+            <div class="bar" style="height: 65%"></div>
+            <div class="bar" style="height: 90%"></div>
+            <div class="bar active" style="height: 75%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sales Card -->
+      <div class="stat-card sales-card" (click)="navigateTo('/home/sales')">
+        <div class="stat-header">
+          <div class="stat-icon-wrapper sales">
+            <mat-icon>receipt_long</mat-icon>
+          </div>
+          <mat-icon class="card-action">arrow_forward</mat-icon>
+        </div>
+        <div class="stat-body">
+          <span class="stat-value">{{ todaySales }}</span>
+          <span class="stat-label">Today's Sales</span>
+        </div>
+        <div class="stat-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="(todaySales / 50) * 100"></div>
+          </div>
+          <span class="progress-text">Target: 50 sales</span>
+        </div>
+      </div>
+
+      <!-- Products Card -->
+      <div class="stat-card products-card clickable" (click)="navigateTo('/home/inventory')">
+        <div class="stat-header">
+          <div class="stat-icon-wrapper products">
+            <mat-icon>inventory_2</mat-icon>
+          </div>
+          <mat-icon class="card-action">arrow_forward</mat-icon>
+        </div>
+        <div class="stat-body">
+          <span class="stat-value">{{ totalProducts }}</span>
+          <span class="stat-label">Total Products</span>
+        </div>
+        <div class="stat-categories">
+          <div class="category-dot"></div>
+          <div class="category-dot"></div>
+          <div class="category-dot"></div>
+          <span>+{{ totalProducts > 3 ? totalProducts - 3 : 0 }} more</span>
+        </div>
+      </div>
+
+      <!-- Low Stock Alert -->
+      <div class="stat-card alert-card" [class.has-alerts]="lowStockItems > 0" (click)="navigateTo('/home/inventory')">
+        <div class="stat-header">
+          <div class="stat-icon-wrapper" [class.warning]="lowStockItems > 0">
+            <mat-icon>{{ lowStockItems > 0 ? 'warning' : 'check_circle' }}</mat-icon>
+          </div>
+          <button mat-icon-button class="view-btn" *ngIf="lowStockItems > 0">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </div>
+        <div class="stat-body">
+          <span class="stat-value">{{ lowStockItems }}</span>
+          <span class="stat-label">Low Stock Items</span>
+        </div>
+        <div class="alert-status" *ngIf="lowStockItems > 0">
+          <div class="pulse-dot"></div>
+          <span>Needs attention</span>
+        </div>
+        <div class="alert-status success" *ngIf="lowStockItems === 0">
+          <mat-icon>check</mat-icon>
+          <span>All stocked up!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions Section -->
+  <div class="actions-section">
+    <div class="section-header">
+      <h2>Quick Actions</h2>
+      <span class="section-subtitle">Get things done faster</span>
+    </div>
+    <div class="actions-grid">
+      <div class="action-card" (click)="navigateTo('/home/pos')">
+        <div class="action-icon pos">
+          <mat-icon>point_of_sale</mat-icon>
+        </div>
+        <div class="action-content">
+          <span class="action-title">Process Sale</span>
+          <span class="action-desc">Quick checkout</span>
+        </div>
+        <mat-icon class="action-arrow">arrow_forward</mat-icon>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/home/inventory')">
+        <div class="action-icon inventory">
+          <mat-icon>add_box</mat-icon>
+        </div>
+        <div class="action-content">
+          <span class="action-title">Add Product</span>
+          <span class="action-desc">Expand catalog</span>
+        </div>
+        <mat-icon class="action-arrow">arrow_forward</mat-icon>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/home/sales')">
+        <div class="action-icon reports">
+          <mat-icon>bar_chart</mat-icon>
+        </div>
+        <div class="action-content">
+          <span class="action-title">View Reports</span>
+          <span class="action-desc">Sales analytics</span>
+        </div>
+        <mat-icon class="action-arrow">arrow_forward</mat-icon>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/home/settings')">
+        <div class="action-icon settings">
+          <mat-icon>tune</mat-icon>
+        </div>
+        <div class="action-content">
+          <span class="action-title">Settings</span>
+          <span class="action-desc">Configure shop</span>
+        </div>
+        <mat-icon class="action-arrow">arrow_forward</mat-icon>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analytics Section -->
+  <div class="analytics-section">
+    <div class="section-header">
+      <h2>Sales Analytics</h2>
+      <div class="chart-filters">
+        <button mat-stroked-button [class.active]="chartPeriod === 'week'" (click)="setChartPeriod('week')">7 Days</button>
+        <button mat-stroked-button [class.active]="chartPeriod === 'month'" (click)="setChartPeriod('month')">30 Days</button>
+      </div>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3>Revenue Trend</h3>
+          <div class="chart-legend">
+            <span class="legend-item"><span class="dot revenue"></span>Revenue</span>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas #revenueChart></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3>Sales by Day</h3>
+          <div class="chart-legend">
+            <span class="legend-item"><span class="dot sales"></span>Sales Count</span>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas #salesChart></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity Feed -->
+  <div class="activity-section">
+    <div class="section-header">
+      <h2>Recent Sales</h2>
+      <button mat-button class="view-all-btn" (click)="navigateTo('/home/sales')">View All</button>
+    </div>
+    <div class="activity-feed">
+      <div class="activity-item" *ngFor="let sale of recentSales">
+        <div class="activity-icon sale">
+          <mat-icon>shopping_bag</mat-icon>
+        </div>
+        <div class="activity-content">
+          <span class="activity-title">{{ sale.invoiceNumber }}</span>
+          <span class="activity-meta">{{ sale.customerName || 'Walk-in Customer' }} • {{ sale.paymentMethod }}</span>
+          <span class="activity-time">{{ sale.saleDate | date:'MMM d, h:mm a' }}</span>
+        </div>
+        <span class="activity-amount">+₦{{ sale.totalAmount | number:'1.0-0' }}</span>
+      </div>
+      <div class="empty-state" *ngIf="recentSales.length === 0 && !isLoadingSales">
+        <mat-icon>receipt_long</mat-icon>
+        <span>No recent sales</span>
+        <p>Sales will appear here as they happen</p>
+      </div>
+      <div class="loading-state" *ngIf="isLoadingSales">
+        <mat-spinner diameter="32"></mat-spinner>
+        <span>Loading sales...</span>
+      </div>
+    </div>
+  </div>
+</div>

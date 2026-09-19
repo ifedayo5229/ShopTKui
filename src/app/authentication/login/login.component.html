@@ -1,0 +1,107 @@
+<div class="auth-container">
+  <!-- Left Panel - Branding -->
+  <div class="branding-panel">
+    <div class="brand-content">
+      <div class="logo-section">
+        <div class="logo-icon">
+          <mat-icon>storefront</mat-icon>
+        </div>
+        <span class="logo-text">ShopTK</span>
+      </div>
+      
+      <div class="tagline">
+        <span class="badge">Smart Shop Management</span>
+        <h1>One platform,<br>complete control<br>for your shop</h1>
+        <p class="description">
+          ShopTK gives you complete control over your inventory, sales tracking, 
+          low stock alerts, and store management with real-time data.
+        </p>
+      </div>
+
+      <div class="features-preview">
+        <div class="feature-card">
+          <div class="feature-header">
+            <span class="feature-icon">📦</span>
+            <span class="feature-title">Today's Inventory</span>
+            <span class="feature-date">{{ today | date:'dd MMM yyyy' }}</span>
+          </div>
+          <div class="feature-items">
+            <div class="feature-item">
+              <span class="item-name">Electronics</span>
+              <span class="item-value">245 items</span>
+            </div>
+            <div class="feature-item">
+              <span class="item-name">Accessories</span>
+              <span class="item-value">128 items</span>
+            </div>
+            <div class="feature-item low-stock">
+              <span class="item-name">Low Stock Alert</span>
+              <span class="item-value warning">12 items</span>
+            </div>
+          </div>
+          <div class="feature-footer">
+            <button class="preview-btn">View all inventory</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel - Login Form -->
+  <div class="form-panel">
+    <div class="form-content">
+      <div class="form-header">
+        <div class="header-actions">
+          <span class="login-prompt">Don't have an account?</span>
+          <a class="register-link" routerLink="/register">Get started</a>
+        </div>
+      </div>
+
+      <div class="form-body">
+        <h2>Sign in</h2>
+        <p class="welcome-text">Welcome back! Please enter your details.</p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="email" formControlName="email" placeholder="Enter your email" type="email">
+              <mat-icon matPrefix>email</mat-icon>
+              <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+              <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Enter a valid email</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <input matInput id="password" formControlName="password" 
+                     [type]="hidePassword ? 'password' : 'text'" placeholder="Enter your password">
+              <mat-icon matPrefix>lock</mat-icon>
+              <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+                <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-options">
+            <mat-checkbox formControlName="rememberMe" color="primary">Remember me</mat-checkbox>
+            <a class="forgot-link" routerLink="/forgot-password">Forgot password?</a>
+          </div>
+
+          <button mat-flat-button color="primary" type="submit" class="login-btn" 
+                  [disabled]="!loginForm.valid || isLoading">
+            <span *ngIf="!isLoading">Sign in</span>
+            <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+          </button>
+        </form>
+
+      </div>
+
+      <div class="form-footer">
+        <p>© {{ currentYear }} ShopTK. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</div>

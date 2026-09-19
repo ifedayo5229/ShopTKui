@@ -1,0 +1,497 @@
+<div class="settings-container">
+  <div class="settings-header">
+    <div class="header-left">
+      <h1>Settings</h1>
+      <p class="subtitle">Manage your business and shop configuration</p>
+    </div>
+  </div>
+
+  <div class="settings-content">
+    <!-- Settings Navigation -->
+    <div class="settings-nav">
+      <button class="nav-item" [class.active]="activeTab === 'general'" (click)="activeTab = 'general'">
+        <mat-icon>business</mat-icon>
+        <span>General</span>
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'shops'" (click)="activeTab = 'shops'">
+        <mat-icon>store</mat-icon>
+        <span>Shops</span>
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'branding'" (click)="activeTab = 'branding'">
+        <mat-icon>palette</mat-icon>
+        <span>Branding</span>
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'inventory'" (click)="activeTab = 'inventory'">
+        <mat-icon>inventory_2</mat-icon>
+        <span>Inventory</span>
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'users'" (click)="activeTab = 'users'">
+        <mat-icon>people</mat-icon>
+        <span>Users</span>
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'notifications'" (click)="activeTab = 'notifications'">
+        <mat-icon>notifications</mat-icon>
+        <span>Notifications</span>
+      </button>
+    </div>
+
+    <!-- Settings Panels -->
+    <div class="settings-panel">
+      <!-- Loading overlay -->
+      <div class="panel-loading" *ngIf="isLoadingTenant || isLoadingShop">
+        <mat-spinner diameter="36"></mat-spinner>
+        <span>Loading...</span>
+      </div>
+
+      <!-- ============ GENERAL (Business Info) ============ -->
+      <div class="panel-content" *ngIf="activeTab === 'general' && !isLoadingTenant">
+        <div class="panel-header">
+          <h2>Business Information</h2>
+          <p>Your business details and contact information</p>
+        </div>
+
+        <form [formGroup]="tenantForm" class="settings-form">
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Business Name</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="businessName" placeholder="Your Business Name">
+                <mat-icon matPrefix>business</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="form-group flex-1">
+              <label>Owner Name</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="ownerName" placeholder="John Doe">
+                <mat-icon matPrefix>person</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Email</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="email" placeholder="business@example.com">
+                <mat-icon matPrefix>email</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="form-group flex-1">
+              <label>Phone</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="phoneNumber" placeholder="+234 800 000 0000">
+                <mat-icon matPrefix>phone</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Address</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <textarea matInput formControlName="address" placeholder="Business address" rows="2"></textarea>
+              <mat-icon matPrefix>location_on</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>City</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="city" placeholder="Lagos">
+                <mat-icon matPrefix>location_city</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="form-group flex-1">
+              <label>State</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="state" placeholder="Lagos">
+                <mat-icon matPrefix>map</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="form-group flex-1">
+              <label>Country</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="country" placeholder="Nigeria">
+                <mat-icon matPrefix>public</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" (click)="saveTenantSettings()" 
+                    [disabled]="!tenantForm.dirty || isSavingTenant">
+              <mat-spinner *ngIf="isSavingTenant" diameter="20"></mat-spinner>
+              <span *ngIf="!isSavingTenant">Save Changes</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ============ SHOPS ============ -->
+      <div class="panel-content" *ngIf="activeTab === 'shops' && !isLoadingShop">
+        <div class="panel-header">
+          <h2>Your Shops</h2>
+          <p>Manage your shop locations</p>
+          <button mat-flat-button color="primary" class="add-shop-btn" (click)="openAddShopDialog()">
+            <mat-icon>add</mat-icon>
+            Add Shop
+          </button>
+        </div>
+
+        <div class="shops-list">
+          <div class="shop-card" *ngFor="let shop of shops" [class.inactive]="!shop.isActive">
+            <div class="shop-card-left">
+              <div class="shop-avatar" [class.inactive]="!shop.isActive">
+                <mat-icon>store</mat-icon>
+              </div>
+              <div class="shop-info">
+                <div class="shop-name-row">
+                  <span class="shop-name">{{ shop.name }}</span>
+                  <span class="shop-status" [class.active]="shop.isActive" [class.inactive]="!shop.isActive">
+                    {{ shop.isActive ? 'Active' : 'Inactive' }}
+                  </span>
+                </div>
+                <span class="shop-address" *ngIf="shop.address">
+                  <mat-icon>location_on</mat-icon> {{ shop.address }}
+                </span>
+                <div class="shop-meta">
+                  <span *ngIf="shop.phoneNumber"><mat-icon>phone</mat-icon> {{ shop.phoneNumber }}</span>
+                  <span *ngIf="shop.city"><mat-icon>location_city</mat-icon> {{ shop.city }}<ng-container *ngIf="shop.state">, {{ shop.state }}</ng-container></span>
+                </div>
+              </div>
+            </div>
+            <div class="shop-card-actions">
+              <button mat-icon-button (click)="openEditShopDialog(shop)" matTooltip="Edit shop">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteShop(shop)" matTooltip="Delete shop" 
+                      class="delete-action" [disabled]="shops.length <= 1">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="empty-shops" *ngIf="shops.length === 0">
+            <mat-icon>store</mat-icon>
+            <span>No shops yet</span>
+            <p>Create your first shop to get started</p>
+            <button mat-flat-button color="primary" (click)="openAddShopDialog()">
+              <mat-icon>add</mat-icon> Add Shop
+            </button>
+          </div>
+        </div>
+
+        <!-- Shop selector for other tabs -->
+        <div class="shop-context-note" *ngIf="shops.length > 1">
+          <mat-icon>info</mat-icon>
+          <span>Select a shop below to configure its Branding, Inventory, Users, and Notifications.</span>
+        </div>
+        <div class="shop-selector-inline" *ngIf="shops.length > 0">
+          <label>Active shop for settings:</label>
+          <mat-form-field appearance="outline" class="shop-dropdown-inline">
+            <mat-select [(value)]="selectedShopId" (selectionChange)="onShopChange($event.value)">
+              <mat-option *ngFor="let shop of shops" [value]="shop.id">
+                {{ shop.name }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>storefront</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Branding Settings -->
+      <div class="panel-content" *ngIf="activeTab === 'branding' && !isLoadingShop">
+        <div class="panel-header">
+          <h2>Branding</h2>
+          <p>Customize your shop's appearance</p>
+        </div>
+
+        <div class="branding-section">
+          <div class="logo-upload">
+            <h3>Shop Logo</h3>
+            <div class="logo-preview">
+              <div class="logo-image" *ngIf="logoUrl">
+                <img [src]="logoUrl" alt="Shop Logo">
+              </div>
+              <div class="logo-placeholder" *ngIf="!logoUrl">
+                <mat-icon>add_photo_alternate</mat-icon>
+                <span>No logo uploaded</span>
+              </div>
+            </div>
+            <div class="upload-actions">
+              <input type="file" #logoInput hidden accept="image/*" (change)="onLogoSelect($event)">
+              <button mat-stroked-button (click)="logoInput.click()">
+                <mat-icon>upload</mat-icon>
+                Upload Logo
+              </button>
+              <button mat-stroked-button color="warn" *ngIf="logoUrl" (click)="removeLogo()">
+                <mat-icon>delete</mat-icon>
+                Remove
+              </button>
+            </div>
+            <p class="upload-hint">Recommended: 200x200px, PNG or JPG</p>
+          </div>
+
+          <div class="color-settings">
+            <h3>Brand Color</h3>
+            <div class="color-options">
+              <button class="color-option" *ngFor="let color of brandColors"
+                      [style.background]="color"
+                      [class.selected]="selectedColor === color"
+                      (click)="selectBrandColor(color)">
+                <mat-icon *ngIf="selectedColor === color">check</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" (click)="saveBrandingSettings()" 
+                    [disabled]="isSaving">
+              <mat-spinner *ngIf="isSaving" diameter="20"></mat-spinner>
+              <span *ngIf="!isSaving">Save Changes</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Settings -->
+      <div class="panel-content" *ngIf="activeTab === 'inventory' && !isLoadingShop">
+        <div class="panel-header">
+          <h2>Inventory Settings</h2>
+          <p>Configure stock management preferences</p>
+        </div>
+
+        <form [formGroup]="inventoryForm" class="settings-form">
+          <!-- Default Low Stock Threshold -->
+          <div class="setting-item threshold-setting">
+            <div class="setting-info">
+              <h3>Default Low Stock Threshold</h3>
+              <p>Alert when product stock falls below this quantity. This sets the threshold for <strong>all products</strong>.</p>
+            </div>
+            <div class="threshold-action">
+              <mat-form-field appearance="outline" class="setting-input">
+                <input matInput type="number" formControlName="lowStockThreshold" min="1">
+              </mat-form-field>
+              <button mat-flat-button color="primary" class="apply-btn"
+                      (click)="saveDefaultThreshold()"
+                      [disabled]="savingSettings['lowStockThreshold'] || inventoryForm.get('lowStockThreshold')?.invalid">
+                <mat-spinner *ngIf="savingSettings['lowStockThreshold']" diameter="18"></mat-spinner>
+                <span *ngIf="!savingSettings['lowStockThreshold']">Apply to All</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Toggle: Enable Low Stock Alerts -->
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>Enable Low Stock Alerts</h3>
+              <p>Receive notifications when products are running low</p>
+            </div>
+            <div class="setting-toggle-wrap">
+              <mat-spinner *ngIf="savingSettings['enableLowStockAlerts']" diameter="18" class="toggle-spinner"></mat-spinner>
+              <mat-slide-toggle formControlName="enableLowStockAlerts" color="primary"
+                                (change)="onToggleLowStockAlerts($event.checked)"></mat-slide-toggle>
+            </div>
+          </div>
+
+          <!-- Toggle: Email Alerts -->
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>Email Alerts</h3>
+              <p>Send low stock alerts via email</p>
+            </div>
+            <div class="setting-toggle-wrap">
+              <mat-spinner *ngIf="savingSettings['enableEmailAlerts']" diameter="18" class="toggle-spinner"></mat-spinner>
+              <mat-slide-toggle formControlName="enableEmailAlerts" color="primary"
+                                (change)="onToggleEmailAlerts($event.checked)"></mat-slide-toggle>
+            </div>
+          </div>
+
+          <!-- Toggle: Allow Negative Stock -->
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>Allow Negative Stock</h3>
+              <p>Allow sales even when stock is zero</p>
+            </div>
+            <div class="setting-toggle-wrap">
+              <mat-spinner *ngIf="savingSettings['allowNegativeStock']" diameter="18" class="toggle-spinner"></mat-spinner>
+              <mat-slide-toggle formControlName="allowNegativeStock" color="primary"
+                                (change)="onToggleNegativeStock($event.checked)"></mat-slide-toggle>
+            </div>
+          </div>
+        </form>
+
+        <!-- Per-Product Threshold Overrides -->
+        <div class="product-thresholds-section">
+          <div class="section-header">
+            <div class="section-title">
+              <h3>Per-Product Thresholds</h3>
+              <p>Override the default threshold for individual products</p>
+            </div>
+            <mat-form-field appearance="outline" class="product-search">
+              <mat-icon matPrefix>search</mat-icon>
+              <input matInput placeholder="Search products..."
+                     [(ngModel)]="productSearchTerm"
+                     (ngModelChange)="onProductSearchChange()">
+            </mat-form-field>
+          </div>
+
+          <div class="products-loading" *ngIf="isLoadingProducts">
+            <mat-spinner diameter="28"></mat-spinner>
+            <span>Loading products...</span>
+          </div>
+
+          <div class="product-threshold-list" *ngIf="!isLoadingProducts && filteredProductThresholds.length > 0">
+            <div class="product-threshold-header">
+              <span class="col-product">Product</span>
+              <span class="col-sku">SKU</span>
+              <span class="col-stock">Current Stock</span>
+              <span class="col-threshold">Threshold</span>
+              <span class="col-action"></span>
+            </div>
+
+            <div class="product-threshold-row" *ngFor="let product of filteredProductThresholds">
+              <div class="col-product">
+                <span class="product-name">{{ product.productName }}</span>
+              </div>
+              <span class="col-sku">{{ product.sku }}</span>
+              <span class="col-stock" [class.low-stock]="product.currentStock <= product.threshold">
+                {{ product.currentStock }}
+              </span>
+              <div class="col-threshold">
+                <input type="number" class="threshold-input" min="0"
+                       [(ngModel)]="product.threshold">
+              </div>
+              <div class="col-action">
+                <button mat-icon-button color="primary"
+                        (click)="updateProductThreshold(product)"
+                        [disabled]="savingProductId === product.inventoryId"
+                        matTooltip="Save threshold">
+                  <mat-spinner *ngIf="savingProductId === product.inventoryId" diameter="18"></mat-spinner>
+                  <mat-icon *ngIf="savingProductId !== product.inventoryId">save</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="empty-products" *ngIf="!isLoadingProducts && filteredProductThresholds.length === 0">
+            <mat-icon>inventory_2</mat-icon>
+            <span *ngIf="productThresholds.length === 0">No products in this shop yet</span>
+            <span *ngIf="productThresholds.length > 0 && filteredProductThresholds.length === 0">No products match your search</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Settings -->
+      <div class="panel-content" *ngIf="activeTab === 'users' && !isLoadingShop">
+        <div class="panel-header">
+          <h2>User Management</h2>
+          <p>Manage team members and their roles</p>
+          <button mat-flat-button color="primary" class="add-user-btn" (click)="openAddUserDialog()">
+            <mat-icon>person_add</mat-icon>
+            Add User
+          </button>
+        </div>
+
+        <div class="users-list">
+          <div class="user-item" *ngFor="let user of users">
+            <div class="user-avatar">
+              <span>{{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}</span>
+            </div>
+            <div class="user-info">
+              <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+              <span class="user-email">{{ user.email }}</span>
+              <span class="user-shops" *ngIf="getUserShopNames(user)">
+                <mat-icon class="shop-icon">store</mat-icon> {{ getUserShopNames(user) }}
+              </span>
+            </div>
+            <span class="role-badge" [class]="getRoleBadgeClass(user.role)">{{ getRoleLabel(user.role) }}</span>
+            <div class="user-status">
+              <span class="status-badge" [class.active]="user.isActive" [class.inactive]="!user.isActive">
+                {{ user.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </div>
+            <button mat-stroked-button class="view-details-btn" (click)="viewUserDetails(user)">
+              View Details
+            </button>
+            <div class="user-actions">
+              <button mat-icon-button [matMenuTriggerFor]="userMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #userMenu="matMenu">
+                <button mat-menu-item (click)="editUser(user)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item (click)="toggleUserStatus(user)">
+                  <mat-icon>{{ user.isActive ? 'block' : 'check_circle' }}</mat-icon>
+                  <span>{{ user.isActive ? 'Deactivate' : 'Activate' }}</span>
+                </button>
+                <button mat-menu-item (click)="resetPassword(user)">
+                  <mat-icon>lock_reset</mat-icon>
+                  <span>Reset Password</span>
+                </button>
+                <button mat-menu-item class="delete-action" (click)="deleteUser(user)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+
+          <div class="empty-users" *ngIf="users.length === 0">
+            <mat-icon>people</mat-icon>
+            <span>No team members yet</span>
+            <p>Add users to help manage your shop</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications Settings -->
+      <div class="panel-content" *ngIf="activeTab === 'notifications' && !isLoadingShop">
+        <div class="panel-header">
+          <h2>Notification Preferences</h2>
+          <p>Configure how you receive alerts. Changes are saved automatically.</p>
+        </div>
+
+        <form [formGroup]="notificationForm" class="settings-form">
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>Low Stock Notifications</h3>
+              <p>Get notified when products are running low</p>
+            </div>
+            <div class="setting-toggle-wrap">
+              <mat-spinner *ngIf="savingSettings['lowStockNotifications']" diameter="18" class="toggle-spinner"></mat-spinner>
+              <mat-slide-toggle formControlName="lowStockNotifications" color="primary"
+                                (change)="onToggleLowStockNotifications($event.checked)"></mat-slide-toggle>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>Daily Sales Summary</h3>
+              <p>Receive a daily sales report via email</p>
+            </div>
+            <div class="setting-toggle-wrap">
+              <mat-spinner *ngIf="savingSettings['dailySalesSummary']" diameter="18" class="toggle-spinner"></mat-spinner>
+              <mat-slide-toggle formControlName="dailySalesSummary" color="primary"
+                                (change)="onToggleDailySalesSummary($event.checked)"></mat-slide-toggle>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>New User Registrations</h3>
+              <p>Get notified when new users join</p>
+            </div>
+            <div class="setting-toggle-wrap">
+              <mat-spinner *ngIf="savingSettings['newUserNotifications']" diameter="18" class="toggle-spinner"></mat-spinner>
+              <mat-slide-toggle formControlName="newUserNotifications" color="primary"
+                                (change)="onToggleNewUserNotifications($event.checked)"></mat-slide-toggle>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

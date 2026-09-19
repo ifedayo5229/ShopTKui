@@ -4,38 +4,80 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HTTP_INTERCEPTORS
+  HTTP_INTERCEPTORS,
+  HttpErrorResponse
 } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from '../environments/environment';
-import { TokenService } from '../services/token/token.service';
+import { TenantContextService } from '../services/tenant-context/tenant-context.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
- 
-  constructor(private tokenService: TokenService, private router: Router) {}
+  constructor(
+    private tenantContext: TenantContextService, 
+    private router: Router
+  ) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> 
-  {
-    debugger
-    
-    const requestForApis = request.url.startsWith(environment.apiUrl);
-    const isLoggedIn = this.tokenService.isLoggedIn();
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    const isApiRequest = request.url.startsWith(environment.apiUrl);
+    const token = this.tenantContext.getAccessToken();
 
-   // console.log('inside intercept');
-    //console.log(`request is ${JSON.stringify(request.body)}`);
-    if(!isLoggedIn){this.router.navigate(['signin']);}
+    // Skip auth header for login and register endpoints
+    const isAuthEndpoint = request.url.includes('/auth/login') || 
+                           request.url.includes('/auth/register') ||
+                           request.url.includes('/auth/refresh-token') ||
+                           request.url.includes('/auth/forgot-password') ||
+                           request.url.includes('/auth/reset-password');
 
-    if (isLoggedIn && requestForApis) {
-      let session = this.tokenService.getSession();
-      if (session){
-        request = request.clone({ headers: request.headers.set('Authorization', `Bearer ${session.accessToken}`) });
+    if (token && isApiRequest && !isAuthEndpoint) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      // Add tenant context header if available
+      const tenantId = this.tenantContext.currentTenant?.tenantId;
+      if (tenantId) {
+        request = request.clone({
+          setHeaders: {
+            'X-Tenant-Id': tenantId
+          }
+        });
       }
-      
+
+      // Add current shop header if available
+      const shopId = this.tenantContext.currentShop?.id;
+      if (shopId) {
+        request = request.clone({
+          setHeaders: {
+            'X-Shop-Id': shopId.toString()
+          }
+        });
+      }
     }
-    return next.handle(request);
+
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          // Token expired or invalid
+          this.tenantContext.clearContext();
+          this.router.navigate(['/login']);
+        } else if (error.status === 403) {
+          // Forbidden - user doesn't have permission
+          this.router.navigate(['/home/dashboard']);
+        }
+        return throwError(() => error);
+      })
+    );
   }
 }
-export const AuthInterceptorProvider = { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true };
+
+export const AuthInterceptorProvider = { 
+  provide: HTTP_INTERCEPTORS, 
+  useClass: AuthInterceptor, 
+  multi: true 
+};

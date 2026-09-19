@@ -1,0 +1,103 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-icon danger">
+      <mat-icon>remove_circle</mat-icon>
+    </div>
+    <div class="header-content">
+      <h2>Remove Stock</h2>
+      <p>Remove inventory from {{ data.inventory.product }}</p>
+    </div>
+    <button mat-icon-button class="close-btn" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="stockForm" (ngSubmit)="onSubmit()">
+    <div class="dialog-body">
+      <div class="product-info">
+        <div class="info-row">
+          <span class="label">Current Stock:</span>
+          <span class="value">{{ data.inventory.quantity }} units</span>
+        </div>
+        <div class="info-row">
+          <span class="label">SKU:</span>
+          <span class="value">{{ data.inventory.sku }}</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="quantity">Quantity to Remove *</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input matInput id="quantity" type="number" formControlName="quantity" 
+                 placeholder="Enter quantity" min="1" [max]="data.inventory.quantity">
+          <mat-icon matPrefix>inventory</mat-icon>
+          <mat-error *ngIf="stockForm.get('quantity')?.hasError('required')">Quantity is required</mat-error>
+          <mat-error *ngIf="stockForm.get('quantity')?.hasError('min')">Quantity must be at least 1</mat-error>
+          <mat-error *ngIf="stockForm.get('quantity')?.hasError('max')">Cannot exceed current stock</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label for="reason">Reason *</label>
+        <mat-form-field appearance="outline" class="full-width" *ngIf="!isCreatingNewReason">
+          <mat-select id="reason" formControlName="reason" (selectionChange)="onReasonChange($event)">
+            <mat-option value="new" class="create-new-option">
+              <mat-icon>add_circle</mat-icon> Create New Reason
+            </mat-option>
+            <mat-divider></mat-divider>
+            <mat-option *ngFor="let reason of reasons" [value]="reason.code">
+              {{ reason.name }}
+            </mat-option>
+          </mat-select>
+          <mat-spinner *ngIf="isLoadingReasons" diameter="20" matSuffix></mat-spinner>
+          <mat-error *ngIf="stockForm.get('reason')?.hasError('required')">Reason is required</mat-error>
+        </mat-form-field>
+
+        <!-- New Reason Input -->
+        <div class="new-reason-input" *ngIf="isCreatingNewReason">
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="newReasonName" placeholder="Enter new reason name">
+            <mat-icon matPrefix>label</mat-icon>
+            <mat-error>Reason name is required</mat-error>
+          </mat-form-field>
+          <button mat-icon-button type="button" class="cancel-new-btn" (click)="cancelNewReason()" 
+                  matTooltip="Cancel">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="notes">Notes</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea matInput id="notes" formControlName="notes" 
+                    placeholder="Add any notes about this stock removal" rows="3"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="preview-box warning" *ngIf="stockForm.get('quantity')?.value > 0">
+        <mat-icon>warning</mat-icon>
+        <span>New stock level will be: <strong>{{ data.inventory.quantity - stockForm.get('quantity')?.value }} units</strong></span>
+      </div>
+
+      <div class="alert-box" *ngIf="newStockLevel <= data.inventory.reorderLevel && newStockLevel > 0">
+        <mat-icon>notification_important</mat-icon>
+        <span>This will trigger a low stock alert!</span>
+      </div>
+
+      <div class="alert-box danger" *ngIf="newStockLevel === 0">
+        <mat-icon>error</mat-icon>
+        <span>This product will be out of stock!</span>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button mat-stroked-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-flat-button color="warn" type="button" (click)="onSubmit()"
+              [disabled]="!stockForm.valid || isLoading" class="submit-btn">
+        <span *ngIf="!isLoading">Remove Stock</span>
+        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+      </button>
+    </div>
+  </form>
+</div>

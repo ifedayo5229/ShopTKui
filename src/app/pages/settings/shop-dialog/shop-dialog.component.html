@@ -1,0 +1,77 @@
+<div class="shop-dialog">
+  <div class="dialog-header">
+    <h2>{{ title }}</h2>
+    <button mat-icon-button (click)="onCancel()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="shopForm" (ngSubmit)="onSubmit()">
+    <div class="dialog-body">
+      <div class="form-group">
+        <label>Shop Name <span class="required">*</span></label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input matInput formControlName="name" placeholder="e.g. Main Branch">
+          <mat-icon matPrefix>store</mat-icon>
+          <mat-error *ngIf="shopForm.get('name')?.hasError('required')">Shop name is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label>Phone</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="phoneNumber" placeholder="+234 800 000 0000">
+            <mat-icon matPrefix>phone</mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="form-group flex-1">
+          <label>
+            <mat-checkbox formControlName="isMainBranch" color="primary">Main Branch</mat-checkbox>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Address</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input matInput formControlName="address" placeholder="Shop address">
+          <mat-icon matPrefix>location_on</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label>City</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="city" placeholder="Lagos">
+            <mat-icon matPrefix>location_city</mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="form-group flex-1">
+          <label>State</label>
+          <mat-form-field appearance="outline" class="full-width">
+            <input matInput formControlName="state" placeholder="Lagos">
+            <mat-icon matPrefix>map</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea matInput formControlName="description" placeholder="Brief description of this shop" rows="2"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button mat-stroked-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-flat-button color="primary" type="submit" 
+              [disabled]="!shopForm.valid || isSubmitting">
+        <mat-spinner *ngIf="isSubmitting" diameter="18"></mat-spinner>
+        <span *ngIf="!isSubmitting">{{ mode === 'create' ? 'Create Shop' : 'Save Changes' }}</span>
+      </button>
+    </div>
+  </form>
+</div>

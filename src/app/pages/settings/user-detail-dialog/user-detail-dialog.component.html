@@ -1,0 +1,127 @@
+<div class="user-detail-dialog">
+  <!-- Header -->
+  <div class="detail-header">
+    <div class="header-left">
+      <div class="user-avatar large">
+        <span>{{ initials }}</span>
+      </div>
+      <div class="header-info">
+        <h2>{{ fullName }}</h2>
+        <span class="user-email">{{ user.email }}</span>
+        <span class="status-badge" [class.active]="user.isActive" [class.inactive]="!user.isActive">
+          <span class="status-dot"></span>
+          {{ user.isActive ? 'Active' : 'Inactive' }}
+        </span>
+      </div>
+    </div>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Details Body -->
+  <div class="detail-body">
+    <!-- Contact Info -->
+    <div class="detail-section">
+      <h3 class="section-title">
+        <mat-icon>person</mat-icon>
+        Contact Information
+      </h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">First Name</span>
+          <span class="info-value">{{ user.firstName || '—' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Last Name</span>
+          <span class="info-value">{{ user.lastName || '—' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Email</span>
+          <span class="info-value">{{ user.email || '—' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Phone</span>
+          <span class="info-value">{{ user.phoneNumber || '—' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role -->
+    <div class="detail-section">
+      <h3 class="section-title">
+        <mat-icon>badge</mat-icon>
+        Role
+      </h3>
+      <div class="role-card">
+        <div class="role-icon-wrap" [ngClass]="getRoleBadgeClass(user.role)">
+          <mat-icon>{{ getRoleIcon(user.role) }}</mat-icon>
+        </div>
+        <div class="role-details">
+          <span class="role-name">{{ getRoleLabel(user.role) }}</span>
+          <span class="role-badge-sm" [ngClass]="getRoleBadgeClass(user.role)">{{ user.role }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assigned Shops -->
+    <div class="detail-section">
+      <h3 class="section-title">
+        <mat-icon>store</mat-icon>
+        Assigned Shops
+        <span class="section-count">{{ getUserShopNames().length }}</span>
+      </h3>
+      <div class="shops-list" *ngIf="getUserShopNames().length > 0; else noShops">
+        <div class="shop-chip" *ngFor="let name of getUserShopNames()">
+          <mat-icon>storefront</mat-icon>
+          <span>{{ name }}</span>
+        </div>
+      </div>
+      <ng-template #noShops>
+        <div class="empty-section">
+          <mat-icon>store</mat-icon>
+          <span>No shops assigned</span>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Account Info -->
+    <div class="detail-section">
+      <h3 class="section-title">
+        <mat-icon>info</mat-icon>
+        Account Info
+      </h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">User ID</span>
+          <span class="info-value mono">{{ user.id }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Created</span>
+          <span class="info-value">{{ user.createdAt | date: 'mediumDate' }}</span>
+        </div>
+        <div class="info-item" *ngIf="user.lastLoginAt">
+          <span class="info-label">Last Login</span>
+          <span class="info-value">{{ user.lastLoginAt | date: 'medium' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Status</span>
+          <span class="info-value">
+            <span class="status-inline" [class.active]="user.isActive">
+              {{ user.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="detail-actions">
+    <button mat-stroked-button (click)="close()">Close</button>
+    <button mat-flat-button color="primary" (click)="openEdit()">
+      <mat-icon>edit</mat-icon>
+      Edit User
+    </button>
+  </div>
+</div>

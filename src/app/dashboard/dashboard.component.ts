@@ -1,355 +1,372 @@
-import { Component, OnInit } from '@angular/core';
-import { InventoryMovementService } from 'src/app/services/inventoryMovement/inventory-movement.service';
-import { ItemRequestService } from '../services/item-request/item-request.service';
-import { Chart, registerables } from 'chart.js'; 
-import { LoginResponseData } from '../models/login-response-data';
-import { TokenService } from '../services/token/token.service';
-import { RoleDto } from '../models/RoleDto';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { TenantContextService } from 'src/app/services/tenant-context/tenant-context.service';
+import { ShopInventoryService } from 'src/app/services/shop-inventory/shop-inventory.service';
+import { SalesService } from 'src/app/services/sales/sales.service';
+import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
+import { Sale } from 'src/app/models/sale';
+import { TenantSubscription, SubscriptionStatus } from 'src/app/models/subscription';
+import { isApiSuccess, getApiData } from 'src/app/models/api-response';
+import { Chart, ChartConfiguration, registerables } from 'chart.js';
+
+// Register Chart.js components
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
-  currentUser: any;
-  userId: string = '';
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('revenueChart') revenueChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('salesChart') salesChartRef!: ElementRef<HTMLCanvasElement>;
 
-  allRequests: number = 0;
-  pendingRequestsCount: number = 0;
-  approvedRequestsCount: number = 0;
-  rejectedRequestsCount: number = 0;
-  issuedRequestsCount: number = 0;
-  closedRequestsCount: number = 0;
+  shopName = '';
+  userName = '';
 
-  allMyRequests: number = 0;
-  mypendingRequestsCount: number = 0;
-  myapprovedRequestsCount: number = 0;
-  myrejectedRequestsCount: number = 0;
-  myissuedRequestsCount: number = 0;
-  myclosedRequestsCount: number = 0;
-  allPendingRequestsCount: number = 0;
+  // Stats
+  totalProducts = 0;
+  lowStockItems = 0;
+  todaySales = 0;
+  todayRevenue = 0;
 
-  isRequesterOnly: boolean = false;
-  isAdmin: boolean = false;
-  isStoreManager: boolean = false;
-  isMainStoreManager: boolean = false;
-  isLineManager: boolean = false;
-  isHoS: boolean = false;
-  isHoD: boolean = false;
-  isITStoreManager: boolean = false;
-  isITSupport: boolean = false;
-  isCPASDStoreManager: boolean = false;
+  // Recent sales
+  recentSales: Sale[] = [];
+  isLoadingSales = false;
 
-  constructor(private itemRequestService: ItemRequestService, private tokenService: TokenService, private router: Router) {
-    Chart.register(...registerables); 
-  }
+  // Charts
+  revenueChart: Chart | null = null;
+  salesChart: Chart | null = null;
+  chartPeriod: 'week' | 'month' = 'week';
+  private salesData: Sale[] = [];
+
+  // Subscription
+  subscription: TenantSubscription | null = null;
+  showUpgradeBanner = false;
+  isFreeTrial = false;
+  isExpiringSoon = false;
+  daysRemaining = 0;
+
+  constructor(
+    private router: Router,
+    private tenantContext: TenantContextService,
+    private inventoryService: ShopInventoryService,
+    private salesService: SalesService,
+    private subscriptionService: SubscriptionService
+  ) {}
 
   ngOnInit(): void {
-    this.getinfo();
-    this.getAllRequests();
-    this.getAllMyRequests(this.userId);
-    this.getMyPendingApprovals(this.userId);
+    const shop = this.tenantContext.currentShop;
+    const user = this.tenantContext.currentUser;
+
+    this.shopName = shop?.name || 'My Shop';
+    this.userName = user?.firstName || 'User';
+
+    this.loadStats();
+    this.loadRecentSales();
+    this.loadChartData();
+    this.loadSubscription();
   }
 
-  getinfo(){
-        const loginResponse: LoginResponseData = this.tokenService.getInfo();
-        this.currentUser = this.tokenService.getInfo(); 
-        this.userId = this.currentUser.profile.id;
+  ngAfterViewInit(): void {
+    // Charts will be initialized after data loads
+  }
 
-        var roles: RoleDto[] = this.currentUser.roles;
-        const hasRequesterRole = roles.some(role => role.roleName.trim().toLowerCase() === 'requester'.toLowerCase());
-        const hasAdminRole = roles.some(role => role.roleName.trim().toLowerCase() === 'admin'.toLowerCase());
-        const hasStoreManagerRole = roles.some(role => role.roleName.trim().toLowerCase() === 'Store Manager'.toLowerCase());
-        const hasMainStoreManagerRole = roles.some(role => role.roleName.trim().toLowerCase() === 'Main Store Manager'.toLowerCase());
-        const hasLineManagerRole = roles.some(role => role.roleName.trim().toLowerCase() === 'Line Manager'.toLowerCase());
-        const hasHoSRole = roles.some(role => role.roleName.trim().toLowerCase() === 'HOS'.toLowerCase());
-        const hasITStrMngrRole = roles.some(role => role.roleName.trim().toLowerCase() === 'IT Store Manager'.toLowerCase());
-        const hasITSupportRole = roles.some(role => role.roleName.trim().toLowerCase() === 'IT Support'.toLowerCase());
-        const hasHoDRole = roles.some(role => role.roleName.trim().toLowerCase() === 'Head of Unit'.toLowerCase());
-        const hasCPASDRole = roles.some(role => role.roleName.trim().toLowerCase() === 'CPASD Store Manager'.toLowerCase());
+  ngOnDestroy(): void {
+    this.revenueChart?.destroy();
+    this.salesChart?.destroy();
+  }
 
+  loadStats(): void {
+    const shopId = this.tenantContext.currentShop?.id;
+    if (!shopId) return;
 
-        if(hasRequesterRole && roles.length === 1){
-          this.isRequesterOnly = true;
-        }
-
-        if(hasAdminRole){
-          this.isAdmin = true;
-        }
-
-        if(hasStoreManagerRole){
-          this.isStoreManager = true;
-        }
-
-        if(hasMainStoreManagerRole){
-          this.isMainStoreManager = true;
-        }
-
-        if(hasLineManagerRole){
-          this.isLineManager = true;
-        }
-
-        if(hasHoSRole){
-          this.isHoS = true;
-        }
-
-        if(hasHoDRole){
-          this.isHoD = true;
-        }
-
-        if(hasITStrMngrRole){
-          this.isITStoreManager = true;
-        }
-
-        if(hasITSupportRole){
-          this.isITSupport = true;
-        }
-
-        if(hasCPASDRole){
-          this.isCPASDStoreManager = true;
-        }
-        
-      }
-
-  getAllRequests(): void {
-    this.itemRequestService.getallItemRequests().subscribe({
+    // Load inventory stats
+    this.inventoryService.getByShop(shopId).subscribe({
       next: (response) => {
-        if (response && response.responseData) {
-          this.allRequests = response.responseData.length;
-          this.issuedRequestsCount = response.responseData.filter(item => item.status.toLowerCase() === 'issued').length;
-          this.closedRequestsCount = response.responseData.filter(item => item.status.toLowerCase() === 'closed').length;
-          this.approvedRequestsCount = (response.responseData.filter(item => item.status.toLowerCase() === 'approved').length) + this.issuedRequestsCount + this.closedRequestsCount;
-          this.pendingRequestsCount = response.responseData.filter(item => item.status.toLowerCase() === 'pending review').length;
-          this.rejectedRequestsCount = response.responseData.filter(item => item.status.toLowerCase() === 'rejected').length;
-          console.log(this.closedRequestsCount);
-          this.createDoughnutChart();
-          this.createBarLineChart();
+        const data = getApiData(response);
+        if (isApiSuccess(response) && data) {
+          this.totalProducts = data.length;
+          this.lowStockItems = data.filter(
+            item => item.status === 'Low Stock' || item.status === 'Out of Stock'
+          ).length;
         }
-      },
-      error: (err) => {
-        console.error('Error fetching all requests:', err);
+      }
+    });
+
+    // Load today's sales
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    this.salesService.getByDateRange(today, endOfDay, shopId).subscribe({
+      next: (response) => {
+        const data = getApiData(response);
+        if (isApiSuccess(response) && data) {
+          this.todaySales = data.length;
+          this.todayRevenue = data.reduce(
+            (sum, sale) => sum + (sale.totalAmount || 0), 0
+          );
+        }
       }
     });
   }
 
-  getAllMyRequests(userId: string): void {
-    this.itemRequestService.getAllRequestsBy(userId).subscribe({
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
+  }
+
+  navigateToUpgrade(): void {
+    this.router.navigate(['/home/subscription/upgrade']);
+  }
+
+  loadSubscription(): void {
+    this.subscriptionService.getMySubscription().subscribe({
       next: (response) => {
-        debugger;
-        if (response && response.responseData) {
-          this.allMyRequests = response.responseData.length;
-          this.myissuedRequestsCount = response.responseData.filter(item => item.status.toLowerCase() === 'issued').length;          
-          this.myclosedRequestsCount = response.responseData.filter(item => item.status.toLowerCase() === 'closed').length;
-          this.myapprovedRequestsCount = (response.responseData.filter(item => item.status.toLowerCase() === 'approved').length) + this.myissuedRequestsCount + this.myclosedRequestsCount;          
-          this.mypendingRequestsCount = response.responseData.filter(item => item.status.toLowerCase() === 'pending review').length;
-          this.myrejectedRequestsCount = response.responseData.filter(item => item.status.toLowerCase() === 'rejected').length;
-          console.log(this.closedRequestsCount);
-          this.createMyDoughnutChart();
-          this.createMyBarLineChart();
+        const data = getApiData(response);
+        if (isApiSuccess(response) && data) {
+          this.subscription = data;
+          this.daysRemaining = data.daysRemaining || 0;
+          this.isFreeTrial = data.status === SubscriptionStatus.Trial;
+          this.isExpiringSoon = this.daysRemaining <= 7 && this.daysRemaining > 0;
+
+          // Show upgrade banner for free trial or expiring soon
+          this.showUpgradeBanner = this.isFreeTrial || this.isExpiringSoon;
         }
       },
       error: (err) => {
-        console.error('Error fetching my requests:', err);
+        console.error('Error loading subscription', err);
       }
     });
   }
 
-  getMyPendingApprovals(userId: string): void {
-
-    this.itemRequestService.getallPendingRequests(userId).subscribe({
-      next: (response) => {
-        debugger;
-        if (response && response.responseData) {
-          this.allPendingRequestsCount = response.responseData.length;
-        }
-      },
-      error: (err) => {
-        console.error('Error fetching pending approvals:', err);
-      }
-    });
-
+  dismissUpgradeBanner(): void {
+    this.showUpgradeBanner = false;
+    // Optionally store in localStorage to not show again for a day
+    localStorage.setItem('upgradeBannerDismissed', new Date().toISOString());
   }
 
-  createDoughnutChart() {
-    const ctxDoughnut = (document.getElementById('doughnutChart') as HTMLCanvasElement).getContext('2d');
-    if (ctxDoughnut) {
-      new Chart(ctxDoughnut, {
-        type: 'doughnut',
-        data: {
-          labels: ['Approved', 'Pending', 'Rejected'],
-          datasets: [{
-            data: [this.approvedRequestsCount, this.pendingRequestsCount, this.rejectedRequestsCount],
-            backgroundColor: ['#4CAF50', '#FFC107', '#F44336'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              callbacks: {
-                label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`
-              }
+  getGreeting(): string {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 17) return 'Good afternoon';
+    return 'Good evening';
+  }
+
+  getTimeIcon(): string {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'wb_sunny';
+    if (hour < 17) return 'wb_twilight';
+    return 'nightlight';
+  }
+
+  loadRecentSales(): void {
+    this.isLoadingSales = true;
+    const shopId = this.tenantContext.currentShop?.id;
+    if (!shopId) {
+      this.isLoadingSales = false;
+      return;
+    }
+
+    // Get sales from last 7 days
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 7);
+
+    this.salesService.getByDateRange(startDate, endDate, shopId).subscribe({
+      next: (response) => {
+        this.isLoadingSales = false;
+        const data = getApiData(response);
+        if (isApiSuccess(response) && data) {
+          // Sort by date descending and take last 5
+          this.recentSales = data
+            .sort((a, b) => new Date(b.saleDate).getTime() - new Date(a.saleDate).getTime())
+            .slice(0, 5);
+        }
+      },
+      error: () => {
+        this.isLoadingSales = false;
+      }
+    });
+  }
+
+  loadChartData(): void {
+    const shopId = this.tenantContext.currentShop?.id;
+    if (!shopId) return;
+
+    const days = this.chartPeriod === 'week' ? 7 : 30;
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+
+    this.salesService.getByDateRange(startDate, endDate, shopId).subscribe({
+      next: (response) => {
+        const data = getApiData(response);
+        if (isApiSuccess(response) && data) {
+          this.salesData = data;
+          this.renderCharts();
+        }
+      }
+    });
+  }
+
+  setChartPeriod(period: 'week' | 'month'): void {
+    this.chartPeriod = period;
+    this.loadChartData();
+  }
+
+  private renderCharts(): void {
+    const days = this.chartPeriod === 'week' ? 7 : 30;
+    const labels: string[] = [];
+    const revenueData: number[] = [];
+    const salesCountData: number[] = [];
+
+    // Build data for each day
+    for (let i = days - 1; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      date.setHours(0, 0, 0, 0);
+
+      const nextDate = new Date(date);
+      nextDate.setDate(nextDate.getDate() + 1);
+
+      const daySales = this.salesData.filter(sale => {
+        const saleDate = new Date(sale.saleDate);
+        return saleDate >= date && saleDate < nextDate;
+      });
+
+      labels.push(date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' }));
+      revenueData.push(daySales.reduce((sum, sale) => sum + (sale.totalAmount || 0), 0));
+      salesCountData.push(daySales.length);
+    }
+
+    this.createRevenueChart(labels, revenueData);
+    this.createSalesChart(labels, salesCountData);
+  }
+
+  private createRevenueChart(labels: string[], data: number[]): void {
+    if (!this.revenueChartRef?.nativeElement) return;
+
+    this.revenueChart?.destroy();
+
+    const ctx = this.revenueChartRef.nativeElement.getContext('2d');
+    if (!ctx) return;
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+    gradient.addColorStop(0, 'rgba(15, 124, 92, 0.3)');
+    gradient.addColorStop(1, 'rgba(15, 124, 92, 0.02)');
+
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)';
+    const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
+
+    this.revenueChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          data,
+          borderColor: '#0f7c5c',
+          backgroundColor: gradient,
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2,
+          pointBackgroundColor: '#0f7c5c',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: isDark ? '#17231e' : '#fff',
+            titleColor: isDark ? '#fff' : '#111827',
+            bodyColor: isDark ? '#a9bbb2' : '#6b7280',
+            borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+            borderWidth: 1,
+            padding: 12,
+            displayColors: false,
+            callbacks: {
+              label: (context) => `â‚¦${context.raw?.toLocaleString()}`
             }
           }
-        }
-      });
-    } else {
-      console.error('Failed to get 2D context for doughnut chart');
-    }
-  }
-
-  createBarLineChart() {
-    const ctxBarLine = (document.getElementById('barLineChart') as HTMLCanvasElement).getContext('2d');
-    if (ctxBarLine) {
-      new Chart(ctxBarLine, {
-        type: 'bar',
-        data: {
-          labels: ['All Requests', 'Approved', 'Pending', 'Rejected'],
-          datasets: [
-            {
-              label: 'Count',
-              data: [this.allRequests, this.approvedRequestsCount, this.pendingRequestsCount, this.rejectedRequestsCount],
-              backgroundColor: 'rgba(75, 192, 192, 0.5)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
-              type: 'bar'
-            },
-            {
-              label: 'Trend',
-              data: [this.allRequests, this.approvedRequestsCount, this.pendingRequestsCount, this.rejectedRequestsCount],
-              type: 'line',
-              borderColor: 'rgba(255, 99,  132, 1)',
-              fill: false,
-              tension: 0.1
-            }
-          ]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { color: textColor, font: { size: 11 } }
           },
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              callbacks: {
-                label: (tooltipItem) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`
-              }
+          y: {
+            grid: { color: gridColor },
+            ticks: {
+              color: textColor,
+              font: { size: 11 },
+              callback: (value) => 'â‚¦' + Number(value).toLocaleString()
             }
           }
         }
-      });
-    } else {
-      console.error('Failed to get 2D context for bar/line chart');
-    }
+      }
+    });
   }
 
+  private createSalesChart(labels: string[], data: number[]): void {
+    if (!this.salesChartRef?.nativeElement) return;
 
-  createMyDoughnutChart() {
-    const ctxDoughnut = (document.getElementById('myDoughnutChart') as HTMLCanvasElement).getContext('2d');
-    if (ctxDoughnut) {
-      new Chart(ctxDoughnut, {
-        type: 'doughnut',
-        data: {
-          labels: ['Approved', 'Pending', 'Rejected'],
-          datasets: [{
-            data: [this.myapprovedRequestsCount, this.mypendingRequestsCount, this.myrejectedRequestsCount],
-            backgroundColor: ['#4CAF50', '#FFC107', '#F44336'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              callbacks: {
-                label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`
-              }
+    this.salesChart?.destroy();
+
+    const ctx = this.salesChartRef.nativeElement.getContext('2d');
+    if (!ctx) return;
+
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)';
+    const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
+
+    this.salesChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          data,
+          backgroundColor: '#22c55e',
+          borderRadius: 6,
+          barThickness: this.chartPeriod === 'week' ? 24 : 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: isDark ? '#17231e' : '#fff',
+            titleColor: isDark ? '#fff' : '#111827',
+            bodyColor: isDark ? '#a9bbb2' : '#6b7280',
+            borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+            borderWidth: 1,
+            padding: 12,
+            displayColors: false,
+            callbacks: {
+              label: (context) => `${context.raw} sales`
             }
           }
-        }
-      });
-    } else {
-      console.error('Failed to get 2D context for doughnut chart');
-    }
-  }
-
-  createMyBarLineChart() {
-    const ctxBarLine = (document.getElementById('myBarLineChart') as HTMLCanvasElement).getContext('2d');
-    if (ctxBarLine) {
-      new Chart(ctxBarLine, {
-        type: 'bar',
-        data: {
-          labels: ['All Requests', 'Approved', 'Pending', 'Rejected'],
-          datasets: [
-            {
-              label: 'Count',
-              data: [this.allMyRequests, this.myapprovedRequestsCount, this.mypendingRequestsCount, this.myrejectedRequestsCount],
-              backgroundColor: 'rgba(75, 192, 192, 0.5)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
-              type: 'bar'
-            },
-            {
-              label: 'Trend',
-              data: [this.allMyRequests, this.myapprovedRequestsCount, this.mypendingRequestsCount, this.myrejectedRequestsCount],
-              type: 'line',
-              borderColor: 'rgba(255, 99,  132, 1)',
-              fill: false,
-              tension: 0.1
-            }
-          ]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { color: textColor, font: { size: 11 } }
           },
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              callbacks: {
-                label: (tooltipItem) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`
-              }
-            }
+          y: {
+            grid: { color: gridColor },
+            ticks: { color: textColor, font: { size: 11 }, stepSize: 1 }
           }
         }
-      });
-    } else {
-      console.error('Failed to get 2D context for bar/line chart');
-    }
+      }
+    });
   }
-
-  goToAllRequests(){
-    this.router.navigate(['/home/myItemRequests']);
-  }
-
-  goToPendingRequests(){
-    this.router.navigate(['/home/pendingRequests']);
-  }
-   goToAllRequestsReport(){
-    this.router.navigate(['/home/allRequests']);
-  }
-
 }

@@ -1,0 +1,213 @@
+<div class="tenant-details-page">
+  <!-- Back Button -->
+  <button class="back-btn" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+    <span>Back to Tenants</span>
+  </button>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- Content -->
+  <div class="content" *ngIf="!isLoading && tenant">
+    <!-- Header -->
+    <header class="tenant-header">
+      <div class="tenant-avatar" *ngIf="!tenant.logoUrl">{{ getInitials(tenant.name) }}</div>
+      <img *ngIf="tenant.logoUrl" [src]="tenant.logoUrl" [alt]="tenant.name" class="tenant-logo">
+      <div class="tenant-title">
+        <h1>{{ tenant.name }}</h1>
+        <span class="tenant-email">{{ tenant.email }}</span>
+      </div>
+      <div class="header-actions">
+        <span class="status-badge" [class.active]="tenant.isActive" [class.inactive]="!tenant.isActive">
+          {{ tenant.isActive ? 'Active' : 'Inactive' }}
+        </span>
+        <button mat-icon-button [matMenuTriggerFor]="actionsMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #actionsMenu="matMenu">
+          <button mat-menu-item (click)="manageSubscription()">
+            <mat-icon>subscriptions</mat-icon>
+            <span>Manage Subscription</span>
+          </button>
+          <button mat-menu-item *ngIf="!tenant.isActive" (click)="activateTenant()">
+            <mat-icon>check_circle</mat-icon>
+            <span>Activate Tenant</span>
+          </button>
+          <button mat-menu-item *ngIf="tenant.isActive" (click)="deactivateTenant()">
+            <mat-icon>block</mat-icon>
+            <span>Deactivate Tenant</span>
+          </button>
+        </mat-menu>
+      </div>
+    </header>
+
+    <!-- Info Cards Grid -->
+    <div class="info-grid">
+      <!-- Owner & Contact Info -->
+      <div class="info-card">
+        <h3>Owner & Contact</h3>
+        <div class="info-item">
+          <mat-icon>person</mat-icon>
+          <div>
+            <span class="label">Owner</span>
+            <span class="value">{{ tenant.ownerName || 'N/A' }}</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <mat-icon>email</mat-icon>
+          <div>
+            <span class="label">Email</span>
+            <span class="value">{{ tenant.email }}</span>
+          </div>
+        </div>
+        <div class="info-item" *ngIf="tenant.phone">
+          <mat-icon>phone</mat-icon>
+          <div>
+            <span class="label">Phone</span>
+            <span class="value">{{ tenant.phone }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Location Info -->
+      <div class="info-card">
+        <h3>Location</h3>
+        <div class="info-item" *ngIf="tenant.address">
+          <mat-icon>location_on</mat-icon>
+          <div>
+            <span class="label">Address</span>
+            <span class="value">{{ tenant.address }}</span>
+          </div>
+        </div>
+        <div class="info-item" *ngIf="tenant.city">
+          <mat-icon>location_city</mat-icon>
+          <div>
+            <span class="label">City</span>
+            <span class="value">{{ tenant.city }}</span>
+          </div>
+        </div>
+        <div class="info-item" *ngIf="tenant.state">
+          <mat-icon>map</mat-icon>
+          <div>
+            <span class="label">State</span>
+            <span class="value">{{ tenant.state }}</span>
+          </div>
+        </div>
+        <div class="info-item" *ngIf="tenant.country">
+          <mat-icon>public</mat-icon>
+          <div>
+            <span class="label">Country</span>
+            <span class="value">{{ tenant.country }}</span>
+          </div>
+        </div>
+        <div class="info-item" *ngIf="!tenant.address && !tenant.city && !tenant.state && !tenant.country">
+          <mat-icon>location_off</mat-icon>
+          <div>
+            <span class="label">Address</span>
+            <span class="value">No location info provided</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subscription Info -->
+      <div class="info-card">
+        <h3>Subscription</h3>
+        <ng-container *ngIf="tenant.subscription; else noSubscription">
+          <div class="info-item">
+            <mat-icon>loyalty</mat-icon>
+            <div>
+              <span class="label">Plan</span>
+              <span class="value plan-badge" [class]="tenant.subscription.planName?.toLowerCase() || 'free'">
+                {{ tenant.subscription.planName || 'Free' }}
+              </span>
+            </div>
+          </div>
+          <div class="info-item">
+            <mat-icon>verified</mat-icon>
+            <div>
+              <span class="label">Status</span>
+              <span class="value sub-status" [class]="getStatusColor(tenant.subscription.status)">
+                {{ tenant.subscription.status }}
+              </span>
+            </div>
+          </div>
+          <div class="info-item">
+            <mat-icon>event_busy</mat-icon>
+            <div>
+              <span class="label">End Date</span>
+              <span class="value">{{ formatDate(tenant.subscription.endDate) }}</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <mat-icon>hourglass_bottom</mat-icon>
+            <div>
+              <span class="label">Days Remaining</span>
+              <span class="value" [class.danger]="tenant.subscription.daysRemaining <= 0">
+                {{ tenant.subscription.daysRemaining > 0 ? tenant.subscription.daysRemaining + ' days' : 'Expired' }}
+              </span>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noSubscription>
+          <div class="info-item">
+            <mat-icon>cancel</mat-icon>
+            <div>
+              <span class="label">Status</span>
+              <span class="value">No Subscription</span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Account Details -->
+      <div class="info-card">
+        <h3>Account Details</h3>
+        <div class="info-item">
+          <mat-icon>calendar_today</mat-icon>
+          <div>
+            <span class="label">Created</span>
+            <span class="value">{{ formatDate(tenant.createdDate) }}</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <mat-icon>fingerprint</mat-icon>
+          <div>
+            <span class="label">Tenant ID</span>
+            <span class="value mono">{{ tenant.tenantId }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shops Section -->
+    <div class="section" *ngIf="tenant.shops && tenant.shops.length > 0">
+      <h2>Shops ({{ tenant.shops.length }})</h2>
+      <div class="shops-grid">
+        <div class="shop-card" *ngFor="let shop of tenant.shops">
+          <div class="shop-header">
+            <mat-icon>store</mat-icon>
+            <span class="shop-name">{{ shop.name }}</span>
+            <span class="shop-status" [class.active]="shop.isActive" [class.inactive]="!shop.isActive">
+              {{ shop.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </div>
+          <div class="shop-meta">
+            <span class="shop-address" *ngIf="shop.address">{{ shop.address }}</span>
+            <span class="main-branch-badge" *ngIf="shop.isMainBranch">Main Branch</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Not Found -->
+  <div class="not-found" *ngIf="!isLoading && !tenant">
+    <mat-icon>error_outline</mat-icon>
+    <h2>Tenant not found</h2>
+    <p>The tenant you're looking for doesn't exist or has been removed.</p>
+    <button mat-raised-button color="primary" (click)="goBack()">Back to Tenants</button>
+  </div>
+</div>

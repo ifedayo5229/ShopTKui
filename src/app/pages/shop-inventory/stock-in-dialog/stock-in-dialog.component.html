@@ -1,0 +1,71 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-icon success">
+      <mat-icon>add_circle</mat-icon>
+    </div>
+    <div class="header-content">
+      <h2>Add Stock</h2>
+      <p>Add inventory to {{ data.inventory.product }}</p>
+    </div>
+    <button mat-icon-button class="close-btn" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="stockForm" (ngSubmit)="onSubmit()">
+    <div class="dialog-body">
+      <div class="product-info">
+        <div class="info-row">
+          <span class="label">Current Stock:</span>
+          <span class="value">{{ data.inventory.quantity }} units</span>
+        </div>
+        <div class="info-row">
+          <span class="label">SKU:</span>
+          <span class="value">{{ data.inventory.sku }}</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="quantity">Quantity to Add *</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input matInput id="quantity" type="number" formControlName="quantity" 
+                 placeholder="Enter quantity" min="1">
+          <mat-icon matPrefix>inventory</mat-icon>
+          <mat-error *ngIf="stockForm.get('quantity')?.hasError('required')">Quantity is required</mat-error>
+          <mat-error *ngIf="stockForm.get('quantity')?.hasError('min')">Quantity must be at least 1</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label for="referenceNumber">Reference Number</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input matInput id="referenceNumber" formControlName="referenceNumber" 
+                 placeholder="PO number, invoice, etc.">
+          <mat-icon matPrefix>receipt</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label for="notes">Notes</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea matInput id="notes" formControlName="notes" 
+                    placeholder="Add any notes about this stock addition" rows="3"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="preview-box" *ngIf="stockForm.get('quantity')?.value > 0">
+        <mat-icon>info</mat-icon>
+        <span>New stock level will be: <strong>{{ data.inventory.quantity + stockForm.get('quantity')?.value }} units</strong></span>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button mat-stroked-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-flat-button color="primary" type="submit" 
+              [disabled]="!stockForm.valid || isLoading" class="submit-btn">
+        <span *ngIf="!isLoading">Add Stock</span>
+        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+      </button>
+    </div>
+  </form>
+</div>
