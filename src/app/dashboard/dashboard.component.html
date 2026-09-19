@@ -24,38 +24,34 @@
   </div>
 
   <!-- Hero Header with Gradient -->
-  <div class="dashboard-hero">
-    <div class="hero-content">
-      <div class="greeting">
-        <span class="time-badge">
-          <mat-icon>{{ getTimeIcon() }}</mat-icon>
-          {{ getGreeting() }}
-        </span>
-        <h1>{{ userName }}<span class="wave">👋</span></h1>
-        <p class="hero-subtitle">Here's your business performance at a glance</p>
-      </div>
-      <div class="hero-actions">
-        <button mat-flat-button class="btn-primary-glow" (click)="navigateTo('/home/pos')">
-          <mat-icon>add_shopping_cart</mat-icon>
-          New Sale
-        </button>
-        <button mat-stroked-button class="btn-outline" (click)="navigateTo('/home/inventory')">
-          <mat-icon>inventory_2</mat-icon>
-          Add Product
-        </button>
-      </div>
+  <!--
+    A page header, not a greeting. The name and wave told the owner nothing they
+    did not already know while taking the most valuable space on the screen, and
+    the two floating cards beside it showed "+24% growth" and "Top seller" as
+    hardcoded text - invented figures on a page whose whole job is to be trusted
+    with real ones.
+
+    What a shop owner needs on opening the app is: how did trading go, what is
+    running out, and how do I start selling. The date orients, the two actions
+    are the ones they came for, and everything else is left to the sections that
+    carry real data.
+  -->
+  <header class="page-header">
+    <div class="page-header__titles">
+      <h1>Dashboard</h1>
+      <p>{{ today | date:'EEEE, d MMMM' }}</p>
     </div>
-    <div class="hero-visual">
-      <div class="floating-card card-1">
-        <mat-icon>trending_up</mat-icon>
-        <span>+24% growth</span>
-      </div>
-      <div class="floating-card card-2">
-        <mat-icon>star</mat-icon>
-        <span>Top seller</span>
-      </div>
+    <div class="page-header__actions">
+      <button mat-stroked-button (click)="navigateTo('/home/inventory')">
+        <mat-icon>add</mat-icon>
+        Add product
+      </button>
+      <button mat-flat-button color="primary" (click)="navigateTo('/home/pos')">
+        <mat-icon>point_of_sale</mat-icon>
+        New sale
+      </button>
     </div>
-  </div>
+  </header>
 
   <!-- Premium Stats Grid -->
   <div class="stats-section">

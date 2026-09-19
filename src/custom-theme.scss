@@ -118,23 +118,30 @@ $custom-theme: mat.define-light-theme((
   }
 }
 
-// Buttons.
+// Buttons are black, not orange.
 //
-// Previously a single rule gave *every* button variant - raised, outlined and
-// plain text - the same gradient fill and white text. That is why the interface
-// had no visual hierarchy: a destructive text button looked identical to the
-// primary call to action, and outlined buttons lost their outline entirely.
-// Each variant now looks like what it is.
+// Previously a single rule gave every variant the same coloured fill, so a
+// destructive text button looked identical to the primary action. Making them
+// all orange instead only moved the problem: the header alone then carried an
+// orange Upgrade button, an orange avatar and an orange New Sale button, three
+// things of equal visual weight asking for the same attention.
+//
+// Near-black carries the primary action perfectly well and costs no emphasis -
+// it is the darkest thing on a light page. That leaves orange free to appear
+// two or three times per screen, where it can actually mean something.
 .mat-mdc-raised-button.mat-primary,
-.mat-mdc-unelevated-button.mat-primary {
-  background-color: var(--primary-color) !important;
-  color: var(--text-inverse) !important;
+.mat-mdc-unelevated-button.mat-primary,
+.mat-mdc-raised-button:not(.mat-warn):not(.mat-accent),
+.mat-mdc-unelevated-button:not(.mat-warn):not(.mat-accent) {
+  background-color: var(--btn-primary-bg) !important;
+  color: var(--btn-primary-text) !important;
   border-radius: var(--radius-md) !important;
   box-shadow: none !important;
+  font-weight: var(--weight-medium);
   transition: background-color var(--transition-base);
 
   &:hover:not([disabled]) {
-    background-color: var(--primary-dark) !important;
+    background-color: var(--btn-primary-bg-hover) !important;
   }
 }
 
@@ -143,26 +150,24 @@ $custom-theme: mat.define-light-theme((
   border-color: var(--border-strong) !important;
   color: var(--text-primary) !important;
   background: transparent !important;
+  font-weight: var(--weight-medium);
 
   &:hover:not([disabled]) {
     background: var(--surface-hover) !important;
-  }
-
-  &.mat-primary {
-    border-color: var(--primary-color) !important;
-    color: var(--primary-color) !important;
   }
 }
 
 .mat-mdc-button {
   border-radius: var(--radius-md) !important;
-  color: var(--text-primary) !important;
+  color: var(--text-secondary) !important;
   background: transparent !important;
+  font-weight: var(--weight-medium);
 
   &:hover:not([disabled]) {
     background: var(--surface-hover) !important;
+    color: var(--text-primary) !important;
   }
 
-  &.mat-primary { color: var(--primary-color) !important; }
-  &.mat-warn    { color: var(--danger-color) !important; }
+  // The only exception. Destructive actions have to be unmistakable.
+  &.mat-warn { color: var(--danger-color) !important; }
 }

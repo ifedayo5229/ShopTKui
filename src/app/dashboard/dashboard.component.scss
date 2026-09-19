@@ -159,155 +159,38 @@ $navy-light: #23372e;
 // ========================================
 // HERO SECTION
 // ========================================
-.dashboard-hero {
+.page-header {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  padding: var(--space-6);
-  margin-bottom: 2.5rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  position: relative;
-  overflow: hidden;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
 
+  &__titles {
+    h1 {
+      font-size: 2rem;
+      font-weight: var(--weight-semibold);
+      line-height: var(--leading-tight);
+      color: var(--text-primary);
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
 
-  .hero-content {
-    position: relative;
-    z-index: 2;
-
-    .greeting {
-      .time-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: var(--grey-100);
-        backdrop-filter: blur(10px);
-        padding: 0.5rem 1rem;
-        border-radius: 100px;
-        font-size: 0.75rem;
-        font-weight: 500;
-        color: var(--text-secondary);
-        margin-bottom: 1rem;
-
-        mat-icon {
-          font-size: 18px;
-          width: 18px;
-          height: 18px;
-        }
-      }
-
-      h1 {
-        font-size: 2.25rem;
-        font-weight: 800;
-        color: var(--text-primary);
-        margin: 0 0 0.5rem 0;
-        letter-spacing: 0;
-
-        .wave {
-          display: inline-block;
-          animation: wave 2s ease-in-out infinite;
-          transform-origin: 70% 70%;
-        }
-      }
-
-      .hero-subtitle {
-        font-size: 1rem;
-        color: var(--text-secondary);
-        margin: 0;
-      }
+    p {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      margin: var(--space-1) 0 0;
     }
   }
 
-  .hero-actions {
+  // Two actions, one of them coloured. The primary action is the only thing on
+  // this row allowed to carry the brand; the secondary reads as an outline so
+  // the eye is never asked which of the two matters.
+  &__actions {
     display: flex;
-    gap: 1.5rem;
-    position: relative;
-    z-index: 2;
-
-    .btn-primary-glow {
-      background: var(--primary-color) !important;
-      color: var(--text-inverse) !important;
-      color: $primary !important;
-      font-weight: 600;
-      padding: 0 1.5rem;
-      height: 48px;
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-
-      mat-icon {
-        margin-right: 0.5rem;
-      }
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
-      }
-    }
-
-    .btn-outline {
-      border: 2px solid rgba(255, 255, 255, 0.4) !important;
-      color: var(--text-primary) !important;
-      font-weight: 600;
-      padding: 0 1.5rem;
-      height: 48px;
-      border-radius: 14px;
-      background: var(--grey-100) !important;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-
-      mat-icon {
-        margin-right: 0.5rem;
-      }
-
-      &:hover {
-        background: var(--grey-200) !important;
-        border-color: rgba(255, 255, 255, 0.6) !important;
-      }
-    }
-  }
-
-  .hero-visual {
-    position: relative;
-    z-index: 2;
-
-    .floating-card {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: $navy;
-      animation: float 3s ease-in-out infinite;
-
-      mat-icon {
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-        color: $success;
-      }
-
-      &.card-1 {
-        top: -20px;
-        right: 0;
-      }
-
-      &.card-2 {
-        bottom: -20px;
-        right: 40px;
-        animation-delay: -1.5s;
-
-        mat-icon {
-          color: $warning;
-        }
-      }
-    }
+    gap: var(--space-2);
+    flex-shrink: 0;
   }
 }
 
@@ -472,7 +355,10 @@ $navy-light: #23372e;
 
   // Revenue card specific
   &.revenue-card {
-    background: var(--primary-color);
+    // Plain, like its three neighbours. One card filled with brand colour while
+      // the rest stay white reads as an accident rather than emphasis.
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
     border: none;
 
     .stat-icon-wrapper {
@@ -706,7 +592,8 @@ $navy-light: #23372e;
     }
 
     &.inventory {
-      background: var(--primary-color);
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
     }
 
     &.reports {

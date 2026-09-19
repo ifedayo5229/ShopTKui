@@ -193,6 +193,11 @@ body {
     --weight-semibold: 600;
     --weight-bold:     700;
 
+    // Buttons. Near-black rather than brand colour - see custom-theme.scss.
+    --btn-primary-bg:       #1b1712;
+    --btn-primary-bg-hover: #2a251d;
+    --btn-primary-text:     #faf8f5;
+
     --transition-fast: 120ms ease;
     --transition-base: 180ms ease;
 }
@@ -262,6 +267,10 @@ body {
     --sidebar-active-text: #fb923c;
 
     // Shadows barely register on a dark ground; separation comes from borders.
+    --btn-primary-bg:       #faf8f5;
+    --btn-primary-bg-hover: #e5ded2;
+    --btn-primary-text:     #1b1712;
+
     --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.30);
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.36);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.44);

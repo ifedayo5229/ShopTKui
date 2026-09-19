@@ -243,7 +243,8 @@ $plan-colors: (
           color: var(--text-primary);
 
           &:hover {
-            background: var(--primary-color);
+            background: var(--btn-primary-bg);
+            color: var(--btn-primary-text);
             color: #fff;
           }
         }

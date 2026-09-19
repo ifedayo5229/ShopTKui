@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   // Stats
   totalProducts = 0;
   lowStockItems = 0;
+  today = new Date();
   todaySales = 0;
   todayRevenue = 0;
 
