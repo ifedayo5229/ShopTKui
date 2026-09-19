@@ -92,7 +92,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
         .logo-icon {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, $market-green 0%, $checkout-teal 100%);
+            background: $market-green;
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -212,7 +212,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
 .hero {
     padding: 10rem 2rem 4rem;
     position: relative;
-    background: linear-gradient(180deg, $white 0%, $gray-50 100%);
+    background: $white;
     overflow: hidden;
     min-height: 100vh;
 
@@ -232,7 +232,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             &.orb-1 {
                 width: 600px;
                 height: 600px;
-                background: linear-gradient(135deg, rgba($market-green, 0.4) 0%, rgba($checkout-teal, 0.3) 100%);
+                background: rgba($market-green, 0.4);
                 top: -200px;
                 right: -100px;
                 animation-delay: 0s;
@@ -241,7 +241,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             &.orb-2 {
                 width: 400px;
                 height: 400px;
-                background: linear-gradient(135deg, rgba($accent-cyan, 0.3) 0%, rgba($market-green, 0.2) 100%);
+                background: rgba($accent-cyan, 0.3);
                 bottom: 20%;
                 left: -100px;
                 animation-delay: -7s;
@@ -250,7 +250,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             &.orb-3 {
                 width: 300px;
                 height: 300px;
-                background: linear-gradient(135deg, rgba($accent-emerald, 0.3) 0%, rgba($accent-cyan, 0.2) 100%);
+                background: rgba($accent-emerald, 0.3);
                 bottom: 10%;
                 right: 20%;
                 animation-delay: -14s;
@@ -261,10 +261,10 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             position: absolute;
             inset: 0;
             background-image: 
-                linear-gradient(rgba($gray-300, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba($gray-300, 0.3) 1px, transparent 1px);
+                rgba($gray-300, 0.3),
+                rgba($gray-300, 0.3);
             background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+            mask-image: transparent;
         }
     }
 
@@ -327,7 +327,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             margin-right: auto;
 
             .gradient-text {
-                background: linear-gradient(135deg, $market-green 0%, $checkout-teal 50%, $accent-cyan 100%);
+                background: $market-green;
                 background-size: 200% 200%;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
@@ -355,7 +355,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             }
 
             .btn-primary {
-                background: linear-gradient(135deg, $market-green 0%, $checkout-teal 100%);
+                background: $market-green;
                 color: $white;
                 font-weight: 600;
                 font-size: 1rem;
@@ -419,7 +419,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
 
         .logo-marquee {
             overflow: hidden;
-            mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+            mask-image: black;
 
             .logo-track {
                 display: flex;
@@ -540,7 +540,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
                     width: 40px;
                     height: 40px;
                     border-radius: 10px;
-                    background: linear-gradient(135deg, $market-green 0%, $checkout-teal 100%);
+                    background: $market-green;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -763,7 +763,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
                     left: 0;
                     right: 0;
                     height: 80%;
-                    background: linear-gradient(180deg, transparent 0%, rgba(15, 124, 92, 0.15) 100%);
+                    background: rgba(15, 124, 92, 0.15);
                     clip-path: polygon(0 100%,
                             5% 70%,
                             10% 75%,
@@ -856,7 +856,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
                 }
 
                 &.blue {
-                    background: linear-gradient(135deg, rgba($market-green, 0.3) 0%, rgba($checkout-teal, 0.2) 100%);
+                    background: rgba($market-green, 0.3);
 
                     mat-icon {
                         color: $checkout-teal-light;
@@ -864,7 +864,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
                 }
 
                 &.green {
-                    background: linear-gradient(135deg, rgba($accent-emerald, 0.3) 0%, rgba($accent-cyan, 0.2) 100%);
+                    background: rgba($accent-emerald, 0.3);
 
                     mat-icon {
                         color: $accent-emerald;
@@ -872,7 +872,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
                 }
 
                 &.teal-accent {
-                    background: linear-gradient(135deg, rgba($checkout-teal, 0.3) 0%, rgba($market-green, 0.2) 100%);
+                    background: rgba($checkout-teal, 0.3);
 
                     mat-icon {
                         color: $checkout-teal-light;
@@ -907,7 +907,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
 // ========================================
 .features {
     padding: 8rem 2rem;
-    background: linear-gradient(135deg, $navy-dark 0%, $navy-mid 100%);
+    background: $navy-dark;
 
     .section-container {
         max-width: 1280px;
@@ -974,7 +974,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             width: 52px;
             height: 52px;
             border-radius: 14px;
-            background: linear-gradient(135deg, $market-green 0%, $checkout-teal 100%);
+            background: $market-green;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1072,7 +1072,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
         @include card-hover;
 
         &.highlighted {
-            background: linear-gradient(135deg, $navy-dark 0%, $navy-mid 100%);
+            background: $navy-dark;
             border: none;
             transform: scale(1.03);
 
@@ -1107,7 +1107,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             top: -14px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, $market-green 0%, $checkout-teal 100%);
+            background: $market-green;
             color: $white;
             padding: 0.5rem 1.5rem;
             border-radius: 100px;
@@ -1289,7 +1289,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
                 width: 48px;
                 height: 48px;
                 border-radius: 50%;
-                background: linear-gradient(135deg, $market-green 0%, $checkout-teal 100%);
+                background: $market-green;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1323,7 +1323,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
     .cta-container {
         max-width: 900px;
         margin: 0 auto;
-        background: linear-gradient(135deg, $navy-dark 0%, $navy-mid 50%, $navy-light 100%);
+        background: $navy-dark;
         border-radius: 32px;
         padding: 5rem 3rem;
         text-align: center;
@@ -1337,7 +1337,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             right: -10%;
             width: 50%;
             height: 150%;
-            background: radial-gradient(circle, rgba(15, 124, 92, 0.2) 0%, transparent 70%);
+            background: transparent;
         }
 
         .cta-content {
@@ -1601,7 +1601,7 @@ $font-primary: 'Nunito Sans', 'Segoe UI', sans-serif;
             .logo-icon {
                 width: 36px;
                 height: 36px;
-                background: linear-gradient(135deg, $market-green 0%, $checkout-teal 100%);
+                background: $market-green;
                 border-radius: 10px;
                 display: flex;
                 align-items: center;

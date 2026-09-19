@@ -82,7 +82,7 @@
     }
 
     &.danger {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+      background: rgba(239, 68, 68, 0.1);
       border: 1px solid rgba(239, 68, 68, 0.3);
 
       mat-icon { color: var(--danger-color); }
@@ -97,7 +97,7 @@
     }
 
     &.warning {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(234, 88, 12, 0.1) 100%);
+      background: rgba(245, 158, 11, 0.1);
       border: 1px solid rgba(245, 158, 11, 0.3);
 
       mat-icon { color: var(--warning-color); }
@@ -112,7 +112,7 @@
     }
 
     &.info {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
+      background: rgba(59, 130, 246, 0.1);
       border: 1px solid rgba(59, 130, 246, 0.3);
 
       mat-icon { color: var(--info-color); }
@@ -132,7 +132,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: linear-gradient(135deg, rgba(15, 124, 92, 0.1) 0%, rgba(14, 165, 164, 0.1) 100%);
+    background: rgba(15, 124, 92, 0.1);
     border: 1px solid rgba(15, 124, 92, 0.3);
     border-radius: 12px;
     padding: 0.75rem 1.25rem;
@@ -272,7 +272,7 @@
       width: 40px;
       height: 40px;
       border-radius: 10px;
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+      background: var(--primary-color);
       display: flex;
       align-items: center;
       justify-content: center;

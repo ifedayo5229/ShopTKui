@@ -314,7 +314,7 @@ $warning: var(--warning-color);
       align-items: center;
       gap: 0.75rem;
       padding: 1rem;
-      background: linear-gradient(135deg, rgba($primary, 0.1) 0%, rgba(14, 165, 164, 0.1) 100%);
+      background: rgba($primary, 0.1);
 
       .menu-avatar {
         width: 44px;
@@ -604,13 +604,13 @@ $warning: var(--warning-color);
           color: white;
         }
 
-        &.blue { background: linear-gradient(135deg, var(--info-color), #2563eb); }
-        &.green { background: linear-gradient(135deg, var(--success-color), var(--success-color)); }
+        &.blue { background: var(--info-color); }
+        &.green { background: var(--success-color); }
         &.teal { background: var(--accent-color); }
-        &.orange { background: linear-gradient(135deg, var(--warning-color), var(--warning-color)); }
-        &.red { background: linear-gradient(135deg, var(--danger-color), var(--danger-color)); }
-        &.gray { background: linear-gradient(135deg, var(--grey-500), var(--grey-600)); }
-        &.product { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        &.orange { background: var(--warning-color); }
+        &.red { background: var(--danger-color); }
+        &.gray { background: var(--grey-500); }
+        &.product { background: #06b6d4; }
       }
 
       .result-info {

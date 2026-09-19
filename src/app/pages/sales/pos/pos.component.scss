@@ -16,7 +16,7 @@
   flex-direction: column;
   padding: 1.25rem 1.5rem;
   overflow: hidden;
-  background: linear-gradient(180deg, var(--surface-color) 0%, var(--bg-dark) 100%);
+  background: var(--surface-color);
 }
 
 .panel-header {
@@ -93,7 +93,7 @@
     }
 
     &.active {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      background: var(--primary-color);
       color: white;
       border-color: transparent;
       box-shadow: 0 4px 12px rgba(15, 124, 92, 0.35);
@@ -162,7 +162,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 50%, #ec4899 100%);
+    background: var(--primary-color);
     transition: height 0.2s ease;
   }
 
@@ -257,7 +257,7 @@
     right: 0.5rem;
     width: 28px;
     height: 28px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    background: var(--primary-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -290,7 +290,7 @@
 
     span {
       padding: 0.5rem 1rem;
-      background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+      background: #fecaca;
       color: var(--danger-color);
       border-radius: 100px;
       font-weight: 700;
@@ -359,7 +359,7 @@
       content: '';
       width: 4px;
       height: 20px;
-      background: linear-gradient(180deg, var(--primary-color) 0%, var(--accent-color) 100%);
+      background: var(--primary-color);
       border-radius: 2px;
     }
   }
@@ -726,7 +726,7 @@
 
         &.active {
           border-color: var(--primary-color);
-          background: linear-gradient(135deg, rgba(15, 124, 92, 0.15) 0%, rgba(79, 70, 229, 0.1) 100%);
+          background: rgba(15, 124, 92, 0.15);
 
           mat-icon, span {
             color: var(--primary-color);
@@ -742,7 +742,7 @@
     font-size: 0.9rem;
     font-weight: 700;
     border-radius: 10px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    background: var(--primary-color);
     box-shadow: 0 4px 12px rgba(15, 124, 92, 0.35);
     transition: all 0.2s ease;
 

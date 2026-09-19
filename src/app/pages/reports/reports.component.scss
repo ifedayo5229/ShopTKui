@@ -142,12 +142,12 @@ $warning: var(--warning-color);
     }
   }
 
-  &.revenue .stat-icon { background: linear-gradient(135deg, $primary, var(--accent-color)); }
-  &.sales .stat-icon { background: linear-gradient(135deg, $success, #059669); }
-  &.items .stat-icon { background: linear-gradient(135deg, var(--info-color), #2563eb); }
-  &.average .stat-icon { background: linear-gradient(135deg, $warning, var(--warning-color)); }
-  &.tax .stat-icon { background: linear-gradient(135deg, var(--accent-color), #087f73); }
-  &.discount .stat-icon { background: linear-gradient(135deg, #f43f5e, #e11d48); }
+  &.revenue .stat-icon { background: $primary; }
+  &.sales .stat-icon { background: $success; }
+  &.items .stat-icon { background: var(--info-color); }
+  &.average .stat-icon { background: $warning; }
+  &.tax .stat-icon { background: var(--accent-color); }
+  &.discount .stat-icon { background: #f43f5e; }
 }
 
 // Report Grid

@@ -40,7 +40,7 @@ $plan-colors: (
       height: 46px;
       font-weight: 600;
       font-size: 0.875rem;
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+      background: var(--primary-color);
       box-shadow: 0 4px 14px rgba(15, 124, 92, 0.35);
       transition: all 0.2s ease;
 
@@ -204,7 +204,7 @@ $plan-colors: (
       font-weight: 700;
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      background: var(--primary-color);
       color: #fff;
       align-self: center;
     }
@@ -301,7 +301,7 @@ $plan-colors: (
       height: 80px;
       margin: 0 auto 1.5rem;
       border-radius: 20px;
-      background: linear-gradient(135deg, rgba(15, 124, 92, 0.1), rgba(14, 165, 164, 0.05));
+      background: rgba(15, 124, 92, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;

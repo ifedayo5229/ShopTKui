@@ -20,8 +20,8 @@
 .banner {
   width: 100%;
   height: 8rem;
-  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  background: var(--primary-color);
+  background-image: rgba(0, 0, 0, 0.4);
   background-size: cover;
   background-position: center;
   position: relative;
@@ -150,7 +150,7 @@
   border: 2px solid hsl(var(--accent));
   border-radius: 0.5rem;
   padding: 1.5rem;
-  background: linear-gradient(135deg, hsl(var(--card)), hsl(var(--secondary) / 0.2));
+  background: var(--bg-card);
   display: flex;
   flex-direction: column;
   gap: 1rem;

@@ -63,7 +63,7 @@
     }
 
     &.active {
-      background: linear-gradient(135deg, #01925a 0%, #017a4b 100%);
+      background: #01925a;
       color: white;
       box-shadow: 0 4px 15px rgba(1, 146, 90, 0.3);
 
@@ -113,7 +113,7 @@
   }
 
   button {
-    background: linear-gradient(135deg, #01925a 0%, #017a4b 100%);
+    background: #01925a;
   }
 }
 
@@ -169,7 +169,7 @@
     min-width: 140px;
 
     &[color="primary"] {
-      background: linear-gradient(135deg, #01925a 0%, #017a4b 100%);
+      background: #01925a;
     }
   }
 }
@@ -351,7 +351,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    background: var(--primary-color);
     color: white;
     display: flex;
     align-items: center;

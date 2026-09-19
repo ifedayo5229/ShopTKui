@@ -259,7 +259,7 @@
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background: var(--primary-color);
     color: #fff;
   }
 
@@ -624,7 +624,7 @@
     height: 52px;
     border: none;
     border-radius: 14px;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background: var(--primary-color);
     color: #fff;
     font-size: 16px;
     font-weight: 700;

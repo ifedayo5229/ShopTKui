@@ -22,7 +22,7 @@
     width: 56px;
     height: 56px;
     border-radius: 16px;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -176,11 +176,11 @@
     justify-content: center;
     color: #fff;
 
-    &.owner { background: linear-gradient(135deg, var(--warning-color), var(--warning-color)); }
-    &.manager { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); }
-    &.cashier { background: linear-gradient(135deg, var(--success-color), #059669); }
-    &.stockkeeper { background: linear-gradient(135deg, var(--info-color), #2563eb); }
-    &.viewer { background: linear-gradient(135deg, var(--grey-400), var(--grey-500)); }
+    &.owner { background: var(--warning-color); }
+    &.manager { background: var(--primary-color); }
+    &.cashier { background: var(--success-color); }
+    &.stockkeeper { background: var(--info-color); }
+    &.viewer { background: var(--grey-400); }
 
     mat-icon {
       font-size: 18px;

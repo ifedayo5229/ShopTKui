@@ -153,23 +153,23 @@
       font-size: 0.875rem;
 
       &.admin {
-        background: linear-gradient(135deg, var(--danger-color) 0%, #f97316 100%);
+        background: var(--danger-color);
       }
 
       &.manager {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+        background: var(--primary-color);
       }
 
       &.cashier {
-        background: linear-gradient(135deg, var(--success-color) 0%, var(--success-color) 100%);
+        background: var(--success-color);
       }
 
       &.staff {
-        background: linear-gradient(135deg, var(--info-color) 0%, #06b6d4 100%);
+        background: var(--info-color);
       }
 
       &.default {
-        background: linear-gradient(135deg, var(--grey-500) 0%, var(--grey-400) 100%);
+        background: var(--grey-500);
       }
     }
 

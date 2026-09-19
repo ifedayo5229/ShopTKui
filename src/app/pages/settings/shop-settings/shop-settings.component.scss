@@ -174,7 +174,7 @@
     }
 
     &.active {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      background: var(--primary-color);
       color: white;
       box-shadow: 0 4px 12px rgba(15, 124, 92, 0.3);
 
@@ -245,7 +245,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    background: var(--primary-color);
   }
 }
 
@@ -711,7 +711,7 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    background: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -894,7 +894,7 @@
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  background: var(--primary-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -908,7 +908,7 @@
   }
 
   &.inactive {
-    background: linear-gradient(135deg, var(--grey-400), var(--grey-500));
+    background: var(--grey-400);
   }
 }
 
@@ -1089,7 +1089,7 @@
 }
 
 .add-shop-btn {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%) !important;
+  background: var(--primary-color) !important;
   color: #fff !important;
 }
 

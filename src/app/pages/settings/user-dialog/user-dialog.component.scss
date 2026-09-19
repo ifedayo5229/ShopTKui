@@ -209,7 +209,7 @@
   }
 
   button[mat-flat-button][color="primary"] {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    background: var(--primary-color);
   }
 }
 

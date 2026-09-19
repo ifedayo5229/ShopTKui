@@ -27,7 +27,7 @@
     }
 
     &.primary {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      background: var(--primary-color);
       box-shadow: 0 4px 12px rgba(1, 146, 90, 0.3);
     }
   }
@@ -241,7 +241,7 @@
 
   .submit-btn {
     min-width: 130px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    background: var(--primary-color);
     color: white;
 
     &:disabled {

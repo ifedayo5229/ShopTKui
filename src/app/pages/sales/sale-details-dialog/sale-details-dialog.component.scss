@@ -12,7 +12,7 @@
   justify-content: space-between;
   align-items: flex-start;
   padding: 24px 28px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #667eea;
   color: white;
 
   .header-left {
@@ -132,7 +132,7 @@
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #f0f4ff 0%, #e8ecff 100%);
+    background: #f0f4ff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -146,7 +146,7 @@
     }
 
     &.payment {
-      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+      background: #e8f5e9;
 
       mat-icon {
         color: #43a047;
@@ -202,7 +202,7 @@
     align-items: center;
     gap: 10px;
     padding: 14px 18px;
-    background: linear-gradient(to right, #f8f9fb, #ffffff);
+    background: #f8f9fb;
     border-bottom: 1px solid #e8eaed;
 
     mat-icon {
@@ -281,7 +281,7 @@
         justify-content: center;
         min-width: 28px;
         height: 28px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #667eea;
         color: white;
         border-radius: 8px;
         font-size: 12px;
@@ -345,7 +345,7 @@
       span:last-child {
         font-size: 18px;
         font-weight: 700;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #667eea;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -355,7 +355,7 @@
 }
 
 .payment-summary {
-  background: linear-gradient(to right, #f0f9ff, #f0fdf4);
+  background: #f0f9ff;
   padding: 16px 18px;
   border-top: 1px solid #e8eaed;
 
@@ -455,7 +455,7 @@
     }
 
     &.download-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #667eea;
       color: white;
       border: none;
 
