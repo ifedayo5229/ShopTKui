@@ -1,14 +1,67 @@
 @use '@angular/material' as mat;
 
-// Include the common styles for Angular Material
 @include mat.core();
 
-// Define your custom color palettes
-$custom-primary: mat.define-palette(mat.$green-palette, 800, 100, 900);
-$custom-accent: mat.define-palette(mat.$teal-palette, 600, 100, 900);
-$custom-warn: mat.define-palette(mat.$red-palette);
+// Angular Material keeps its own palette, independent of the CSS custom
+// properties in styles.scss. It was built on mat.$green-palette, which is why
+// Material form fields, checkboxes and ripples stayed green no matter what the
+// tokens said. The palette below is the brand orange, so the two agree.
+$brand-orange: (
+   50: #fdf5f0,
+  100: #fbdcc8,
+  200: #f7bfa0,
+  300: #f2a178,
+  400: #ee8a59,
+  500: #ea743b,
+  600: #dc5f22,
+  700: #c2410c,
+  800: #9a3412,
+  900: #7c2d12,
+  contrast: (
+     50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  )
+);
 
-// Create the theme object
+// Indigo as the secondary voice - the adire reference, and far enough from
+// orange that an accent never reads as a brand element by mistake.
+$brand-indigo: (
+   50: #f3f5fb,
+  100: #dde2f4,
+  200: #c2cbea,
+  300: #9aa8dc,
+  400: #7285cc,
+  500: #4f63b4,
+  600: #3a4b9e,
+  700: #2b3a8c,
+  800: #1e2a66,
+  900: #151d47,
+  contrast: (
+     50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  )
+);
+
+$custom-primary: mat.define-palette($brand-orange, 700, 100, 900);
+$custom-accent:  mat.define-palette($brand-indigo, 700, 100, 900);
+$custom-warn:    mat.define-palette(mat.$red-palette);
+
 $custom-theme: mat.define-light-theme((
   color: (
     primary: $custom-primary,
@@ -17,20 +70,20 @@ $custom-theme: mat.define-light-theme((
   )
 ));
 
-// Include the custom theme styles
 @include mat.all-component-themes($custom-theme);
 
-// Custom styles for input fields
+// Form fields follow the tokens so they flip with the theme rather than being
+// pinned to one hardcoded colour.
 .mat-mdc-form-field {
   .mdc-text-field--filled {
-    background-color: rgba(15, 124, 92, 0.06);
+    background-color: var(--surface-sunken);
   }
 
   .mdc-text-field--outlined {
     .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
-      border-color: rgba(15, 124, 92, 0.32);
+      border-color: var(--border-color);
     }
   }
 
@@ -41,18 +94,15 @@ $custom-theme: mat.define-light-theme((
       border-color: var(--primary-color);
     }
   }
-
 }
 
-
-// Custom styles for input fields
 .mat-form-field-appearance-fill {
   .mat-form-field-flex {
-    padding: 0.5em 0.75em 0 0.75em !important; // Adjust these values as needed
+    padding: 0.5em 0.75em 0 0.75em !important;
   }
 
   .mat-form-field-infix {
-    padding: 0.5em 0 0.5em 0 !important; // Adjust these values as needed
+    padding: 0.5em 0 0.5em 0 !important;
   }
 
   .mat-form-field-label-wrapper {
@@ -68,16 +118,51 @@ $custom-theme: mat.define-light-theme((
   }
 }
 
-// Custom styles for buttons
-.mat-mdc-raised-button,
-.mat-mdc-outlined-button,
-.mat-mdc-button {
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color)) !important;
-  color: white !important;
-  border-radius: 8px !important;
-  transition: background 0.3s ease;
+// Buttons.
+//
+// Previously a single rule gave *every* button variant - raised, outlined and
+// plain text - the same gradient fill and white text. That is why the interface
+// had no visual hierarchy: a destructive text button looked identical to the
+// primary call to action, and outlined buttons lost their outline entirely.
+// Each variant now looks like what it is.
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-unelevated-button.mat-primary {
+  background-color: var(--primary-color) !important;
+  color: var(--text-inverse) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+  transition: background-color var(--transition-base);
 
-  &:hover {
-    background: linear-gradient(135deg, var(--primary-dark), #087f73) !important;
+  &:hover:not([disabled]) {
+    background-color: var(--primary-dark) !important;
   }
+}
+
+.mat-mdc-outlined-button {
+  border-radius: var(--radius-md) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-primary) !important;
+  background: transparent !important;
+
+  &:hover:not([disabled]) {
+    background: var(--surface-hover) !important;
+  }
+
+  &.mat-primary {
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+  }
+}
+
+.mat-mdc-button {
+  border-radius: var(--radius-md) !important;
+  color: var(--text-primary) !important;
+  background: transparent !important;
+
+  &:hover:not([disabled]) {
+    background: var(--surface-hover) !important;
+  }
+
+  &.mat-primary { color: var(--primary-color) !important; }
+  &.mat-warn    { color: var(--danger-color) !important; }
 }

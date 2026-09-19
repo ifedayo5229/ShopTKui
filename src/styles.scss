@@ -76,23 +76,31 @@ body {
     --grey-900: #1b1712;
 
     // ---- Brand --------------------------------------------------------------
-    // One accent, used sparingly. Restraint is most of what reads as mature.
-    --primary-color: #0f7c5c;
-    --primary-dark:  #0b5f46;
-    --primary-light: #d4ede4;
-    --primary-tint:  #f0f9f5;
-    --secondary-color: #9a3412;
-    --secondary-dark:  #7c2d12;
-    --secondary-tint:  #fdf3ee;
+    // Warm orange. It sits naturally with the stone neutrals and carries the
+    // West African warmth without needing a motif to say so.
+    //
+    // #c2410c rather than a brighter orange because this colour has to work as
+    // button fills and as text on white: it clears 5.9:1 against white, where
+    // the vivid oranges sit near 3.8:1 and fail for body-sized text. The bright
+    // end of the range is still available through --primary-accent for fills and
+    // highlights, where contrast rules are looser.
+    --primary-color:  #c2410c;
+    --primary-dark:   #9a3412;
+    --primary-accent: #f97316;
+    --primary-light:  #fbdcc8;
+    --primary-tint:   #fdf5f0;
+    --secondary-color: #2b3a8c;
+    --secondary-dark:  #1e2a66;
+    --secondary-tint:  #f3f5fb;
 
-    --accent-color: #0f7c5c;
-    --accent-dark:  #0b5f46;
+    --accent-color: #c2410c;
+    --accent-dark:  #9a3412;
 
     // ---- Semantic -----------------------------------------------------------
     --success-color: #15803d;
     --success-tint:  #f0fdf4;
-    --warning-color: #b45309;
-    --warning-tint:  #fffbeb;
+    --warning-color: #a16207;
+    --warning-tint:  #fefce8;
     --danger-color:  #b91c1c;
     --danger-tint:   #fef2f2;
     --info-color:    #1d4ed8;
@@ -121,12 +129,13 @@ body {
     // ---- Sidebar ------------------------------------------------------------
     // Flat, not a gradient. Gradients on chrome are the other reliable tell of
     // a dated interface; the active item is marked by a tint and a rule.
-    --sidebar-bg:          #ffffff;
-    --sidebar-text:        var(--grey-600);
-    --sidebar-text-hover:  var(--grey-900);
-    --sidebar-hover-bg:    var(--grey-100);
-    --sidebar-active-bg:   var(--primary-tint);
-    --sidebar-active-text: var(--primary-color);
+    --sidebar-bg:          #17130f;
+    --sidebar-border:      #2a231c;
+    --sidebar-text:        #a39a8d;
+    --sidebar-text-hover:  #faf8f5;
+    --sidebar-hover-bg:    #221c16;
+    --sidebar-active-bg:   rgba(249, 115, 22, 0.14);
+    --sidebar-active-text: #fb923c;
 
     // ---- Aliases kept for existing rules ------------------------------------
     --primary:             var(--primary-color);
@@ -208,18 +217,19 @@ body {
     --grey-800: #f2eee6;
     --grey-900: #faf8f5;
 
-    --primary-color: #34c79a;
-    --primary-dark:  #0f7c5c;
-    --primary-light: #1c3b33;
-    --primary-tint:  #15241f;
+    --primary-color:  #fb923c;
+    --primary-dark:   #ea580c;
+    --primary-accent: #fdba74;
+    --primary-light:  #3a2317;
+    --primary-tint:   #2a1a12;
     --secondary-color: #fbbf24;
 
-    --accent-color: #34c79a;
-    --accent-dark:  #0f7c5c;
+    --accent-color: #fb923c;
+    --accent-dark:  #ea580c;
 
     --success-color: #4ade80;
     --success-tint:  #12241a;
-    --warning-color: #fbbf24;
+    --warning-color: #facc15;
     --warning-tint:  #2a2113;
     --danger-color:  #f87171;
     --danger-tint:   #2b1618;
@@ -243,12 +253,13 @@ body {
     --border-color-light: #221d18;
     --border-strong:      #3b342b;
 
-    --sidebar-bg:          #191511;
-    --sidebar-text:        var(--grey-500);
-    --sidebar-text-hover:  var(--grey-900);
-    --sidebar-hover-bg:    #2a251f;
-    --sidebar-active-bg:   var(--primary-tint);
-    --sidebar-active-text: var(--primary-color);
+    --sidebar-bg:          #0f0c0a;
+    --sidebar-border:      #241e18;
+    --sidebar-text:        #8d8377;
+    --sidebar-text-hover:  #faf8f5;
+    --sidebar-hover-bg:    #1c1713;
+    --sidebar-active-bg:   rgba(249, 115, 22, 0.16);
+    --sidebar-active-text: #fb923c;
 
     // Shadows barely register on a dark ground; separation comes from borders.
     --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.30);
@@ -273,17 +284,18 @@ body {
         --grey-800: #f1f5f9;
         --grey-900: #f8fafc;
 
-        --primary-color: #34c79a;
-        --primary-dark:  #0f7c5c;
-        --primary-light: #1c3b33;
-        --primary-tint:  #15241f;
+        --primary-color:  #fb923c;
+        --primary-dark:   #ea580c;
+        --primary-accent: #fdba74;
+        --primary-light:  #3a2317;
+        --primary-tint:   #2a1a12;
 
-        --accent-color: #34c79a;
-        --accent-dark:  #0f7c5c;
+        --accent-color: #fb923c;
+        --accent-dark:  #ea580c;
 
         --success-color: #4ade80;
         --success-tint:  #12241a;
-        --warning-color: #fbbf24;
+        --warning-color: #facc15;
         --warning-tint:  #2a2113;
         --danger-color:  #f87171;
         --danger-tint:   #2b1618;
@@ -303,8 +315,8 @@ body {
         --border-color-light: #221d18;
         --border-strong:      #3b342b;
 
-        --sidebar-bg:         #191511;
-        --sidebar-hover-bg:   #2a251f;
+        --sidebar-bg:         #0f0c0a;
+        --sidebar-hover-bg:   #1c1713;
 
         --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.30);
         --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.36);
@@ -607,7 +619,7 @@ table {
   // Stat cards icon backgrounds in dark mode stay vibrant
   .stat-icon {
     &.blue {
-      background: linear-gradient(135deg, #34c79a 0%, #0f7c5c 100%);
+      background: var(--primary-color);
     }
     &.green {
       background: linear-gradient(135deg, #34d399 0%, #22c55e 100%);

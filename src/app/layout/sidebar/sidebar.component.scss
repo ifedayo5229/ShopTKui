@@ -3,14 +3,14 @@
 // ========================================
 
 $primary: var(--primary-color);
-$primary-light: #34c79a;
+$primary-light: #f97316;
 $success: var(--success-color);
 
 .sidebar {
   width: 280px;
   height: 100vh;
   background: var(--sidebar-bg);
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--sidebar-border, var(--border-color));
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -59,7 +59,7 @@ $success: var(--success-color);
 
     mat-icon {
       color: white;
-      font-size: 26px;
+      font-size: 20px;
       width: 26px;
       height: 26px;
       position: relative;
@@ -288,7 +288,7 @@ $success: var(--success-color);
       }
 
       .nav-indicator {
-        background: white;
+        background: var(--sidebar-bg);
         box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
       }
     }
@@ -392,7 +392,7 @@ $success: var(--success-color);
       box-shadow: 0 4px 12px rgba($primary, 0.3);
 
       mat-icon {
-        font-size: 24px;
+        font-size: 20px;
         width: 24px;
         height: 24px;
         color: white;

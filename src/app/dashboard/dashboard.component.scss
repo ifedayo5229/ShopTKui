@@ -4,7 +4,7 @@
 
 // Variables
 $primary: var(--primary-color);
-$primary-light: #34c79a;
+$primary-light: #f97316;
 $success: var(--success-color);
 $success-light: #34d399;
 $warning: var(--warning-color);
@@ -81,7 +81,7 @@ $navy-light: #23372e;
     flex-shrink: 0;
 
     mat-icon {
-      font-size: 28px;
+      font-size: 20px;
       width: 28px;
       height: 28px;
     }
@@ -384,7 +384,7 @@ $navy-light: #23372e;
     box-shadow: none;
 
     mat-icon {
-      font-size: 26px;
+      font-size: 20px;
       width: 26px;
       height: 26px;
       color: white;
@@ -695,7 +695,7 @@ $navy-light: #23372e;
     transition: transform 0.3s ease;
 
     mat-icon {
-      font-size: 24px;
+      font-size: 20px;
       width: 24px;
       height: 24px;
       color: white;
@@ -794,7 +794,7 @@ $navy-light: #23372e;
     justify-content: center;
 
     mat-icon {
-      font-size: 22px;
+      font-size: 18px;
       width: 22px;
       height: 22px;
     }
@@ -839,7 +839,7 @@ $navy-light: #23372e;
   color: var(--text-muted);
 
   mat-icon {
-    font-size: 48px;
+    font-size: 28px;
     width: 48px;
     height: 48px;
     margin-bottom: 1rem;
