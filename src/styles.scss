@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
 // Inter reads as business software; Nunito Sans is rounded and reads consumer.
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+// Sora for display, Manrope for body - the pairing from the ShopTK design.
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import '../src/custom-theme.scss';
 
@@ -60,82 +61,98 @@ body {
 
 :root {
     // ---- Neutral ramp -------------------------------------------------------
-    // Warm stone rather than cool slate. This is where the West African feel
-    // actually lives: a sand undertone across every surface reads as warm and
-    // grounded, where cool slate reads Nordic-corporate. It costs nothing in
-    // legibility and needs no pattern or motif to carry it.
-    --grey-50:  #faf8f5;
+    // Warm stone, derived from the design's ink/cream/line trio. The whole
+    // palette sits on a sand undertone - that warmth is what carries the West
+    // African feel, and it does it without a single motif.
+    --grey-50:  #fbf9f6;   // paper
     --grey-100: #f4f1ea;
-    --grey-200: #e8e2d7;
-    --grey-300: #d4cabb;
-    --grey-400: #a69b8a;
-    --grey-500: #776d5f;
-    --grey-600: #57503f;
-    --grey-700: #3e382d;
-    --grey-800: #2a251d;
-    --grey-900: #1b1712;
+    --grey-200: #e6e1d6;
+    --grey-300: #cdc6b6;
+    --grey-400: #a39c8b;
+    --grey-500: #6f6a5e;
+    --grey-600: #4c4840;
+    --grey-700: #34302a;
+    --grey-800: #24211c;
+    --grey-900: #1c1a16;   // ink   // ink
 
     // ---- Brand --------------------------------------------------------------
-    // Warm orange. It sits naturally with the stone neutrals and carries the
-    // West African warmth without needing a motif to say so.
-    //
-    // #c2410c rather than a brighter orange because this colour has to work as
-    // button fills and as text on white: it clears 5.9:1 against white, where
-    // the vivid oranges sit near 3.8:1 and fail for body-sized text. The bright
-    // end of the range is still available through --primary-accent for fills and
-    // highlights, where contrast rules are looser.
-    --primary-color:  #c2410c;
-    --primary-dark:   #9a3412;
-    --primary-accent: #f97316;
-    --primary-light:  #fbdcc8;
-    --primary-tint:   #fdf5f0;
-    --secondary-color: #2b3a8c;
-    --secondary-dark:  #1e2a66;
-    --secondary-tint:  #f3f5fb;
+    // Terracotta. One accent for actions, with a tint for its quiet states.
+    --primary-color:  #084f40;   // deep teal - the colour of value
+    --primary-dark:   #05382d;
+    --primary-accent: #86b4a9;   // sage - the ledger marks
+    --primary-light:  #d3e4df;
+    --primary-tint:   #eef5f3;
 
-    --accent-color: #c2410c;
-    --accent-dark:  #9a3412;
+    // Ochre. Spent only on the moments that matter - a total struck, a sale
+    // closed, a count completed. Never on chrome, never on navigation. Its
+    // whole value is that it appears rarely enough to be read as an event.
+    --seal-color: #c8790a;
+    --seal-dark:  #a16207;
+    --seal-tint:  #fdf3e3;
+
+    --accent-color: #084f40;
+    --accent-dark:  #05382d;
+
+    // ---- Secondary family ---------------------------------------------------
+    // Four muted companions, each with a tint. These are for categorising -
+    // product groups, chart series, status pills - never for chrome. Having a
+    // defined set is what stops every new screen inventing its own colour.
+    --secondary-color: #86b4a9;   // sage
+    --secondary-dark:  #5d9082;
+    --secondary-tint:  #eef5f3;
+
+    --cat-teal:  #184e49;  --cat-teal-tint:  #e3efed;
+    --cat-olive: #8f7f34;  --cat-olive-tint: #f4efdb;
+    --cat-navy:  #22303f;  --cat-navy-tint:  #e4e9ee;
+    --cat-wine:  #5c1f2e;  --cat-wine-tint:  #f1e1e2;
 
     // ---- Semantic -----------------------------------------------------------
-    --success-color: #15803d;
-    --success-tint:  #f0fdf4;
+    // Warmed to sit with the palette, but kept unambiguous: on an inventory
+    // product these have to be read at a glance and never confused with brand.
+    --success-color: #0f6b52;
+    --success-tint:  #e6f2ee;
     --warning-color: #a16207;
-    --warning-tint:  #fefce8;
-    --danger-color:  #b91c1c;
-    --danger-tint:   #fef2f2;
-    --info-color:    #1d4ed8;
-    --info-tint:     #eff6ff;
+    --warning-tint:  #fdf3e3;
+    --danger-color:  #9c2b1e;
+    --danger-tint:   #f8e5e1;
+    --info-color:    #2c4a5c;
+    --info-tint:     #e6ecf0;
 
     // ---- Text ---------------------------------------------------------------
-    --text-color:     var(--grey-700);
+    --text-color:     #1b1b1b;
     --text-primary:   var(--grey-900);
     --text-secondary: var(--grey-500);
     --text-muted:     var(--grey-400);
     --text-inverse:   #ffffff;
 
     // ---- Surfaces -----------------------------------------------------------
-    --background-color: var(--grey-50);
-    --bg-card:          #ffffff;
+    --background-color: #fbf9f6;   // paper
+    --bg-card:          #ffffff;   // paper
     --bg-dark:          var(--grey-100);
     --surface-color:    #ffffff;
     --surface-hover:    var(--grey-100);
     --surface-sunken:   var(--grey-100);
 
     // ---- Borders ------------------------------------------------------------
-    --border-color:       var(--grey-200);
-    --border-color-light: var(--grey-100);
+    --border-color:       #e6e1d6;
+    --border-color-light: #f0ece3;
     --border-strong:      var(--grey-300);
 
     // ---- Sidebar ------------------------------------------------------------
-    // Flat, not a gradient. Gradients on chrome are the other reliable tell of
-    // a dated interface; the active item is marked by a tint and a rule.
-    --sidebar-bg:          #17130f;
-    --sidebar-border:      #2a231c;
-    --sidebar-text:        #a39a8d;
-    --sidebar-text-hover:  #faf8f5;
-    --sidebar-hover-bg:    #221c16;
-    --sidebar-active-bg:   rgba(249, 115, 22, 0.14);
-    --sidebar-active-text: #fb923c;
+    // Ink. A dark rail gives the layout a spine and leaves the accent somewhere
+    // to sit other than decoration.
+    --sidebar-bg:          var(--grey-900);
+    --sidebar-border:      #2a251c;
+    --sidebar-text:        var(--grey-400);
+    --sidebar-text-hover:  #fbf9f6;
+    --sidebar-hover-bg:    var(--grey-800);
+    --sidebar-active-bg:   rgba(134, 180, 169, 0.16);
+    --sidebar-active-text: #86b4a9;
+
+    // ---- Buttons ------------------------------------------------------------
+    --btn-primary-bg:       var(--grey-900);
+    --btn-primary-bg-hover: var(--grey-800);
+    --btn-primary-text:     #fbf9f6;
 
     // ---- Aliases kept for existing rules ------------------------------------
     --primary:             var(--primary-color);
@@ -146,8 +163,6 @@ body {
     --border:              var(--border-color);
 
     // ---- Spacing ------------------------------------------------------------
-    // A 4px rhythm. Consistent spacing does more for perceived quality than any
-    // colour choice, and it is the thing most obviously missing today.
     --space-1: 0.25rem;
     --space-2: 0.5rem;
     --space-3: 0.75rem;
@@ -158,33 +173,38 @@ body {
     --space-8: 4rem;
 
     // ---- Radius -------------------------------------------------------------
-    // Restrained. Large radii read playful rather than serious.
-    --radius-sm:   4px;
-    --radius-md:   6px;
-    --radius-lg:   8px;
-    --radius-xl:   12px;
-    --radius-full: 9999px;
+    // The design uses 8 / 12 / 18 and a full pill.
+    --radius-sm:   8px;
+    --radius-md:   12px;
+    --radius-lg:   18px;
+    --radius-xl:   24px;
+    --radius-full: 999px;
 
     // ---- Elevation ----------------------------------------------------------
-    // Borders carry most of the separation; shadows are a light touch on top.
-    --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
-    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
-    --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.10);
+    --shadow-xs: 0 1px 2px rgba(23, 20, 15, 0.04);
+    --shadow-sm: 0 1px 3px rgba(23, 20, 15, 0.06), 0 1px 2px rgba(23, 20, 15, 0.04);
+    --shadow-md: 0 4px 12px rgba(23, 20, 15, 0.08);
+    --shadow-lg: 0 12px 28px rgba(23, 20, 15, 0.10);
 
     // ---- Type ---------------------------------------------------------------
-    --font-sans: 'Inter', 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-mono: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+    // Sora for display, Manrope for body - a distinctive face for headings over
+    // a refined one for reading, which is what gives the design its voice.
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-sans:    'IBM Plex Sans', 'Segoe UI', sans-serif;
+    --font-mono:    'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
 
-    --text-xs:   0.75rem;
-    --text-sm:   0.8125rem;
-    --text-base: 0.875rem;   // 14px: the working size for dense business UI
-    --text-md:   1rem;
-    --text-lg:   1.125rem;
-    --text-xl:   1.375rem;
-    --text-2xl:  1.75rem;
+    // The design's ladder: 52 / 32 / 28 / 20 / 18 / 15 / 14 / 13 / 12
+    --text-xs:   0.75rem;    // 12
+    --text-sm:   0.8125rem;  // 13
+    --text-base: 0.875rem;   // 14
+    --text-md:   0.9375rem;  // 15
+    --text-lg:   1.125rem;   // 18
+    --text-xl:   1.25rem;    // 20
+    --text-2xl:  1.75rem;    // 28
+    --text-3xl:  2rem;       // 32
+    --text-4xl:  3.25rem;    // 52
 
-    --leading-tight:  1.25;
+    --leading-tight:  1.15;
     --leading-normal: 1.5;
     --leading-loose:  1.7;
 
@@ -192,11 +212,6 @@ body {
     --weight-medium:   500;
     --weight-semibold: 600;
     --weight-bold:     700;
-
-    // Buttons. Near-black rather than brand colour - see custom-theme.scss.
-    --btn-primary-bg:       #1b1712;
-    --btn-primary-bg-hover: #2a251d;
-    --btn-primary-text:     #faf8f5;
 
     --transition-fast: 120ms ease;
     --transition-base: 180ms ease;
@@ -342,7 +357,9 @@ body {
   }
 
   h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
     color: var(--text-primary);
+    letter-spacing: -0.02em;
   }
 
   button {
@@ -738,3 +755,69 @@ hr,
 
 
 
+
+
+// ============================================================================
+// Ledger Rhythm
+//
+// The brand's second register. A serif speaks once, boldly, for the wordmark
+// and the page title; a monospace carries everything the system annotates -
+// figures, references, labels in the margin.
+//
+// The monospace is not decoration here. Every price, quantity and total in this
+// product sits in a column, and a proportional face makes those columns ragged:
+// a 1 is narrow, a 4 is wide, and the eye cannot compare two rows without
+// re-reading both. Tabular figures line up, so a column of money can be scanned
+// rather than read.
+// ============================================================================
+
+.font-display,
+.brand-wordmark {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.02em;
+}
+
+// Applies to any element holding a figure. Also set directly on table cells and
+// stat values below, so existing markup picks it up without being touched.
+.tabular,
+.stat-value,
+.metric-value,
+.amount,
+.price,
+.quantity,
+td.numeric,
+.mat-mdc-cell.numeric {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+    letter-spacing: -0.01em;
+}
+
+// Small uppercase labels, the marginalia of the ledger.
+.label-mono,
+.stat-label,
+.section-label,
+.field-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+// The seal. One warm mark for a closed entry - a paid sale, a completed count,
+// a settled total. Rare by design.
+.seal,
+.is-complete,
+.badge-paid {
+    color: var(--seal-color);
+    background: var(--seal-tint);
+    border: 1px solid rgba(200, 121, 10, 0.24);
+    border-radius: var(--radius-full);
+    padding: 0.125rem 0.625rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}

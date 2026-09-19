@@ -6,17 +6,47 @@
 // properties in styles.scss. It was built on mat.$green-palette, which is why
 // Material form fields, checkboxes and ripples stayed green no matter what the
 // tokens said. The palette below is the brand orange, so the two agree.
-$brand-orange: (
-   50: #fdf5f0,
-  100: #fbdcc8,
-  200: #f7bfa0,
-  300: #f2a178,
-  400: #ee8a59,
-  500: #ea743b,
-  600: #dc5f22,
-  700: #c2410c,
-  800: #9a3412,
-  900: #7c2d12,
+// Deep teal carries the system; sage is its light end. Material keeps its own
+// palette independent of the CSS tokens, so it has to be moved separately or
+// form fields, checkboxes and ripples keep the previous colour.
+$brand-teal: (
+   50: #eef5f3,
+  100: #d3e4df,
+  200: #adcdc4,
+  300: #86b4a9,
+  400: #5d9082,
+  500: #2f7462,
+  600: #0f5f4c,
+  700: #084f40,
+  800: #05382d,
+  900: #032520,
+  contrast: (
+     50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  )
+);
+
+// Ochre, the seal. Material's "accent" is the right slot for it: used rarely,
+// and never for chrome.
+$brand-ochre: (
+   50: #fdf3e3,
+  100: #f9e0ba,
+  200: #f0c37f,
+  300: #e5a344,
+  400: #d88a1c,
+  500: #c8790a,
+  600: #a16207,
+  700: #874f06,
+  800: #6b3e05,
+  900: #522f04,
   contrast: (
      50: rgba(0, 0, 0, 0.87),
     100: rgba(0, 0, 0, 0.87),
@@ -31,35 +61,8 @@ $brand-orange: (
   )
 );
 
-// Indigo as the secondary voice - the adire reference, and far enough from
-// orange that an accent never reads as a brand element by mistake.
-$brand-indigo: (
-   50: #f3f5fb,
-  100: #dde2f4,
-  200: #c2cbea,
-  300: #9aa8dc,
-  400: #7285cc,
-  500: #4f63b4,
-  600: #3a4b9e,
-  700: #2b3a8c,
-  800: #1e2a66,
-  900: #151d47,
-  contrast: (
-     50: rgba(0, 0, 0, 0.87),
-    100: rgba(0, 0, 0, 0.87),
-    200: rgba(0, 0, 0, 0.87),
-    300: #ffffff,
-    400: #ffffff,
-    500: #ffffff,
-    600: #ffffff,
-    700: #ffffff,
-    800: #ffffff,
-    900: #ffffff,
-  )
-);
-
-$custom-primary: mat.define-palette($brand-orange, 700, 100, 900);
-$custom-accent:  mat.define-palette($brand-indigo, 700, 100, 900);
+$custom-primary: mat.define-palette($brand-teal, 700, 100, 900);
+$custom-accent:  mat.define-palette($brand-ochre, 500, 100, 900);
 $custom-warn:    mat.define-palette(mat.$red-palette);
 
 $custom-theme: mat.define-light-theme((
